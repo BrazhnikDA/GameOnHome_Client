@@ -6,4 +6,10 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Online\" />
+    <Folder Include="Offline\" />
+  </ItemGroup>
+
 </Project>

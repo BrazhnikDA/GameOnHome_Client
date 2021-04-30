@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM
 {
-    public partial class Form1 : Form
+    public partial class ListGames : Form
     {
-        public Form1()
+        public ListGames()
         {
             InitializeComponent();
         }
-
     }
 }
