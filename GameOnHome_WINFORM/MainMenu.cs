@@ -21,7 +21,8 @@ namespace GameOnHome_WINFORM
         {
             ListGames games = new ListGames();
             games.Show();
-            Close();
+            games.Activate();
+            this.Hide();
         }
 
         private void buttonSettings_Click(object sender, EventArgs e)

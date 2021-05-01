@@ -16,5 +16,12 @@ namespace GameOnHome_WINFORM
         {
             InitializeComponent();
         }
+
+        private void pictureBoxKrestiki_Noliki_Click(object sender, EventArgs e)
+        {
+            Online.Online_Krestiki_Noliki krestiki_Noliki = new Online.Online_Krestiki_Noliki();
+            krestiki_Noliki.Show();
+            this.Hide();
+        }
     }
 }
