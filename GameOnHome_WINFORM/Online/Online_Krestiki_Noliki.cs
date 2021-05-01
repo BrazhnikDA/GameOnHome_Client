@@ -20,6 +20,7 @@ namespace GameOnHome_WINFORM.Online
         {
             InitializeComponent();
 
+            //Всем кнопкам находящимся на панели1 присвоить функцию по нажатию Button_click
             foreach (Control b in panel1.Controls)
             {
                 if (b.Name != "pictureWait")
@@ -31,12 +32,14 @@ namespace GameOnHome_WINFORM.Online
 
         public void Button_click(object sender, EventArgs e)
         {
+            // Если мы делаем первый ход Мы - X
             if (count == 0)
             {
                 if(userName == null) { userName = "X"; }
                 else { userName = "O"; }
             }
 
+            // Изменить кнопку на которую нажал пользователь (Текст, сделать неактивной)
             ((Button)sender).Text = userName.ToString();
             ((Button)sender).Enabled = false;
             count++;
@@ -44,10 +47,12 @@ namespace GameOnHome_WINFORM.Online
 
             this.Invoke((MethodInvoker)delegate ()                  // Выполнения действие с формой в потоке
             {
+                // Тут надо расскоментить и сделать пикчерВэйт полупрозрачным
                 //pictureWait.Visible = true;
-                pictureWait.BackColor = Color.Transparent;
+                //pictureWait.BackColor = Color.Transparent;
             });
 
+            // Если клиент к чему-то подключился, отправить сообщение и вызвать функцию на првоерку победителя
             if (client != null)
             {
                 SendMessage((sender as Button).Name + "_" + userName);
@@ -57,12 +62,15 @@ namespace GameOnHome_WINFORM.Online
 
         public void TableForWinner()
         {
+            // Минимальное кол-во ходов для победы 5, начинаем проверять только с этого момента
             if(count > 4)
             {
-
+                // Вызываем функцию на проверку победы и смотрим что вернула
                 switch (IsWin())
                 {
+                    // Желательно добавить красивые таблички о победе с 2 кнопками, переиграть, главное меню
                     case 1:
+                        // Выиграл X
                         if(userName == "X")
                         {
                             pictureWinGame.Visible = true;
@@ -78,6 +86,7 @@ namespace GameOnHome_WINFORM.Online
                         break;
 
                     case 2:
+                        // Выиграл O
                         /*
                         grid_end_game.Visibility = Visibility.Visible;
                         text_end_game.Content = "Игрок O выиграл!";
@@ -87,6 +96,7 @@ namespace GameOnHome_WINFORM.Online
                         break;
 
                     case 3:
+                        // Ничья
                         /*
                         grid_end_game.Visibility = Visibility.Visible;
                         text_end_game.Content = "Ничья";
@@ -103,8 +113,7 @@ namespace GameOnHome_WINFORM.Online
         {
             string[,] values = new string[3, 3];    // Масив для хранения значений ячеек
 
-            // Смотрим все кнопки
-
+            // Смотрим все кнопки и записываем их значение
             values[0, 0] = button1.Text;
             values[0, 1] = button2.Text;
             values[0, 2] = button3.Text;
@@ -115,6 +124,7 @@ namespace GameOnHome_WINFORM.Online
             values[2, 1] = button8.Text;
             values[2, 2] = button9.Text;
 
+            // Проверяем миллион условий на победу 
             if (values[0, 0] == "X" && values[0, 1] == "X" && values[0, 2] == "X")
                 return 1;
             else if (values[0, 0] == "X" && values[1, 0] == "X" && values[2, 0] == "X")
@@ -149,45 +159,48 @@ namespace GameOnHome_WINFORM.Online
             else if (values[1, 0] == "O" && values[1, 1] == "O" && values[1, 2] == "O")
                 return 1;
 
-            else if (count == 9)
+            else if (count == 9) // Ничья
                 return 3;
 
-            else return 0;
+            else return 0;  // Нет победителя
         }
 
         private void ChangeAfterListen(string msg)
         {
-            string nameButton = msg.Split('_')[0];
-            string val = msg[8].ToString();
+            string nameButton = msg.Split('_')[0];  // Название кнопки которую нажал противник 
+            string val = msg[8].ToString();         // Фигура которой он играет
             if (msg != "")
             {
+                // Выполняем в отдельном потоке
                 this.Invoke((MethodInvoker)delegate ()
                 {
-                    Control control = panel1.Controls.Owner;
+                    // Идём по всем элементам панели1
                     foreach (Control b in panel1.Controls)
                     {
+                        // Имя нашей и вражеской кнопки должно совпасть
                         if (b.Name == nameButton)
                         {
+                            // Если это первый ход, значит противник X, нам надо быть O
                             if(count == 0)
                             {
                                 userName = "O";
                             }
                             b.Text = val;
                             b.Enabled = false;
-                            //userName = "O";
-                            break;
+                            break;  // Выходим, дальше искать нечего
                         }
                     }
-
-                    count++;
-                    pictureWait.Visible = false;
-                    TableForWinner();
+                    count++;    // Увеличиваем ходы на 1
+                                            
+                    pictureWait.Visible = false;    // Делаем табличку с ожиданием неактивной, так как мы дождались ответа соперника
+                    TableForWinner();               // Проверяем на победу
                 });
             }
         }
         
         private void buttonConnect_Click(object sender, EventArgs e)
         {
+            // Создаём клиент
             client = new TcpClient();
             try
             {
@@ -198,11 +211,14 @@ namespace GameOnHome_WINFORM.Online
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start(); //старт потока
 
+                // На форме меняем статус подключения
+                buttonConnect.Enabled = false;      // Выключаем, больше она нам не понадобится
                 Status_connect.Text = "Статус: Подключён";
                 pictureConnect.Image = Properties.Resources.green_krug;
             }
             catch (Exception ex)
             {
+                // Вывод ошибки в консоль, скорее всего сервер не запущен, или случилась хрень
                 Console.WriteLine(ex.Message);
             }
         }
@@ -212,14 +228,15 @@ namespace GameOnHome_WINFORM.Online
             if ((message != ""))
             {
                 byte[] buffer = new byte[1024];
-                buffer = Encoding.UTF8.GetBytes(message);   // Делаем байт код и отправляем его на сервер
+                buffer = Encoding.UTF8.GetBytes(message);   // Делаем байт код в формате UTF-8(Это важно) и отправляем его на сервер
                 stream.Write(buffer, 0, buffer.Length);
             }
         }
 
-        // получение сообщений
+        // Получение сообщений
         void ReceiveMessage()
         {
+            // Бесконечно слушаем
             while (true)
             {
                 try
@@ -234,9 +251,8 @@ namespace GameOnHome_WINFORM.Online
                     }
                     while (stream.DataAvailable);
 
-                    ChangeAfterListen(builder.ToString());
-
-                    Console.WriteLine(builder.ToString());//вывод сообщения
+                    ChangeAfterListen(builder.ToString()); // Вызываем функцию разбора пришедшего сообщения
+                    Console.WriteLine(builder.ToString()); // Вывод полученного сообщения
                 }
                 catch
                 {
@@ -249,6 +265,11 @@ namespace GameOnHome_WINFORM.Online
 
         void Disconnect()
         {
+            // НЕ ТЕССТИРОВАЛ!
+            // Эту функцию желательно вызывать при событии,
+            // если пользователь подключён к серверу и резко закроет приложение
+            // Нужно всё отчистить, потому что все эти сокеты засирают хрен знает где память
+
             if (stream != null)
                 stream.Close();//отключение потока
             if (client != null)
