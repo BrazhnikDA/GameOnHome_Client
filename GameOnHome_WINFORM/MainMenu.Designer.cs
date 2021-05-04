@@ -29,83 +29,81 @@ namespace GameOnHome_WINFORM
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.But_Play = new System.Windows.Forms.Button();
+            this.But_Setting = new System.Windows.Forms.Button();
+            this.But_Exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // But_Play
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Font = new System.Drawing.Font("Sitka Banner", 42F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.Location = new System.Drawing.Point(458, 114);
-            this.button1.Name = "buttonPlay";
-            this.button1.Size = new System.Drawing.Size(573, 148);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Играть";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonPlay_Click);
+            this.But_Play.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.Play;
+            this.But_Play.FlatAppearance.BorderSize = 0;
+            this.But_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.But_Play.Font = new System.Drawing.Font("Comic Sans MS", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.But_Play.Location = new System.Drawing.Point(120, 350);
+            this.But_Play.Name = "But_Play";
+            this.But_Play.Size = new System.Drawing.Size(180, 60);
+            this.But_Play.TabIndex = 0;
+            this.But_Play.Text = "Играть";
+            this.But_Play.UseVisualStyleBackColor = true;
+            this.But_Play.Click += new System.EventHandler(this.But_Play_Click);
+            this.But_Play.MouseEnter += new System.EventHandler(this.But_Play_MouseEnter);
+            this.But_Play.MouseLeave += new System.EventHandler(this.But_Play_MouseLeave);
             // 
-            // button2
+            // But_Setting
             // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.Font = new System.Drawing.Font("Sitka Banner", 42F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button2.Location = new System.Drawing.Point(458, 363);
-            this.button2.Name = "buttonSettings";
-            this.button2.Size = new System.Drawing.Size(573, 148);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Настройки";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.buttonSettings_Click);
+            this.But_Setting.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.Settings;
+            this.But_Setting.FlatAppearance.BorderSize = 0;
+            this.But_Setting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.But_Setting.Font = new System.Drawing.Font("Comic Sans MS", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.But_Setting.Location = new System.Drawing.Point(120, 420);
+            this.But_Setting.Name = "But_Setting";
+            this.But_Setting.Size = new System.Drawing.Size(180, 60);
+            this.But_Setting.TabIndex = 1;
+            this.But_Setting.Text = "Настройки";
+            this.But_Setting.UseVisualStyleBackColor = true;
+            this.But_Setting.Click += new System.EventHandler(this.But_Setting_Click);
+            this.But_Setting.MouseEnter += new System.EventHandler(this.Bur_Setting_MouseEnter);
+            this.But_Setting.MouseLeave += new System.EventHandler(this.Bur_Setting_MouseLeave);
             // 
-            // button3
+            // But_Exit
             // 
-            this.button3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button3.Font = new System.Drawing.Font("Sitka Banner", 42F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button3.Location = new System.Drawing.Point(458, 610);
-            this.button3.Name = "buttonExit";
-            this.button3.Size = new System.Drawing.Size(573, 148);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Выход";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.buttonExit_Click);
-            // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(1357, 909);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(100, 94);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "RU";
-            this.button4.UseVisualStyleBackColor = true;
+            this.But_Exit.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.Exit;
+            this.But_Exit.FlatAppearance.BorderSize = 0;
+            this.But_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.But_Exit.Font = new System.Drawing.Font("Comic Sans MS", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.But_Exit.Location = new System.Drawing.Point(120, 490);
+            this.But_Exit.Name = "But_Exit";
+            this.But_Exit.Size = new System.Drawing.Size(180, 60);
+            this.But_Exit.TabIndex = 2;
+            this.But_Exit.Text = "Выход";
+            this.But_Exit.UseVisualStyleBackColor = true;
+            this.But_Exit.Click += new System.EventHandler(this.But_Exit_Click);
+            this.But_Exit.MouseEnter += new System.EventHandler(this.But_Exit_MouseEnter);
+            this.But_Exit.MouseLeave += new System.EventHandler(this.But_Exit_MouseLeave);
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1469, 1015);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.Main_Menu;
+            this.ClientSize = new System.Drawing.Size(1080, 714);
+            this.Controls.Add(this.But_Exit);
+            this.Controls.Add(this.But_Setting);
+            this.Controls.Add(this.But_Play);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainMenu";
             this.Text = "Главное меню";
+            this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button But_Play;
+        private System.Windows.Forms.Button But_Setting;
+        private System.Windows.Forms.Button But_Exit;
     }
 }
 

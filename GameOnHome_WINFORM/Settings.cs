@@ -16,5 +16,10 @@ namespace GameOnHome_WINFORM
         {
             InitializeComponent();
         }
+
+        private void Settings_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
