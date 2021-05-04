@@ -7,7 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Offline\" />
+    <Compile Remove="Offline\**" />
+    <EmbeddedResource Remove="Offline\**" />
+    <None Remove="Offline\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\green_krug.jpg" />
+    <None Remove="Resources\red_krug.png" />
+    <None Remove="Resources\Wait.png" />
+    <None Remove="Resources\Вы_выиграли.png" />
+    <None Remove="Resources\Вы_проиграли.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\green_krug.jpg" />
+    <Resource Include="Resources\red_krug.png" />
+    <Resource Include="Resources\Wait.png" />
+    <Resource Include="Resources\Вы_выиграли.png" />
+    <Resource Include="Resources\Вы_проиграли.png" />
   </ItemGroup>
 
   <ItemGroup>

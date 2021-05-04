@@ -8,24 +8,63 @@ using System.Windows.Forms;
 namespace GameOnHome_WINFORM.Online
 {
     public partial class Online_Krestiki_Noliki : Form
-    {
-        string userName;                            // Фигура игркока X/O                 
+    {          
         private const string host = "127.0.0.1";    // IP
         private const int port = 7770;              // Порт
         TcpClient client;                           // Клиент
         NetworkStream stream;                       // Поток от клиента до сервера
+
+        const int mapSize = 3;          // Размер карты 3*3
+        const int cellSize = 225;       // Размер ячейки
+        string currentPlayer = "";      // X или O
+
+        int[,] map = new int[mapSize, mapSize];             // Карта игры { 0 - Пусто, 1 - Крестик, 2 - Нолик } 
+        Button[,] buttons = new Button[mapSize, mapSize];   // Массив кнопок
+
+        Image tacFigure;            // Изображение крестика
+        Image toeFigure;            // Изображение нолика
 
         int count = 0;                              // Количество сделанных ходов
         public Online_Krestiki_Noliki()
         {
             InitializeComponent();
 
-            //Всем кнопкам находящимся на панели1 присвоить функцию по нажатию Button_click
-            foreach (Control b in panel1.Controls)
+            Properties.Resources.krest.SetResolution(225, 225);
+            Properties.Resources.nol.SetResolution(225, 225);
+
+            tacFigure = Properties.Resources.krest;
+            toeFigure = Properties.Resources.nol;
+
+            Text = "Крестики-нолики";
+            CreatePlayBoard();
+        }
+
+        public void CreatePlayBoard()
+        {
+            map = new int[mapSize, mapSize] {
+                { 0,0,0 },
+                { 0,0,0 },
+                { 0,0,0 },
+            };
+
+            this.Width = (mapSize + 1) * cellSize + 50;
+            this.Height = (mapSize + 1) * cellSize + 50;
+
+            for (int i = 0; i < mapSize; i++)
             {
-                if (b.Name != "pictureWait")
+                for (int j = 0; j < mapSize; j++)
                 {
-                    b.Click += Button_click;
+                    // Создаём кнопку и указвыаем нужные нам параметры
+                    Button button = new Button();
+                    button.Location = new Point(j * cellSize, i * cellSize);    // Местоположение
+                    button.BackColor = Color.Gray;
+                    button.Size = new Size(cellSize, cellSize);
+                    button.Click += new EventHandler(Button_click);             // Привязываем функцию обработчика нажатий
+                    button.Name = "button" + i.ToString() + "_" + j.ToString(); // Даём ей имя, что бы можно это использовать где потребуется (псевдо ID)
+
+                    buttons[i, j] = button;                                     // Заносим в наш массив кнопок
+
+                    this.Controls.Add(button);                                  // Привязываем кнопки к нашему окну
                 }
             }
         }
@@ -35,15 +74,27 @@ namespace GameOnHome_WINFORM.Online
             // Если мы делаем первый ход Мы - X
             if (count == 0)
             {
-                if(userName == null) { userName = "X"; }
-                else { userName = "O"; }
+                if(currentPlayer == "") { currentPlayer = "X"; }
+                else { currentPlayer = "O"; }
             }
 
-            // Изменить кнопку на которую нажал пользователь (Текст, сделать неактивной)
-            ((Button)sender).Text = userName.ToString();
-            ((Button)sender).Enabled = false;
-            count++;
+            Button currentButton = sender as Button;
 
+            // Изменить кнопку на которую нажал пользователь (Текст, сделать неактивной)
+            if (currentPlayer == "X")
+            {
+                currentButton.Image = tacFigure;
+                currentButton.BackColor = Color.White;
+                map[ConvertNameI(currentButton), ConvertNameY(currentButton)] = 1;
+            }
+            else
+            {
+                currentButton.Image = toeFigure;
+                currentButton.BackColor = Color.White; 
+                map[ConvertNameI(currentButton), ConvertNameY(currentButton)] = 2;
+            }
+            //currentButton.Enabled = false;
+            count++;
 
             this.Invoke((MethodInvoker)delegate ()                  // Выполнения действие с формой в потоке
             {
@@ -55,9 +106,37 @@ namespace GameOnHome_WINFORM.Online
             // Если клиент к чему-то подключился, отправить сообщение и вызвать функцию на првоерку победителя
             if (client != null)
             {
-                SendMessage((sender as Button).Name + "_" + userName);
+                SendMessage(GetMap() + currentPlayer);
+                DeactivateAllButtons();
                 TableForWinner();
             }
+        }
+
+        public string GetMap()
+        {
+            string res = "";
+            for(int i = 0; i < mapSize; i++)
+            {
+                for(int j = 0; j < mapSize; j++)
+                {
+                    res += Convert.ToInt32(map[i, j]) + ",";
+                }
+            }
+            return res;
+        }
+
+        // Получить позицию кнопки по I
+        public int ConvertNameI(Button b)
+        {
+            string sym = b.Name;
+            return Convert.ToInt32(sym[6]) - 48;
+        }
+
+        // Получить позицию кнопки по Y
+        public int ConvertNameY(Button b)
+        {
+            string sym = b.Name;
+            return Convert.ToInt32(sym[8]) - 48;
         }
 
         public void TableForWinner()
@@ -71,7 +150,7 @@ namespace GameOnHome_WINFORM.Online
                     // Желательно добавить красивые таблички о победе с 2 кнопками, переиграть, главное меню
                     case 1:
                         // Выиграл X
-                        if(userName == "X")
+                        if(currentPlayer == "X")
                         {
                             pictureWinGame.Visible = true;
                             pictureWait.Visible = false;
@@ -111,83 +190,86 @@ namespace GameOnHome_WINFORM.Online
 
         private int IsWin()
         {
-            string[,] values = new string[3, 3];    // Масив для хранения значений ячеек
-
-            // Смотрим все кнопки и записываем их значение
-            values[0, 0] = button1.Text;
-            values[0, 1] = button2.Text;
-            values[0, 2] = button3.Text;
-            values[1, 0] = button4.Text;
-            values[1, 1] = button5.Text;
-            values[1, 2] = button6.Text;
-            values[2, 0] = button7.Text;
-            values[2, 1] = button8.Text;
-            values[2, 2] = button9.Text;
 
             // Проверяем миллион условий на победу 
-            if (values[0, 0] == "X" && values[0, 1] == "X" && values[0, 2] == "X")
+            if (map[0, 0] == 1 && map[0, 1] == 1 && map[0, 2] == 1)
                 return 1;
-            else if (values[0, 0] == "X" && values[1, 0] == "X" && values[2, 0] == "X")
+            else if (map[0, 0] == 1 && map[1, 0] == 1 && map[2, 0] == 1)
                 return 1;
-            else if (values[2, 0] == "X" && values[2, 1] == "X" && values[2, 2] == "X")
+            else if (map[2, 0] == 1 && map[2, 1] == 1 && map[2, 2] == 1)
                 return 1;
-            else if (values[0, 2] == "X" && values[1, 2] == "X" && values[2, 2] == "X")
+            else if (map[0, 2] == 1 && map[1, 2] == 1 && map[2, 2] == 1)
                 return 1;
-            else if (values[0, 0] == "X" && values[1, 1] == "X" && values[2, 2] == "X")
+            else if (map[0, 0] == 1 && map[1, 1] == 1 && map[2, 2] == 1)
                 return 1;
-            else if (values[0, 2] == "X" && values[1, 1] == "X" && values[2, 0] == "X")
+            else if (map[0, 2] == 1 && map[1, 1] == 1 && map[2, 0] == 1)
                 return 1;
-            else if (values[0, 1] == "X" && values[1, 1] == "X" && values[2, 1] == "X")
+            else if (map[0, 1] == 1 && map[1, 1] == 1 && map[2, 1] == 1)
                 return 1;
-            else if (values[1, 0] == "X" && values[1, 1] == "X" && values[1, 2] == "X")
+            else if (map[1, 0] == 1 && map[1, 1] == 1 && map[1, 2] == 1)
                 return 1;
 
-            if (values[0, 0] == "O" && values[0, 1] == "O" && values[0, 2] == "O")
+            if (map[0, 0] == 0 && map[0, 1] == 0 && map[0, 2] == 0)
                 return 2;
-            else if (values[0, 0] == "O" && values[1, 0] == "O" && values[2, 0] == "O")
+            else if (map[0, 0] == 0 && map[1, 0] == 0 && map[2, 0] == 0)
                 return 2;
-            else if (values[2, 0] == "O" && values[2, 1] == "O" && values[2, 2] == "O")
+            else if (map[2, 0] == 0 && map[2, 1] == 0 && map[2, 2] == 0)
                 return 2;
-            else if (values[0, 2] == "O" && values[1, 2] == "O" && values[2, 2] == "O")
+            else if (map[0, 2] == 0 && map[1, 2] == 0 && map[2, 2] == 0)
                 return 1;
-            else if (values[0, 0] == "O" && values[1, 1] == "O" && values[2, 2] == "O")
+            else if (map[0, 0] == 0 && map[1, 1] == 0 && map[2, 2] == 0)
                 return 2;
-            else if (values[0, 2] == "O" && values[1, 1] == "O" && values[2, 0] == "O")
+            else if (map[0, 2] == 0 && map[1, 1] == 0 && map[2, 0] == 0)
                 return 2;
-            else if (values[0, 1] == "O" && values[1, 1] == "O" && values[2, 1] == "O")
+            else if (map[0, 1] == 0 && map[1, 1] == 0 && map[2, 1] == 0)
                 return 1;
-            else if (values[1, 0] == "O" && values[1, 1] == "O" && values[1, 2] == "O")
+            else if (map[1, 0] == 0 && map[1, 1] == 0 && map[1, 2] == 0)
                 return 1;
 
             else if (count == 9) // Ничья
                 return 3;
 
-            else return 0;  // Нет победителя
+            else return 0;       // Нет победителя
         }
 
         private void ChangeAfterListen(string msg)
         {
-            string nameButton = msg.Split('_')[0];  // Название кнопки которую нажал противник 
-            string val = msg[8].ToString();         // Фигура которой он играет
+            string[] razborMessage = new string[10];
+            razborMessage = msg.Split(',');  
+            string val = razborMessage[9].ToString();         // Фигура которой он играет
             if (msg != "")
             {
                 // Выполняем в отдельном потоке
                 this.Invoke((MethodInvoker)delegate ()
                 {
-                    // Идём по всем элементам панели1
-                    foreach (Control b in panel1.Controls)
+                    if(currentPlayer == "")
                     {
-                        // Имя нашей и вражеской кнопки должно совпасть
-                        if (b.Name == nameButton)
+                        if(val == "X") { currentPlayer = "O"; }
+                        else { currentPlayer = "X"; }
+                    }
+
+                    int counter = 0;
+                    for(int i = 0; i < mapSize; i++)
+                    {
+                        for(int j = 0; j < mapSize; j++)
                         {
-                            // Если это первый ход, значит противник X, нам надо быть O
-                            if(count == 0)
+                            int input = Convert.ToInt32(razborMessage[counter]);
+                            if (map[i, j] != input)
                             {
-                                userName = "O";
+                                if (input == 1)
+                                {
+                                    buttons[i, j].Image = tacFigure;
+                                    buttons[i, j].BackColor = Color.White;
+                                }
+                                else 
+                                { 
+                                    buttons[i, j].Image = toeFigure;
+                                    buttons[i, j].BackColor = Color.White;
+                                }
                             }
-                            b.Text = val;
-                            b.Enabled = false;
-                            break;  // Выходим, дальше искать нечего
+                            
+                            map[i, j] = input;
+                            counter++;
                         }
                     }
                     count++;    // Увеличиваем ходы на 1
@@ -197,7 +279,29 @@ namespace GameOnHome_WINFORM.Online
                 });
             }
         }
-        
+
+        public void ActivateAllButtons()
+        {
+            for(int i = 0; i < mapSize; i++)
+            {
+                for(int j = 0; j < mapSize; j++)
+                {
+                    buttons[i, j].Enabled = true;
+                }
+            }
+        }
+
+        public void DeactivateAllButtons()
+        {
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    buttons[i, j].Enabled = false;
+                }
+            }
+        }
+
         private void buttonConnect_Click(object sender, EventArgs e)
         {
             // Создаём клиент
@@ -251,13 +355,17 @@ namespace GameOnHome_WINFORM.Online
                     }
                     while (stream.DataAvailable);
 
-                    ChangeAfterListen(builder.ToString()); // Вызываем функцию разбора пришедшего сообщения
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        ChangeAfterListen(builder.ToString()); // Вызываем функцию разбора пришедшего сообщения
+                        ActivateAllButtons();
+                        TableForWinner();
+                    });
                     Console.WriteLine(builder.ToString()); // Вывод полученного сообщения
                 }
                 catch
                 {
                     Console.WriteLine("Подключение прервано!"); //соединение было прервано
-                    Console.ReadLine();
                     Disconnect();
                 }
             }
@@ -265,11 +373,6 @@ namespace GameOnHome_WINFORM.Online
 
         void Disconnect()
         {
-            // НЕ ТЕССТИРОВАЛ!
-            // Эту функцию желательно вызывать при событии,
-            // если пользователь подключён к серверу и резко закроет приложение
-            // Нужно всё отчистить, потому что все эти сокеты засирают хрен знает где память
-
             if (stream != null)
                 stream.Close();//отключение потока
             if (client != null)
