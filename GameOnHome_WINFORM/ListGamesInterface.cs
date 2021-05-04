@@ -19,7 +19,7 @@ namespace GameOnHome_WINFORM
             pb = new PictureBox();
             pb.Size = new Size(800, 800);
             pb.Location = new Point(0, 0);
-            pb.Image = Image.FromFile(@"../../Resources/dr");
+            pb.Image = Properties.Resources.dr;
 
             parent.Controls.Add(pb);
         }
