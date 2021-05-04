@@ -1,7 +1,7 @@
 ﻿
 namespace GameOnHome_WINFORM.Online
 {
-    partial class Online_Krestiki_Noliki
+    partial class Krestiki_Noliki
     {
         /// <summary>
         /// Required designer variable.
@@ -102,7 +102,7 @@ namespace GameOnHome_WINFORM.Online
             this.Controls.Add(this.pictureConnect);
             this.Controls.Add(this.Status_connect);
             this.Controls.Add(this.buttonConnect);
-            this.Name = "Online_Krestiki_Noliki";
+            this.Name = "Krestiki_Noliki";
             ((System.ComponentModel.ISupportInitialize)(this.pictureWait)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureConnect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureWinGame)).EndInit();

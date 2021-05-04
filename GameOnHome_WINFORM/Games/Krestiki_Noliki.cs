@@ -7,8 +7,10 @@ using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM.Online
 {
-    public partial class Online_Krestiki_Noliki : Form
-    {          
+    public partial class Krestiki_Noliki : Form
+    {
+        private bool IsStatus = false;              // True - онлайн, False - оффлайн
+
         private const string host = "127.0.0.1";    // IP
         private const int port = 7770;              // Порт
         TcpClient client;                           // Клиент
@@ -25,9 +27,11 @@ namespace GameOnHome_WINFORM.Online
         Image toeFigure;            // Изображение нолика
 
         int count = 0;                              // Количество сделанных ходов
-        public Online_Krestiki_Noliki()
+        public Krestiki_Noliki(bool IsStatus_)
         {
             InitializeComponent();
+
+            IsStatus = IsStatus_;
 
             Properties.Resources.krest.SetResolution(225, 225);
             Properties.Resources.nol.SetResolution(225, 225);
@@ -59,7 +63,9 @@ namespace GameOnHome_WINFORM.Online
                     button.Location = new Point(j * cellSize, i * cellSize);    // Местоположение
                     button.BackColor = Color.Gray;
                     button.Size = new Size(cellSize, cellSize);
-                    button.Click += new EventHandler(Button_click);             // Привязываем функцию обработчика нажатий
+                    if(IsStatus)
+                        button.Click += new EventHandler(Button_click_online);  // Привязываем функцию обработчика нажатий
+                    else button.Click += new EventHandler(Button_click_ofline);
                     button.Name = "button" + i.ToString() + "_" + j.ToString(); // Даём ей имя, что бы можно это использовать где потребуется (псевдо ID)
 
                     buttons[i, j] = button;                                     // Заносим в наш массив кнопок
@@ -69,16 +75,78 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        public void Button_click(object sender, EventArgs e)
+        private void Button_click_ofline(object sender, EventArgs e)
         {
+            currentPlayer = "X";
+            Button currentButton = sender as Button;
+
+            // Пользователь нажал на занятую ячейку, выходим из функции
+            if (map[ConvertNameI(currentButton), ConvertNameY(currentButton)] != 0)
+            {
+                return;
+            }
+
+            currentButton.Image = tacFigure;
+            currentButton.BackColor = Color.White;
+            map[ConvertNameI(currentButton), ConvertNameY(currentButton)] = 1;
+            count++;
+
+            Bot_xod_easy();      // Ход бота
+
+            TableForWinner();
+        }
+
+        private void Bot_xod_easy()
+        {
+            if (count != 9)
+            {
+                Random rnd = new Random();
+                // Получить случайное число (в диапазоне от 0 до 9)
+                int xodI = rnd.Next(0, 3);
+                int xodJ = rnd.Next(0, 3);
+
+                while (map[xodI, xodJ] != 0)
+                {
+                    xodI = rnd.Next(0, 3);
+                    xodJ = rnd.Next(0, 3);
+                }
+                map[xodI, xodJ] = 2;
+
+                buttons[xodI, xodJ].Image = toeFigure;
+                buttons[xodI, xodJ].BackColor = Color.White;
+
+                count++;
+            }
+        }
+        public void Button_click_online(object sender, EventArgs e)
+        {
+            Button currentButton = sender as Button;
+
+            // Пользователь нажал на занятую ячейку, выходим из функции
+            if(map[ConvertNameI(currentButton), ConvertNameY(currentButton)] != 0)
+            {
+                return;
+            }
+
+            if (client != null)
+            {
+                if (!client.Connected)
+                {
+                    MessageBox.Show("Нет подключения к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }else 
+            {
+                MessageBox.Show("Подключитесь к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Если мы делаем первый ход Мы - X
             if (count == 0)
             {
                 if(currentPlayer == "") { currentPlayer = "X"; }
                 else { currentPlayer = "O"; }
             }
-
-            Button currentButton = sender as Button;
 
             // Изменить кнопку на которую нажал пользователь (Текст, сделать неактивной)
             if (currentPlayer == "X")
@@ -272,7 +340,7 @@ namespace GameOnHome_WINFORM.Online
                             counter++;
                         }
                     }
-                    count++;    // Увеличиваем ходы на 1
+                    count++;    // Увеличиваем ход на 1
                                             
                     pictureWait.Visible = false;    // Делаем табличку с ожиданием неактивной, так как мы дождались ответа соперника
                     TableForWinner();               // Проверяем на победу
@@ -308,12 +376,16 @@ namespace GameOnHome_WINFORM.Online
             client = new TcpClient();
             try
             {
-                client.Connect(host, port); //подключение клиента
-                stream = client.GetStream(); // получаем поток
+                client.Connect(host, port);     // Подключение клиента
+                stream = client.GetStream();    // Получаем поток
 
-                // запускаем новый поток для получения данных
+                // Запускаем новый поток для получения данных от сервера
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start(); //старт потока
+
+                // Каждые 10 секунд проверяем есть ли соединение с сервером!
+                Thread listenConnection = new Thread(new ThreadStart(CheckConnection));
+                listenConnection.Start();
 
                 // На форме меняем статус подключения
                 buttonConnect.Enabled = false;      // Выключаем, больше она нам не понадобится
@@ -324,6 +396,7 @@ namespace GameOnHome_WINFORM.Online
             {
                 // Вывод ошибки в консоль, скорее всего сервер не запущен, или случилась хрень
                 Console.WriteLine(ex.Message);
+                MessageBox.Show("Сервер не отвечает", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -357,16 +430,29 @@ namespace GameOnHome_WINFORM.Online
 
                     this.Invoke((MethodInvoker)delegate ()
                     {
-                        ChangeAfterListen(builder.ToString()); // Вызываем функцию разбора пришедшего сообщения
-                        ActivateAllButtons();
-                        TableForWinner();
+                        ChangeAfterListen(builder.ToString());  // Вызываем функцию разбора пришедшего сообщения
+                        ActivateAllButtons();                   // Активируем все кнопки 
+                        TableForWinner();                       // Проверяем нет ли победителя
                     });
-                    Console.WriteLine(builder.ToString()); // Вывод полученного сообщения
+                    Console.WriteLine(builder.ToString());      // Вывод полученного сообщения
                 }
                 catch
                 {
-                    Console.WriteLine("Подключение прервано!"); //соединение было прервано
+                    Console.WriteLine("Подключение прервано!"); // Соединение было прервано
+                    MessageBox.Show("Подключение разрвано, приложение закроется через 5 секунд", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Disconnect();
+                }
+            }
+        }
+
+        public void CheckConnection()
+        {
+            while (true)
+            {
+                Thread.Sleep(10000);
+                if (!client.Connected)
+                {
+                    MessageBox.Show("Соединение с сервером разорвано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -374,10 +460,10 @@ namespace GameOnHome_WINFORM.Online
         void Disconnect()
         {
             if (stream != null)
-                stream.Close();//отключение потока
+                stream.Close();     // Отключение потока
             if (client != null)
-                client.Close();//отключение клиента
-            Environment.Exit(0); //завершение процесса
+                client.Close();     // Отключение клиента
+            Environment.Exit(0);    // Закртиые приложения
         }
 
     }

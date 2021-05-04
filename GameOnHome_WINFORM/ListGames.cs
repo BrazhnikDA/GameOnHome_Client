@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOnHome_WINFORM.Online;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,11 +20,14 @@ namespace GameOnHome_WINFORM
 
         private void ListGames_Load(object sender, EventArgs e)
         {
-
+            g = CreateGraphics();
+            g.Clear(Color.White);
+            label_tic_tac.Location = new Point(44, 171);
+            label_tic_tac.Font = new Font("Stencil", 9.75f);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e) {
-            Online.Online_Krestiki_Noliki krestiki_Noliki = new Online.Online_Krestiki_Noliki();
+            Online.Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(false);
             krestiki_Noliki.Show();
         }
 
