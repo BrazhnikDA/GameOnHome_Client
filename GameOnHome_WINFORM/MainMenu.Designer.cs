@@ -40,9 +40,10 @@ namespace GameOnHome_WINFORM
             this.But_Play.FlatAppearance.BorderSize = 0;
             this.But_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.But_Play.Font = new System.Drawing.Font("Comic Sans MS", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.But_Play.Location = new System.Drawing.Point(120, 350);
+            this.But_Play.Location = new System.Drawing.Point(171, 583);
+            this.But_Play.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.But_Play.Name = "But_Play";
-            this.But_Play.Size = new System.Drawing.Size(180, 60);
+            this.But_Play.Size = new System.Drawing.Size(257, 100);
             this.But_Play.TabIndex = 0;
             this.But_Play.Text = "Играть";
             this.But_Play.UseVisualStyleBackColor = true;
@@ -56,9 +57,10 @@ namespace GameOnHome_WINFORM
             this.But_Setting.FlatAppearance.BorderSize = 0;
             this.But_Setting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.But_Setting.Font = new System.Drawing.Font("Comic Sans MS", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.But_Setting.Location = new System.Drawing.Point(120, 420);
+            this.But_Setting.Location = new System.Drawing.Point(171, 700);
+            this.But_Setting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.But_Setting.Name = "But_Setting";
-            this.But_Setting.Size = new System.Drawing.Size(180, 60);
+            this.But_Setting.Size = new System.Drawing.Size(257, 100);
             this.But_Setting.TabIndex = 1;
             this.But_Setting.Text = "Настройки";
             this.But_Setting.UseVisualStyleBackColor = true;
@@ -72,9 +74,10 @@ namespace GameOnHome_WINFORM
             this.But_Exit.FlatAppearance.BorderSize = 0;
             this.But_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.But_Exit.Font = new System.Drawing.Font("Comic Sans MS", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.But_Exit.Location = new System.Drawing.Point(120, 490);
+            this.But_Exit.Location = new System.Drawing.Point(171, 817);
+            this.But_Exit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.But_Exit.Name = "But_Exit";
-            this.But_Exit.Size = new System.Drawing.Size(180, 60);
+            this.But_Exit.Size = new System.Drawing.Size(257, 100);
             this.But_Exit.TabIndex = 2;
             this.But_Exit.Text = "Выход";
             this.But_Exit.UseVisualStyleBackColor = true;
@@ -84,15 +87,15 @@ namespace GameOnHome_WINFORM
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.Main_Menu;
-            this.ClientSize = new System.Drawing.Size(1080, 714);
+            this.ClientSize = new System.Drawing.Size(1543, 1190);
             this.Controls.Add(this.But_Exit);
             this.Controls.Add(this.But_Setting);
             this.Controls.Add(this.But_Play);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainMenu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Главное меню";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
