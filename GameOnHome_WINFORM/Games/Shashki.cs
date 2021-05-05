@@ -14,6 +14,9 @@ namespace GameOnHome_WINFORM.Online
 {
     public partial class Shashki : Form
     {
+        private string ID;                          // ID присвоенное сервером
+        private bool IsStatus = false;              // True - онлайн, False - оффлайн
+
         private const string host = "127.0.0.1";    // IP
         private const int port = 7770;              // Порт
         TcpClient client;                           // Клиент
@@ -146,6 +149,20 @@ namespace GameOnHome_WINFORM.Online
         // Обработка нажатия на фигуру
         public void OnFigurePress(object sender, EventArgs e)
         {
+            if (client != null)
+            {
+                if (!client.Connected)
+                {
+                    MessageBox.Show("Нет подключения к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Подключитесь к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (currentPlayer == 0)
             {
                 currentPlayer = 1;  // Кто первый сходил,тот играет за белых 
@@ -699,6 +716,7 @@ namespace GameOnHome_WINFORM.Online
                                 {
                                     buttons[i, j].Image = null;
                                     buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
+                                    buttons[i, j].Text = "";
                                 }
                             }
                         }
@@ -733,9 +751,27 @@ namespace GameOnHome_WINFORM.Online
                 client.Connect(host, port); //подключение клиента
                 stream = client.GetStream(); // получаем поток
 
+                while (true)
+                {
+                    byte[] data = new byte[64]; // буфер для получаемых данных
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0;
+
+                    bytes = stream.Read(data, 0, data.Length);
+                    builder.Append(Encoding.UTF8.GetString(data, 0, bytes));
+
+                    ID = builder.ToString();            // Присваиваем ID
+
+                    break;
+                }
+
                 // запускаем новый поток для получения данных
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start(); //старт потока
+
+                // Каждые 10 секунд проверяем есть ли соединение с сервером!
+                Thread listenConnection = new Thread(new ThreadStart(CheckConnection));
+                listenConnection.Start();
 
                 buttonConnect.Enabled = false;      // Выключаем, больше она нам не понадобится
 
@@ -744,6 +780,8 @@ namespace GameOnHome_WINFORM.Online
             {
                 // Вывод ошибки в консоль, скорее всего сервер не запущен, или случилась хрень
                 Console.WriteLine(ex.Message);
+                MessageBox.Show("Сервер не отвечает", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
 
@@ -788,7 +826,21 @@ namespace GameOnHome_WINFORM.Online
                 catch
                 {
                     Console.WriteLine("Подключение прервано!"); // Соединение было прервано (Игра выключена, игра крашнулась)
+                    MessageBox.Show("Подключение разрвано, приложение закроется через 5 секунд", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Thread.Sleep(5000);
                     Disconnect();
+                }
+            }
+        }
+
+        public void CheckConnection()
+        {
+            while (true)
+            {
+                Thread.Sleep(10000);
+                if (!client.Connected)
+                {
+                    MessageBox.Show("Соединение с сервером разорвано!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

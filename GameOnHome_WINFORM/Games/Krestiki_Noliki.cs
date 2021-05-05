@@ -455,6 +455,7 @@ namespace GameOnHome_WINFORM.Online
                 {
                     Console.WriteLine("Подключение прервано!"); // Соединение было прервано
                     MessageBox.Show("Подключение разрвано, приложение закроется через 5 секунд", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Thread.Sleep(5000);
                     Disconnect();
                 }
             }
