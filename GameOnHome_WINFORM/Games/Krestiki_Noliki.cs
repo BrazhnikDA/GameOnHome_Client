@@ -9,6 +9,7 @@ namespace GameOnHome_WINFORM.Online
 {
     public partial class Krestiki_Noliki : Form
     {
+        private string ID;                          // ID присвоенное сервером
         private bool IsStatus = false;              // True - онлайн, False - оффлайн
 
         private const string host = "127.0.0.1";    // IP
@@ -378,6 +379,20 @@ namespace GameOnHome_WINFORM.Online
             {
                 client.Connect(host, port);     // Подключение клиента
                 stream = client.GetStream();    // Получаем поток
+
+                while (true)
+                {
+                    byte[] data = new byte[64]; // буфер для получаемых данных
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0;
+                   
+                    bytes = stream.Read(data, 0, data.Length);
+                    builder.Append(Encoding.UTF8.GetString(data, 0, bytes));
+
+                    ID = builder.ToString();            // Присваиваем ID
+
+                    break;  
+                }
 
                 // Запускаем новый поток для получения данных от сервера
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
