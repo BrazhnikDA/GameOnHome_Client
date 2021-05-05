@@ -74,5 +74,11 @@ namespace GameOnHome_WINFORM
             label_shaski.Location = new Point(280, 171);
             label_shaski.Font = new Font("Stencil", 9.75f);
         }
+
+        private void pictureBox_Three_Row_Click(object sender, EventArgs e)
+        {
+            ThreeRow three = new ThreeRow();
+            three.Show();
+        }
     }
 }

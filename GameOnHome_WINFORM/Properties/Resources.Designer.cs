@@ -73,6 +73,26 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blue_icing {
+            get {
+                object obj = ResourceManager.GetObject("blue_icing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap chocolate_icing {
+            get {
+                object obj = ResourceManager.GetObject("chocolate_icing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dr {
             get {
                 object obj = ResourceManager.GetObject("dr", resourceCulture);
@@ -96,6 +116,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap Exit1 {
             get {
                 object obj = ResourceManager.GetObject("Exit1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap green_icing_green_sprinkles {
+            get {
+                object obj = ResourceManager.GetObject("green_icing_green_sprinkles", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +176,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap nol {
             get {
                 object obj = ResourceManager.GetObject("nol", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pink_icing_white_drizzle {
+            get {
+                object obj = ResourceManager.GetObject("pink_icing_white_drizzle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -226,6 +266,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap white {
             get {
                 object obj = ResourceManager.GetObject("white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap white_icing {
+            get {
+                object obj = ResourceManager.GetObject("white_icing", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
