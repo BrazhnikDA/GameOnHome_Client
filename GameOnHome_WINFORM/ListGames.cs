@@ -33,7 +33,7 @@ namespace GameOnHome_WINFORM
         }
 
         private void pictureBox_tic_tac_Click(object sender, EventArgs e) {
-            Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(false);
+            Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(true);
             krestiki_Noliki.Show();
         }
 

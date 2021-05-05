@@ -54,7 +54,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 2F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(462, 424);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(628, 594);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // timerLabel
@@ -63,7 +63,7 @@
             this.timerLabel.AutoSize = true;
             this.timerLabel.Font = new System.Drawing.Font("Book Antiqua", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.timerLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.timerLabel.Location = new System.Drawing.Point(207, 394);
+            this.timerLabel.Location = new System.Drawing.Point(290, 564);
             this.timerLabel.Name = "timerLabel";
             this.timerLabel.Size = new System.Drawing.Size(47, 30);
             this.timerLabel.TabIndex = 4;
@@ -74,9 +74,9 @@
             // 
             this.horizontalLine1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.horizontalLine1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.horizontalLine1.Location = new System.Drawing.Point(3, 352);
+            this.horizontalLine1.Location = new System.Drawing.Point(3, 522);
             this.horizontalLine1.Name = "horizontalLine1";
-            this.horizontalLine1.Size = new System.Drawing.Size(456, 2);
+            this.horizontalLine1.Size = new System.Drawing.Size(622, 2);
             this.horizontalLine1.TabIndex = 1;
             // 
             // scoreLabel
@@ -85,7 +85,7 @@
             this.scoreLabel.AutoSize = true;
             this.scoreLabel.Font = new System.Drawing.Font("Book Antiqua", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.scoreLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.scoreLabel.Location = new System.Drawing.Point(191, 362);
+            this.scoreLabel.Location = new System.Drawing.Point(274, 532);
             this.scoreLabel.Name = "scoreLabel";
             this.scoreLabel.Size = new System.Drawing.Size(79, 32);
             this.scoreLabel.TabIndex = 2;
@@ -97,7 +97,7 @@
             this.gameField.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gameField.Location = new System.Drawing.Point(3, 3);
             this.gameField.Name = "gameField";
-            this.gameField.Size = new System.Drawing.Size(456, 346);
+            this.gameField.Size = new System.Drawing.Size(622, 516);
             this.gameField.TabIndex = 5;
             this.gameField.TabStop = false;
             this.gameField.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gameField_MouseDown);
@@ -107,13 +107,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(462, 424);
+            this.ClientSize = new System.Drawing.Size(628, 594);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Font = new System.Drawing.Font("Book Antiqua", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximumSize = new System.Drawing.Size(1200, 1200);
-            this.MinimumSize = new System.Drawing.Size(480, 480);
+            this.MaximumSize = new System.Drawing.Size(3840, 2160);
+            this.MinimumSize = new System.Drawing.Size(650, 650);
             this.Name = "ThreeRow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Три в ряд";
