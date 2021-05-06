@@ -42,16 +42,28 @@ namespace GameOnHome_WINFORM.Online
         Image whiteFigure;          // Изображение белой фигуры
         Image blackFigure;          // Изображение чёрной фигуры
 
-        public Shashki()
+        public Shashki(bool IsStatus_)
         {
             InitializeComponent();
+
+            IsStatus = IsStatus_;
+
             whiteFigure = new Bitmap(Properties.Resources.white, new Size(cellSize - 10, cellSize - 10));   // Привязываем белую фигуру 
             blackFigure = new Bitmap(Properties.Resources.black, new Size(cellSize - 10, cellSize - 10));   // Привязываем чёрную фигуру
+
             Text = "Шашки";     // Название окна
+
+            if (IsStatus)
+            {
+                Server_Connect();       // Функция для подключеняи к серверу
+                Thread.Sleep(100);      // Ожидаем подключения
+            }
+
             InitBoard();        // "Создаём" доску
         }
         public void InitBoard()
         {
+            // Инициализируем переменные
             isContinue = false;
             currentPlayer = 0;  // Выбранный игрок пока что 0
             isMoving = false;
@@ -84,7 +96,9 @@ namespace GameOnHome_WINFORM.Online
                     Button button = new Button();
                     button.Location = new Point(j * cellSize, i * cellSize);    // Местоположение
                     button.Size = new Size(cellSize, cellSize);
-                    button.Click += new EventHandler(OnFigurePress);            // Привязываем функцию обработчика нажатий
+                    if (IsStatus)
+                        button.Click += new EventHandler(OnFigurePressOnline);  // Привязываем функцию обработчика нажатий
+                    else button.Click += new EventHandler(OnFigurePressOffline);
                     button.BackColor = GetPrevButtonColor(button);
                     button.ForeColor = Color.Red;
                     button.Name = "button" + i.ToString() + "_" + j.ToString(); // Даём ей имя, что бы можно это использовать где потребуется (псевдо ID)
@@ -113,7 +127,7 @@ namespace GameOnHome_WINFORM.Online
                     if (map[i, j] == 1)         // Если остались белые, значит чёрные не выиграли
                         white = true;
                     if (map[i, j] == 2)         //Если остались чёрные, значит белые не выиграли
-                        black = true;       
+                        black = true;
                 }
             }
             if (white == false)
@@ -146,30 +160,14 @@ namespace GameOnHome_WINFORM.Online
             return Color.White;
         }
 
-        // Обработка нажатия на фигуру
-        public void OnFigurePress(object sender, EventArgs e)
+        // Обработка нажатия на фигуру при офлайн режиме
+        public void OnFigurePressOffline(object sender, EventArgs e)
         {
-            if (client != null)
-            {
-                if (!client.Connected)
-                {
-                    MessageBox.Show("Нет подключения к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Подключитесь к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (currentPlayer == 0)
-            {
-                currentPlayer = 1;  // Кто первый сходил,тот играет за белых 
-            }
+            currentPlayer = 1;      // Пользователь всегда играет за белых
             pressedButton = sender as Button;
-            
-            if (CheckMap(ConvertNameI(pressedButton),ConvertNameY(pressedButton)) != 0 &&
+
+            // Проверка, выбранная кнопка не пустая и принадлежит нашему игроку (белая)
+            if (CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton)) != 0 &&
                 CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton)) == currentPlayer)
             {
                 CloseSteps();                               // Закрываем шаги
@@ -228,7 +226,196 @@ namespace GameOnHome_WINFORM.Online
                         pressedButton.Enabled = true;
                         isMoving = true;
                     }
+                    CheckWin();                                 // Нет ли победителя? 
+                    Bot_brain_easy();
+                }
+            }
+            prevButton = pressedButton;
+        }
 
+        public void Bot_brain_easy()
+        {
+            bool IsEat = false;
+            for (int i = 0; i < mapSize; i++)
+            {
+                for(int j = 0; j < mapSize; j++)
+                {
+                    if(map[i,j] == 2)
+                    {
+                        IsEat = false;
+
+                        IsEat = bot_check_eat(i, j, i - 1, j - 1, i - 2, j - 2);      // Диагональ слева
+                        if (IsEat)
+                            return;
+                        IsEat = bot_check_eat(i, j, i - 1, j + 1, i - 2, j + 2);      // Диагональ справа
+                        if (IsEat)
+                            return;
+                    }
+                }
+            }
+            bot_move();
+        }
+
+        bool bot_check_eat(int i, int j, int ii, int jj, int iii, int jjj)
+        {
+            if (IsInsideBorders(ii, jj))
+            {
+                if (map[ii, jj] == 1)
+                {
+                    if (IsInsideBorders(iii, jjj))
+                    {
+                        if (map[iii, jjj] == 0)
+                        {
+                            buttons[i, j].Image = null;
+                            map[i, j] = 0;
+
+                            buttons[ii, jj].Image = null;
+                            map[ii, jj] = 0;
+
+                            buttons[iii, jjj].Image = blackFigure;
+                            map[iii, jjj] = 2;
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        void bot_move()
+        {
+            List<int[]> listIJ = new List<int[]>();
+
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    if (map[i, j] == 2)
+                    {
+                        int[] check = new int[4];
+
+                        check = bot_check_move(i, j, i - 1, j - 1);
+                        if(check[0] != -1 && check[1] != -1)
+                        {
+                            listIJ.Add(check);
+                        }
+                        check = bot_check_move(i, j, i - 1, j + 1);
+                        if (check[0] != -1 && check[1] != -1)
+                        {
+                            listIJ.Add(check);
+                        }
+                    }
+                }
+            }
+
+            Random rnd = new Random();
+            byte xod = Convert.ToByte(rnd.Next(0, listIJ.Count));
+
+            map[listIJ[xod][0], listIJ[xod][1]] = 0;
+            map[listIJ[xod][2], listIJ[xod][3]] = 2;
+
+            buttons[listIJ[xod][0], listIJ[xod][1]].Image = null;
+            buttons[listIJ[xod][2], listIJ[xod][3]].Image = blackFigure;
+
+        }
+        int[] bot_check_move(int i, int j, int ii, int jj)
+        {
+            int[] ij = new int[4];
+            if (IsInsideBorders(ii, jj))
+            {
+                if (map[ii, jj] == 0)
+                {
+                    ij[0] = i; ij[1] = j;
+                    ij[2] = ii; ij[3] = jj;
+                    return ij;
+                }
+            }
+            return new int[4] { -1, -1, -1, -1 };
+        }
+
+
+            // Обработка нажатия на фигуру при онлайн режиме
+            public void OnFigurePressOnline(object sender, EventArgs e)
+        {
+            if (client != null)
+            {
+                if (!client.Connected)
+                {
+                    MessageBox.Show("Нет подключения к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Подключитесь к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (currentPlayer == 0)
+            {
+                currentPlayer = 1;  // Кто первый сходил,тот играет за белых 
+            }
+            pressedButton = sender as Button;
+
+            if (CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton)) != 0 &&
+                CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton)) == currentPlayer)
+            {
+                CloseSteps();                               // Закрываем шаги
+                pressedButton.BackColor = Color.Red;        // Выделяем нажатую кнопку красным
+                DeactivateAllButtons();                     // Деактивируем все кнопки
+                pressedButton.Enabled = true;               // Нажатую клавишу делаем активной
+                countEatSteps = 0;
+                if (pressedButton.Text != "D")              // Проверка, это дамка или нет
+                    ShowSteps(pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize, true);
+                else ShowSteps(pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize, false);
+
+                if (isMoving)               // Есть куда ходить
+                {
+                    CloseSteps();           // Закрываем все шаги 
+                    pressedButton.BackColor = GetPrevButtonColor(pressedButton);
+                    ShowPossibleSteps();    // Показываем куда можем сходить
+                    isMoving = false;
+                }
+                else
+                    isMoving = true;        // Активируем что бы проверить на возможные ходы 
+            }
+            else
+            {
+                if (isMoving)
+                {
+                    isContinue = false;
+                    if (Math.Abs(pressedButton.Location.X / cellSize - prevButton.Location.X / cellSize) > 1)
+                    {
+                        isContinue = true;
+                        DeleteEaten(pressedButton, prevButton);
+                    }
+                    int temp = map[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize];
+                    map[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize] = map[prevButton.Location.Y / cellSize, prevButton.Location.X / cellSize];
+                    map[prevButton.Location.Y / cellSize, prevButton.Location.X / cellSize] = temp;
+                    pressedButton.Image = prevButton.Image;
+                    prevButton.Image = null;
+                    pressedButton.Text = prevButton.Text;
+                    prevButton.Text = "";
+                    SwitchButtonToDamka(pressedButton);
+                    countEatSteps = 0;
+                    isMoving = false;
+                    CloseSteps();
+                    DeactivateAllButtons();
+                    if (pressedButton.Text != "D")
+                        ShowSteps(pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize, true);
+                    else ShowSteps(pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize, false);
+                    if (countEatSteps == 0 || !isContinue)
+                    {
+                        CloseSteps();
+                        ShowPossibleSteps();
+                        isContinue = false;
+                    }
+                    else if (isContinue)
+                    {
+                        pressedButton.BackColor = Color.Red;
+                        pressedButton.Enabled = true;
+                        isMoving = true;
+                    }
                     SendMessage(GetMap() + currentPlayer);      // Отправляем нашу карту на сервер 
                     CheckWin();                                 // Нет ли победителя? 
                     WaitXod();                                  // Закрываем ходы игроку
@@ -236,6 +423,7 @@ namespace GameOnHome_WINFORM.Online
             }
             prevButton = pressedButton;
         }
+    
 
         public void WaitXod()
         {
@@ -741,8 +929,8 @@ namespace GameOnHome_WINFORM.Online
 
         }
 
-        // Кнопка подключитсья
-        private void buttonConnect_Click(object sender, EventArgs e)
+        // Подключение к серверу
+        private void Server_Connect()
         {
             // Создаём клиент
             client = new TcpClient();
@@ -772,9 +960,6 @@ namespace GameOnHome_WINFORM.Online
                 // Каждые 10 секунд проверяем есть ли соединение с сервером!
                 Thread listenConnection = new Thread(new ThreadStart(CheckConnection));
                 listenConnection.Start();
-
-                buttonConnect.Enabled = false;      // Выключаем, больше она нам не понадобится
-
             }
             catch (Exception ex)
             {

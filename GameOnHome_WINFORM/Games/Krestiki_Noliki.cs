@@ -27,12 +27,12 @@ namespace GameOnHome_WINFORM.Online
         Image tacFigure;            // Изображение крестика
         Image toeFigure;            // Изображение нолика
 
-        int count = 0;                              // Количество сделанных ходов
+        int count = 0;              // Количество сделанных ходов
         public Krestiki_Noliki(bool IsStatus_)
         {
             InitializeComponent();
 
-            cellSize = (Width + Height) / 8;
+            cellSize = (Width / 5) + (Height / 9);      
 
             IsStatus = IsStatus_;
 
@@ -43,6 +43,12 @@ namespace GameOnHome_WINFORM.Online
             toeFigure = Properties.Resources.nol;
 
             Text = "Крестики-нолики";
+
+            if (IsStatus)
+            {
+                Server_Connect();       // Функция для подключеняи к серверу
+                Thread.Sleep(100);      // Ожидаем подключения
+            }
             CreatePlayBoard();
         }
 
@@ -138,9 +144,6 @@ namespace GameOnHome_WINFORM.Online
         }
         public void Button_click_online(object sender, EventArgs e)
         {
-            Server_Connect();       // Функция для подключеняи к серверу
-            Thread.Sleep(100);      // Ожидаем подключения
-
             Button currentButton = sender as Button;
 
             // Пользователь нажал на занятую ячейку, выходим из функции
@@ -188,12 +191,13 @@ namespace GameOnHome_WINFORM.Online
             // Если клиент к чему-то подключился, отправить сообщение и вызвать функцию на првоерку победителя
             if (client != null)
             {
-                SendMessage(GetMap() + currentPlayer);
-                DeactivateAllButtons();
-                TableForWinner();
+                SendMessage(GetMap() + currentPlayer);  // Отправляем карту и фигуру которую мы поставили
+                DeactivateAllButtons();                 // Деактивируем все кнопки
+                TableForWinner();                       // Проверяем нет ли победителя
             }
         }
 
+        // Возвращает карту в формате string для отправки на сервер
         public string GetMap()
         {
             string res = "";
@@ -238,31 +242,19 @@ namespace GameOnHome_WINFORM.Online
                             pictureWait.Visible = false;
 
                         }
-                        /*
-                        grid_end_game.Visibility = Visibility.Visible;
-                        text_end_game.Content = "Игрок X выиграл!";
-                        Wait.Visibility = Visibility.Hidden;
-                        */
+                        DeactivateAllButtons();
                         MessageBox.Show("Player X win");
                         break;
 
                     case 2:
                         // Выиграл O
-                        /*
-                        grid_end_game.Visibility = Visibility.Visible;
-                        text_end_game.Content = "Игрок O выиграл!";
-                        Wait.Visibility = Visibility.Hidden;
-                        */
+                        DeactivateAllButtons();
                         MessageBox.Show("Player O win");
                         break;
 
                     case 3:
                         // Ничья
-                        /*
-                        grid_end_game.Visibility = Visibility.Visible;
-                        text_end_game.Content = "Ничья";
-                        Wait.Visibility = Visibility.Hidden;
-                        */
+                        DeactivateAllButtons();
                         MessageBox.Show("Nichya win");
                         break;
 
@@ -272,7 +264,6 @@ namespace GameOnHome_WINFORM.Online
 
         private int IsWin()
         {
-
             // Проверяем миллион условий на победу 
             if (map[0, 0] == 1 && map[0, 1] == 1 && map[0, 2] == 1)
                 return 1;
@@ -314,6 +305,7 @@ namespace GameOnHome_WINFORM.Online
             else return 0;       // Нет победителя
         }
 
+        // Зафиксировать изменения после хода соперника
         private void ChangeAfterListen(string msg)
         {
             string[] razborMessage = new string[10];
@@ -362,6 +354,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
+        // Активировать все кнопки
         public void ActivateAllButtons()
         {
             for(int i = 0; i < mapSize; i++)
@@ -373,6 +366,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
+        // Деактивировать все кнопки
         public void DeactivateAllButtons()
         {
             for (int i = 0; i < mapSize; i++)
@@ -384,6 +378,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
+        // Подключение к серверу
         private void Server_Connect()
         {
             // Создаём клиент
@@ -490,6 +485,5 @@ namespace GameOnHome_WINFORM.Online
                 client.Close();     // Отключение клиента
             Environment.Exit(0);    // Закртиые приложения
         }
-
     }
 }

@@ -102,7 +102,8 @@ namespace GameOnHome_WINFORM
             this.Controls.Add(this.But_Go);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "settings_of_game";
-            this.Text = "settings_of_game";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Режим игры";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

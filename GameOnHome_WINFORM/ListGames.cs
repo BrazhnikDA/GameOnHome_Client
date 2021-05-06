@@ -68,7 +68,7 @@ namespace GameOnHome_WINFORM
 
         //Метод для вызова определённого режима игры "Шашки"
         public void shaski_play(bool result) {
-            Shashki shashki = new Shashki();       //Когда режимы шашек будут доделаны, нужно будет поставить "result" в конструктор создания Shashki()
+            Shashki shashki = new Shashki(result);       //Когда режимы шашек будут доделаны, нужно будет поставить "result" в конструктор создания Shashki()
             shashki.Show();
         }
 
