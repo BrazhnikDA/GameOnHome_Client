@@ -18,7 +18,7 @@ namespace GameOnHome_WINFORM.Online
         NetworkStream stream;                       // Поток от клиента до сервера
 
         const int mapSize = 3;          // Размер карты 3*3
-        const int cellSize = 225;       // Размер ячейки
+        int cellSize;                   // Размер ячейки
         string currentPlayer = "";      // X или O
 
         int[,] map = new int[mapSize, mapSize];             // Карта игры { 0 - Пусто, 1 - Крестик, 2 - Нолик } 
@@ -32,10 +32,12 @@ namespace GameOnHome_WINFORM.Online
         {
             InitializeComponent();
 
+            cellSize = (Width + Height) / 8;
+
             IsStatus = IsStatus_;
 
-            Properties.Resources.krest.SetResolution(225, 225);
-            Properties.Resources.nol.SetResolution(225, 225);
+            Properties.Resources.krest.SetResolution(cellSize, cellSize);
+            Properties.Resources.nol.SetResolution(cellSize, cellSize);
 
             tacFigure = Properties.Resources.krest;
             toeFigure = Properties.Resources.nol;
@@ -51,9 +53,9 @@ namespace GameOnHome_WINFORM.Online
                 { 0,0,0 },
                 { 0,0,0 },
             };
-
-            this.Width = (mapSize + 1) * cellSize + 50;
-            this.Height = (mapSize + 1) * cellSize + 50;
+           
+            this.Width = (mapSize) * cellSize + 35;
+            this.Height = (mapSize) * cellSize + 65;
 
             for (int i = 0; i < mapSize; i++)
             {
@@ -76,6 +78,22 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
+        // Функция для изменения размера кнопок при изменении размера окна
+        private void Krestiki_Noliki_SizeChanged(object sender, EventArgs e)
+        {
+            if(buttons[0,0] == null) { return; }
+            cellSize = (Width / 5) + (Height / 9);
+
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    buttons[i,j].Location = new Point(j * cellSize, i * cellSize);
+                    buttons[i,j].Size = new Size(cellSize, cellSize);
+                }
+            }
+        }
+
         private void Button_click_ofline(object sender, EventArgs e)
         {
             currentPlayer = "X";
@@ -93,8 +111,6 @@ namespace GameOnHome_WINFORM.Online
             count++;
 
             Bot_xod_easy();      // Ход бота
-
-            TableForWinner();
         }
 
         private void Bot_xod_easy()
@@ -117,10 +133,14 @@ namespace GameOnHome_WINFORM.Online
                 buttons[xodI, xodJ].BackColor = Color.White;
 
                 count++;
-            }
+                TableForWinner();
+            }else { TableForWinner(); }
         }
         public void Button_click_online(object sender, EventArgs e)
         {
+            Server_Connect();       // Функция для подключеняи к серверу
+            Thread.Sleep(100);      // Ожидаем подключения
+
             Button currentButton = sender as Button;
 
             // Пользователь нажал на занятую ячейку, выходим из функции
@@ -129,9 +149,10 @@ namespace GameOnHome_WINFORM.Online
                 return;
             }
 
+            // Если клиент не иниициализирован выдать ошибку 
             if (client != null)
             {
-                if (!client.Connected)
+                if (!client.Connected)  // Клиент инициализирован нет соеденения с сервером
                 {
                     MessageBox.Show("Нет подключения к серверу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -162,15 +183,7 @@ namespace GameOnHome_WINFORM.Online
                 currentButton.BackColor = Color.White; 
                 map[ConvertNameI(currentButton), ConvertNameY(currentButton)] = 2;
             }
-            //currentButton.Enabled = false;
             count++;
-
-            this.Invoke((MethodInvoker)delegate ()                  // Выполнения действие с формой в потоке
-            {
-                // Тут надо расскоментить и сделать пикчерВэйт полупрозрачным
-                //pictureWait.Visible = true;
-                //pictureWait.BackColor = Color.Transparent;
-            });
 
             // Если клиент к чему-то подключился, отправить сообщение и вызвать функцию на првоерку победителя
             if (client != null)
@@ -278,21 +291,21 @@ namespace GameOnHome_WINFORM.Online
             else if (map[1, 0] == 1 && map[1, 1] == 1 && map[1, 2] == 1)
                 return 1;
 
-            if (map[0, 0] == 0 && map[0, 1] == 0 && map[0, 2] == 0)
+            if (map[0, 0] == 2 && map[0, 1] == 2 && map[0, 2] == 2)
                 return 2;
-            else if (map[0, 0] == 0 && map[1, 0] == 0 && map[2, 0] == 0)
+            else if (map[0, 0] == 2 && map[1, 0] == 2 && map[2, 0] == 2)
                 return 2;
-            else if (map[2, 0] == 0 && map[2, 1] == 0 && map[2, 2] == 0)
+            else if (map[2, 0] == 2 && map[2, 1] == 2 && map[2, 2] == 2)
                 return 2;
-            else if (map[0, 2] == 0 && map[1, 2] == 0 && map[2, 2] == 0)
+            else if (map[0, 2] == 2 && map[1, 2] == 2 && map[2, 2] == 2)
                 return 1;
-            else if (map[0, 0] == 0 && map[1, 1] == 0 && map[2, 2] == 0)
+            else if (map[0, 0] == 2 && map[1, 1] == 2 && map[2, 2] == 2)
                 return 2;
-            else if (map[0, 2] == 0 && map[1, 1] == 0 && map[2, 0] == 0)
+            else if (map[0, 2] == 2 && map[1, 1] == 2 && map[2, 0] == 2)
                 return 2;
-            else if (map[0, 1] == 0 && map[1, 1] == 0 && map[2, 1] == 0)
+            else if (map[0, 1] == 2 && map[1, 1] == 2 && map[2, 1] == 2)
                 return 1;
-            else if (map[1, 0] == 0 && map[1, 1] == 0 && map[1, 2] == 0)
+            else if (map[1, 0] == 2 && map[1, 1] == 2 && map[1, 2] == 2)
                 return 1;
 
             else if (count == 9) // Ничья
@@ -371,7 +384,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        private void buttonConnect_Click(object sender, EventArgs e)
+        private void Server_Connect()
         {
             // Создаём клиент
             client = new TcpClient();
@@ -380,6 +393,7 @@ namespace GameOnHome_WINFORM.Online
                 client.Connect(host, port);     // Подключение клиента
                 stream = client.GetStream();    // Получаем поток
 
+                // Получаем ID
                 while (true)
                 {
                     byte[] data = new byte[64]; // буфер для получаемых данных
@@ -401,11 +415,6 @@ namespace GameOnHome_WINFORM.Online
                 // Каждые 10 секунд проверяем есть ли соединение с сервером!
                 Thread listenConnection = new Thread(new ThreadStart(CheckConnection));
                 listenConnection.Start();
-
-                // На форме меняем статус подключения
-                buttonConnect.Enabled = false;      // Выключаем, больше она нам не понадобится
-                Status_connect.Text = "Статус: Подключён";
-                pictureConnect.Image = Properties.Resources.green_krug;
             }
             catch (Exception ex)
             {

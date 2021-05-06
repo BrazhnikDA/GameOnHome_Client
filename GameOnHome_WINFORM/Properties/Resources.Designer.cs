@@ -83,6 +83,16 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap checlers_icone {
+            get {
+                object obj = ResourceManager.GetObject("checlers_icone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chocolate_icing {
             get {
                 object obj = ResourceManager.GetObject("chocolate_icing", resourceCulture);
@@ -183,6 +193,16 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap online_mod {
+            get {
+                object obj = ResourceManager.GetObject("online_mod", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pink_icing_white_drizzle {
             get {
                 object obj = ResourceManager.GetObject("pink_icing_white_drizzle", resourceCulture);
@@ -236,6 +256,26 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap Settings1 {
             get {
                 object obj = ResourceManager.GetObject("Settings1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap single_mod {
+            get {
+                object obj = ResourceManager.GetObject("single_mod", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap three_in_a_row_icone {
+            get {
+                object obj = ResourceManager.GetObject("three_in_a_row_icone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

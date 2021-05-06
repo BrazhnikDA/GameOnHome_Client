@@ -124,6 +124,9 @@
   <data name="blue_icing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\blue_icing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="checlers_icone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\checlers_icone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="chocolate_icing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chocolate_icing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -154,6 +157,9 @@
   <data name="nol" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nol.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="online_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\online_mod.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pink_icing_white_drizzle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pink_icing_white_drizzle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -171,6 +177,12 @@
   </data>
   <data name="Settings1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Settings1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="single_mod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\single_mod.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="three_in_a_row_icone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\three_in_a_row_icone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tic_tac_icone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tic_tac_icone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
