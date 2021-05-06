@@ -1,12 +1,7 @@
 ﻿using GameOnHome_WINFORM.Online;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM
@@ -79,6 +74,12 @@ namespace GameOnHome_WINFORM
         {
             ThreeRow three = new ThreeRow();
             three.Show();
+        }
+
+        private void pictureBox_Saper_Click(object sender, EventArgs e)
+        {
+            Games.Miner miner = new Games.Miner();
+            miner.Show();
         }
     }
 }
