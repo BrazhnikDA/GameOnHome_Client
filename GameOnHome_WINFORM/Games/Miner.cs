@@ -76,6 +76,8 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Обрабатываем нажатие мышкой на кнопку
+        // Относительно нажатой клавиши вызываем определённую функцию
         private void OnButtonPressedMouse(object sender, MouseEventArgs e)
         {
             Button pressedButton = sender as Button;
@@ -90,6 +92,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Правая кнопка мыши
         private void OnRightButtonPressed(Button pressedButton)
         {
             currentPictureToSet++;
@@ -116,6 +119,7 @@ namespace GameOnHome_WINFORM.Games
             CheckWin();
         }
 
+        // Левая кнопка мыши
         private void OnLeftButtonPressed(Button pressedButton)
         {
             pressedButton.Enabled = false;
@@ -139,6 +143,7 @@ namespace GameOnHome_WINFORM.Games
             }else { CheckWin(); }
         }
 
+        // Проверка на победу
         private void CheckWin()
         {
             bool IsWin = true;
@@ -164,6 +169,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Если открыли бомбу, показываем все бомбы, кроме той которую взорвали
         private static void ShowAllBombs(int iBomb, int jBomb)
         {
             for (int i = 0; i < mapSize; i++)
@@ -181,6 +187,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Функция для вырезания нужной картинки из массива картинок 
         public static Image FindNeededImage(int xPos, int yPos)
         {
             Image image = new Bitmap(cellSize, cellSize);
@@ -190,6 +197,7 @@ namespace GameOnHome_WINFORM.Games
             return image;
         }
 
+        // Создание карты
         private static void SeedMap()
         {
             Random r = new Random();
@@ -206,10 +214,11 @@ namespace GameOnHome_WINFORM.Games
                     posJ = r.Next(0, mapSize - 1);
                 }
                 map[posI, posJ] = -1;
-                buttons[posI, posJ].Text = ".";
+                buttons[posI, posJ].Text = ".";         // Приписываем кнопкам с бомбой точку, шрифт при создании стоит 1 (Тест не виден)
             }
         }
 
+        // Ячейки с бомбой 
         private static void CountCellBomb()
         {
             for (int i = 0; i < mapSize; i++)
@@ -232,6 +241,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Вспомогательная функция открытия ячейки и занесение нужной картинки
         private static void OpenCell(int i, int j)
         {
             buttons[i, j].Enabled = false;
@@ -271,6 +281,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Функция для открытия ячейки
         private static void OpenCells(int i, int j)
         {
             OpenCell(i, j);
@@ -294,6 +305,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        // Проверка на выход за пределы карты
         private static bool IsInBorder(int i, int j)
         {
             if (i < 0 || j < 0 || j > mapSize - 1 || i > mapSize - 1)
