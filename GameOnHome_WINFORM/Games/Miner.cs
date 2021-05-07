@@ -62,6 +62,10 @@ namespace GameOnHome_WINFORM.Games
                     button.Anchor = (AnchorStyles.Top | AnchorStyles.Left);
                     button.Size = new Size(cellSize, cellSize);
                     button.Font = new Font(button.Font.FontFamily, 1);
+                    button.TabStop = false;
+                    button.FlatStyle = FlatStyle.Flat;
+                    button.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
+                    button.FlatAppearance.BorderSize = 0;
                     button.Image = FindNeededImage(0, 0);
                     button.MouseUp += new MouseEventHandler(OnButtonPressedMouse);
                     

@@ -259,11 +259,12 @@ namespace GameOnHome_WINFORM.Online
                 {
                     if(map[i,j] == 2)   // Мы нашли чёрную фигуру
                     {
+                        // Сразу проверяем хода по 4 диагоналям, можно ли кого нибудь съесть 
                         if(buttons[i,j].Text == "D")
                         {
                             int ii = i - 1;
                             int jj = j - 1;
-                            while (IsInsideBorders(ii, jj))
+                            while (IsInsideBorders(ii, jj))     // Вверх-влево
                             {
                                 if(map[ii, jj] == 1) 
                                 {
@@ -282,7 +283,7 @@ namespace GameOnHome_WINFORM.Online
                             }
                             ii = i - 1;
                             jj = j + 1;
-                            while (IsInsideBorders(ii, jj))
+                            while (IsInsideBorders(ii, jj))     // Вверх-вправо 
                             {
                                 if (map[ii, jj] == 1)
                                 {
@@ -301,7 +302,7 @@ namespace GameOnHome_WINFORM.Online
                             }
                             ii = i + 1;
                             jj = j - 1;
-                            while (IsInsideBorders(ii, jj))
+                            while (IsInsideBorders(ii, jj))     // Вниз-влево 
                             {
                                 if (map[ii, jj] == 1)
                                 {
@@ -320,7 +321,7 @@ namespace GameOnHome_WINFORM.Online
                             }
                             ii = i + 1;
                             jj = j + 1;
-                            while (IsInsideBorders(ii, jj))
+                            while (IsInsideBorders(ii, jj))     // Вниз-вправо
                             {
                                 if (map[ii, jj] == 1)
                                 {
@@ -339,6 +340,7 @@ namespace GameOnHome_WINFORM.Online
                             }
                         }
 
+                        // Обычная пешка
                         IsEat = bot_check_eat(i, j, i - 1, j - 1, i - 2, j - 2);      // Проверить диагональ слева вверх
                         if (IsEat)
                             return;
@@ -350,7 +352,7 @@ namespace GameOnHome_WINFORM.Online
             }
             if(!bot_move())     // Нет съедобных ходов, делаем обычный ход
             {
-                // Если кдинственный доступный ход, сьесть назад, съедаем назад
+                // Если единственный доступный ход для ПРОСТОЙ пешки, сьесть назад, съедаем назад
                 for (int i = 0; i < mapSize; i++)
                 {
                     for (int j = 0; j < mapSize; j++)
@@ -399,7 +401,7 @@ namespace GameOnHome_WINFORM.Online
                             if (buttons[i, j].Text == "D")
                             {
                                 buttons[iii, jjj].Image = blackFigure;
-                                buttons[iii, jjj].Text = "D";
+                                buttons[iii, jjj].Text = "D";   // Если дамка приписываем букву "D"
                                 map[iii, jjj] = 2;
                             }
                             else
@@ -420,23 +422,25 @@ namespace GameOnHome_WINFORM.Online
         // Просто ход бота, без съедания
         private bool bot_move()
         {
-            List<int[]> listIJ = new List<int[]>();     // Список ходов которые мы можем сделать пешкой
+            List<int[]> listIJ = new List<int[]>();          // Список ходов которые мы можем сделать пешкой
             List<int[]> listIJDamka = new List<int[]>();     // Список ходов которые мы можем сделать дамкой
 
             for (int i = 0; i < mapSize; i++)
             {
                 for (int j = 0; j < mapSize; j++)
                 {
-                    if (map[i, j] == 2)                 // Найдена чёрная фигура
+                    if (map[i, j] == 2)                      // Найдена чёрная фигура
                     {
+                        // Если встреченная кнопка дамка
                         if (buttons[i, j].Text == "D")
                         {
-                            int[] xodDamka = new int[4] { 0, 0, 0, 0 };
+                            int[] xodDamka = new int[4] { 0, 0, 0, 0 }; // Запоминаем координаты хода где стояли/куда придём
+                            // Начинаем смотреть по 4 диагоналям
                             int ii = i - 1;
                             int jj = j - 1;
-                            while (xodDamka[0] != -1)
+                            while (xodDamka[0] != -1)   // Пока не дойдём до конца доски (опонента невозможно встретить, т.к. предыдущая функция съела противника если возможность была
                             {
-                                xodDamka = bot_check_move(i, j, ii, jj);
+                                xodDamka = bot_check_move(i, j, ii, jj);    
                                 if (xodDamka[0] != -1)
                                 {
                                     listIJDamka.Add(xodDamka);
@@ -497,6 +501,7 @@ namespace GameOnHome_WINFORM.Online
                 }
             }
 
+            // Есть дамка, ходим дамкой
             if (listIJDamka.Count > 0)
             {
                 Random rnd = new Random();
@@ -532,7 +537,7 @@ namespace GameOnHome_WINFORM.Online
             { return false; }
         }
 
-        // Проверка хода, если сходить нельзя возвращем массив из -1..
+        // Проверка хода, если сходить нельзя возвращем массив из -1...
         int[] bot_check_move(int i, int j, int ii, int jj)
         {
             int[] ij = new int[4];
@@ -695,10 +700,12 @@ namespace GameOnHome_WINFORM.Online
         // Проверка может ли шашка стать дамкой
         public void SwitchButtonToDamka(Button button)
         {
+            // Проверка для белых
             if (map[button.Location.Y / cellSize, button.Location.X / cellSize] == 1 && button.Location.Y / cellSize == mapSize - 1)
             {
                 button.Text = "D";
             }
+            // Проверка для чёрных
             if (map[button.Location.Y / cellSize, button.Location.X / cellSize] == 2 && button.Location.Y / cellSize == 0)
             {
                 button.Text = "D";
@@ -1259,7 +1266,6 @@ namespace GameOnHome_WINFORM.Online
             if (client != null)
                 client.Close();//отключение клиента
             Environment.Exit(0); //завершение процесса
-        }
-        
+        }     
     }
 }
