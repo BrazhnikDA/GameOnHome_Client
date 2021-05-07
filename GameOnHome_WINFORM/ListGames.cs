@@ -118,5 +118,11 @@ namespace GameOnHome_WINFORM
             Games.Miner miner = new Games.Miner();
             miner.Show();
         }
+
+        private void pictureBox_Chess_Click(object sender, EventArgs e)
+        {
+            Games.Chess chess = new Games.Chess();
+            chess.Show();
+        }
     }
 }

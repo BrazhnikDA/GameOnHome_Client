@@ -73,6 +73,66 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blackElephant {
+            get {
+                object obj = ResourceManager.GetObject("blackElephant", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blackHorse {
+            get {
+                object obj = ResourceManager.GetObject("blackHorse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blackKing {
+            get {
+                object obj = ResourceManager.GetObject("blackKing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blackPawn {
+            get {
+                object obj = ResourceManager.GetObject("blackPawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blackQuen {
+            get {
+                object obj = ResourceManager.GetObject("blackQuen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blackTower {
+            get {
+                object obj = ResourceManager.GetObject("blackTower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap blue_icing {
             get {
                 object obj = ResourceManager.GetObject("blue_icing", resourceCulture);
@@ -86,6 +146,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap checlers_icone {
             get {
                 object obj = ResourceManager.GetObject("checlers_icone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap chess {
+            get {
+                object obj = ResourceManager.GetObject("chess", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,6 +396,66 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap white_icing {
             get {
                 object obj = ResourceManager.GetObject("white_icing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whiteElephant {
+            get {
+                object obj = ResourceManager.GetObject("whiteElephant", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whiteHorse {
+            get {
+                object obj = ResourceManager.GetObject("whiteHorse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whiteKing {
+            get {
+                object obj = ResourceManager.GetObject("whiteKing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whitePawn {
+            get {
+                object obj = ResourceManager.GetObject("whitePawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whiteQuen {
+            get {
+                object obj = ResourceManager.GetObject("whiteQuen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whiteTower {
+            get {
+                object obj = ResourceManager.GetObject("whiteTower", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

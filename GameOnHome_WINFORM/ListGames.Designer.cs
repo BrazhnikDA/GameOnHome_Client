@@ -38,10 +38,13 @@ namespace GameOnHome_WINFORM
             this.label_3ryd = new System.Windows.Forms.Label();
             this.pictureBox_saper = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tic_tac)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shashki)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Three_Row)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_saper)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox_tic_tac
@@ -141,6 +144,31 @@ namespace GameOnHome_WINFORM
             this.label1.TabIndex = 1;
             this.label1.Text = "Сапёр";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::GameOnHome_WINFORM.Properties.Resources.online_mod;
+            this.pictureBox1.Location = new System.Drawing.Point(1039, 67);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(136, 128);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox_Chess_Click);
+            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox_Three_Row_MouseEnter);
+            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox_Three_Row_MouseLeave);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(1065, 200);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 24);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Шахматы";
+            // 
             // ListGames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -149,10 +177,12 @@ namespace GameOnHome_WINFORM
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1219, 849);
             this.Controls.Add(this.label_shaski);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label_3ryd);
             this.Controls.Add(this.label_tic_tac);
             this.Controls.Add(this.pictureBox_shashki);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox_saper);
             this.Controls.Add(this.pictureBox_Three_Row);
             this.Controls.Add(this.pictureBox_tic_tac);
@@ -164,6 +194,7 @@ namespace GameOnHome_WINFORM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shashki)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Three_Row)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_saper)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,5 +210,7 @@ namespace GameOnHome_WINFORM
         private System.Windows.Forms.Label label_3ryd;
         private System.Windows.Forms.PictureBox pictureBox_saper;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

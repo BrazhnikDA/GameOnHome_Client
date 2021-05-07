@@ -121,11 +121,32 @@
   <data name="black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="blackElephant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackElephant.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blackHorse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackHorse.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blackKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackKing.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blackPawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackPawn.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blackQuen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackQuen.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blackTower" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackTower.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="blue_icing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\blue_icing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="checlers_icone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\checlers_icone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="chess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chess.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="chocolate_icing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chocolate_icing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -195,6 +216,24 @@
   </data>
   <data name="white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whiteElephant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whiteElephant.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whiteHorse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whiteHorse.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whiteKing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whiteKing.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whitePawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whitePawn.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whiteQuen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whiteQuen.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whiteTower" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\whiteTower.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="white_icing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\white_icing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

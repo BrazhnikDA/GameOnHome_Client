@@ -214,7 +214,7 @@ namespace GameOnHome_WINFORM.Games
                     posJ = r.Next(0, mapSize - 1);
                 }
                 map[posI, posJ] = -1;
-                buttons[posI, posJ].Text = ".";         // Приписываем кнопкам с бомбой точку, шрифт при создании стоит 1 (Тест не виден)
+                buttons[posI, posJ].Text = ".";         // Приписываем кнопкам с бомбой точку, шрифт при создании стоит 1 (Текст не виден)
             }
         }
 
