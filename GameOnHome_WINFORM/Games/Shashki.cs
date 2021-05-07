@@ -267,13 +267,24 @@ namespace GameOnHome_WINFORM.Online
                         if (map[iii, jjj] == 0)
                         {
                             buttons[i, j].Image = null;
+                            buttons[i, j].Enabled = false;
                             map[i, j] = 0;
 
+
+                            if (buttons[ii, jj].Enabled == true)
+                            {
+                                ActivateAllButtons();
+                            }
+
                             buttons[ii, jj].Image = null;
+                            buttons[ii, jj].Enabled = false;
                             map[ii, jj] = 0;
 
                             buttons[iii, jjj].Image = blackFigure;
                             map[iii, jjj] = 2;
+
+                            SwitchButtonToDamka(buttons[iii, jjj]);
+
                             return true;
                         }
                     }
@@ -316,6 +327,8 @@ namespace GameOnHome_WINFORM.Online
 
             buttons[listIJ[xod][0], listIJ[xod][1]].Image = null;
             buttons[listIJ[xod][2], listIJ[xod][3]].Image = blackFigure;
+
+            SwitchButtonToDamka(buttons[listIJ[xod][0], listIJ[xod][1]]);
 
         }
         int[] bot_check_move(int i, int j, int ii, int jj)
@@ -477,7 +490,7 @@ namespace GameOnHome_WINFORM.Online
 
         }
 
-        // Превратить шашку в дамку
+        // Проверка может ли шашка стать дамкой
         public void SwitchButtonToDamka(Button button)
         {
             if (map[button.Location.Y / cellSize, button.Location.X / cellSize] == 1 && button.Location.Y / cellSize == mapSize - 1)
@@ -515,6 +528,19 @@ namespace GameOnHome_WINFORM.Online
             }
             if (!isEatStep)
                 ActivateAllButtons();
+
+
+            for(int i = 0; i < mapSize; i++)
+            {
+                for(int j = 0; j < mapSize; j++)
+                {
+                    if(buttons[i, j].Enabled == true)
+                    {
+                        return;
+                    }
+                }
+            }
+            ActivateAllButtons();
         }
 
         // Проверка ходов по 4 диагоналям
