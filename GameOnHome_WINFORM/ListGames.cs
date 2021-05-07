@@ -121,7 +121,7 @@ namespace GameOnHome_WINFORM
 
         private void pictureBox_Chess_Click(object sender, EventArgs e)
         {
-            Games.Chess chess = new Games.Chess();
+            Games.Chess chess = new Games.Chess(true);
             chess.Show();
         }
     }
