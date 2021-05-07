@@ -226,36 +226,150 @@ namespace GameOnHome_WINFORM.Online
                         pressedButton.Enabled = true;
                         isMoving = true;
                     }
-                    CheckWin();                                 // Нет ли победителя? 
-                    Bot_brain_easy();
+
+                    bool IsEnd = true;
+                    for (int i = 0; i < mapSize; i++)
+                    {
+                        for (int j = 0; j < mapSize; j++)
+                        {
+                            if (buttons[i, j].BackColor == Color.Yellow)
+                            {
+                                IsEnd = false;
+                            }
+                        }
+                    }
+                    if (IsEnd)
+                    {
+                        CheckWin();                                 // Нет ли победителя? 
+                        Bot_brain_easy();                           // Ход бота
+                        CheckWin();                                 // Нет ли победителя после хода бота?
+                    }
                 }
             }
             prevButton = pressedButton;
         }
 
+        // Интеллект бота сложность: легко
         public void Bot_brain_easy()
         {
-            bool IsEat = false;
+            bool IsEat = false;         // Есть ли съедобный ход
             for (int i = 0; i < mapSize; i++)
             {
                 for(int j = 0; j < mapSize; j++)
                 {
-                    if(map[i,j] == 2)
+                    if(map[i,j] == 2)   // Мы нашли чёрную фигуру
                     {
-                        IsEat = false;
+                        if(buttons[i,j].Text == "D")
+                        {
+                            int ii = i - 1;
+                            int jj = j - 1;
+                            while (IsInsideBorders(ii, jj))
+                            {
+                                if(map[ii, jj] == 1) 
+                                {
+                                    if (IsInsideBorders(ii - 1, jj - 1))
+                                    {
+                                        if (map[ii - 1, jj - 1] == 0)
+                                        {
+                                            IsEat = bot_check_eat(i, j, ii, jj, ii - 1, jj - 1);
+                                            buttons[ii - 1, jj - 1].Text = "D";
+                                            if (IsEat)
+                                                return;
+                                        }
+                                    }
+                                }
+                                ii--;jj--;
+                            }
+                            ii = i - 1;
+                            jj = j + 1;
+                            while (IsInsideBorders(ii, jj))
+                            {
+                                if (map[ii, jj] == 1)
+                                {
+                                    if (IsInsideBorders(ii - 1, jj + 1))
+                                    {
+                                        if (map[ii - 1, jj + 1] == 0)
+                                        {
+                                            IsEat = bot_check_eat(i, j, ii, jj, ii - 1, jj + 1);
+                                            buttons[ii - 1, jj + 1].Text = "D";
+                                            if (IsEat)
+                                                return;
+                                        }
+                                    }
+                                }
+                                ii--; jj++;
+                            }
+                            ii = i + 1;
+                            jj = j - 1;
+                            while (IsInsideBorders(ii, jj))
+                            {
+                                if (map[ii, jj] == 1)
+                                {
+                                    if (IsInsideBorders(ii + 1, jj - 1))
+                                    {
+                                        if (map[ii + 1, jj - 1] == 0)
+                                        {
+                                            IsEat = bot_check_eat(i, j, ii, jj, ii + 1, jj - 1);
+                                            buttons[ii + 1, jj - 1].Text = "D";
+                                            if (IsEat)
+                                                return;
+                                        }
+                                    }
+                                }
+                                ii++; jj--;
+                            }
+                            ii = i + 1;
+                            jj = j + 1;
+                            while (IsInsideBorders(ii, jj))
+                            {
+                                if (map[ii, jj] == 1)
+                                {
+                                    if (IsInsideBorders(ii + 1, jj + 1))
+                                    {
+                                        if (map[ii + 1, jj + 1] == 0)
+                                        {
+                                            IsEat = bot_check_eat(i, j, ii, jj, ii + 1, jj + 1);
+                                            buttons[ii + 1, jj + 1].Text = "D";
+                                            if (IsEat)
+                                                return;
+                                        }
+                                    }
+                                }
+                                ii++; jj++;
+                            }
+                        }
 
-                        IsEat = bot_check_eat(i, j, i - 1, j - 1, i - 2, j - 2);      // Диагональ слева
+                        IsEat = bot_check_eat(i, j, i - 1, j - 1, i - 2, j - 2);      // Проверить диагональ слева вверх
                         if (IsEat)
                             return;
-                        IsEat = bot_check_eat(i, j, i - 1, j + 1, i - 2, j + 2);      // Диагональ справа
+                        IsEat = bot_check_eat(i, j, i - 1, j + 1, i - 2, j + 2);      // Проверить диагональ справа вверх
                         if (IsEat)
                             return;
                     }
                 }
             }
-            bot_move();
+            if(!bot_move())     // Нет съедобных ходов, делаем обычный ход
+            {
+                // Если кдинственный доступный ход, сьесть назад, съедаем назад
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
+                        if (map[i, j] == 2)   // Мы нашли чёрную фигуру
+                        {
+                            IsEat = bot_check_eat(i, j, i + 1, j - 1, i + 2, j - 2);      // Проверить диагональ слева вниз
+                            if (IsEat)
+                                return;
+                            IsEat = bot_check_eat(i, j, i + 1, j + 1, i + 2, j + 2);      // Проверить диагональ справа вниз
+                            if (IsEat)
+                                return;
+                        }
+                    }
+                }
+            }
         }
 
+        // Проверить есть ли съедобный ход пи дагонали, если есть - съедаем
         bool bot_check_eat(int i, int j, int ii, int jj, int iii, int jjj)
         {
             if (IsInsideBorders(ii, jj))
@@ -266,25 +380,35 @@ namespace GameOnHome_WINFORM.Online
                     {
                         if (map[iii, jjj] == 0)
                         {
-                            buttons[i, j].Image = null;
+                            buttons[i, j].Image = null;                 // Поле где стояла фигура изначально
+                            buttons[i, j].Text = "";
                             buttons[i, j].Enabled = false;
                             map[i, j] = 0;
 
-
                             if (buttons[ii, jj].Enabled == true)
                             {
-                                ActivateAllButtons();
+                                ActivateAllButtons();                   // Костыль, если мы сходили и у нас 1 активная фигура, то съев её все поля станут disable
                             }
 
-                            buttons[ii, jj].Image = null;
+                            buttons[ii, jj].Image = null;               // Поле где находилась съеденная фигура
                             buttons[ii, jj].Enabled = false;
+                            buttons[ii, jj].Text = "";
                             map[ii, jj] = 0;
 
-                            buttons[iii, jjj].Image = blackFigure;
-                            map[iii, jjj] = 2;
+                            // Ставим нашу фигуру
+                            if (buttons[i, j].Text == "D")
+                            {
+                                buttons[iii, jjj].Image = blackFigure;
+                                buttons[iii, jjj].Text = "D";
+                                map[iii, jjj] = 2;
+                            }
+                            else
+                            {
+                                buttons[iii, jjj].Image = blackFigure;
+                                map[iii, jjj] = 2;
+                            }
 
-                            SwitchButtonToDamka(buttons[iii, jjj]);
-
+                            SwitchButtonToDamka(buttons[iii, jjj]);     // Проверяем не является ли она дамкой
                             return true;
                         }
                     }
@@ -293,17 +417,71 @@ namespace GameOnHome_WINFORM.Online
             return false;
         }
 
-        void bot_move()
+        // Просто ход бота, без съедания
+        private bool bot_move()
         {
-            List<int[]> listIJ = new List<int[]>();
+            List<int[]> listIJ = new List<int[]>();     // Список ходов которые мы можем сделать пешкой
+            List<int[]> listIJDamka = new List<int[]>();     // Список ходов которые мы можем сделать дамкой
 
             for (int i = 0; i < mapSize; i++)
             {
                 for (int j = 0; j < mapSize; j++)
                 {
-                    if (map[i, j] == 2)
+                    if (map[i, j] == 2)                 // Найдена чёрная фигура
                     {
-                        int[] check = new int[4];
+                        if (buttons[i, j].Text == "D")
+                        {
+                            int[] xodDamka = new int[4] { 0, 0, 0, 0 };
+                            int ii = i - 1;
+                            int jj = j - 1;
+                            while (xodDamka[0] != -1)
+                            {
+                                xodDamka = bot_check_move(i, j, ii, jj);
+                                if (xodDamka[0] != -1)
+                                {
+                                    listIJDamka.Add(xodDamka);
+                                }
+                                ii--; jj--;
+                            }
+                            ii = i - 1;
+                            jj = j + 1;
+                            xodDamka[0] = 0;
+                            while (xodDamka[0] != -1)
+                            {
+                                xodDamka = bot_check_move(i, j, ii, jj);
+                                if (xodDamka[0] != -1)
+                                {
+                                    listIJDamka.Add(xodDamka);
+                                }
+                                ii--; jj++;
+                            }
+                            ii = i + 1;
+                            jj = j - 1;
+                            xodDamka[0] = 0;
+                            while (xodDamka[0] != -1)
+                            {
+                                xodDamka = bot_check_move(i, j, ii, jj);
+                                if (xodDamka[0] != -1)
+                                {
+                                    listIJDamka.Add(xodDamka);
+                                }
+                                ii++; jj--;
+                            }
+                            ii = i + 1;
+                            jj = j + 1;
+                            xodDamka[0] = 0;
+                            while (xodDamka[0] != -1)
+                            {
+                                xodDamka = bot_check_move(i, j, ii, jj);
+                                if (xodDamka[0] != -1)
+                                {
+                                    listIJDamka.Add(xodDamka);
+                                }
+                                ii++; jj++;
+                            }
+                        }
+
+                        int[] check = new int[4];       // Переменная для хранения координат где стоит фигура и куда она может сходить (i, j, ii, jj) 
 
                         check = bot_check_move(i, j, i - 1, j - 1);
                         if(check[0] != -1 && check[1] != -1)
@@ -319,18 +497,42 @@ namespace GameOnHome_WINFORM.Online
                 }
             }
 
-            Random rnd = new Random();
-            byte xod = Convert.ToByte(rnd.Next(0, listIJ.Count));
+            if (listIJDamka.Count > 0)
+            {
+                Random rnd = new Random();
+                byte xod = Convert.ToByte(rnd.Next(0, listIJDamka.Count));   // Выбираем случайный ход из возможных
 
-            map[listIJ[xod][0], listIJ[xod][1]] = 0;
-            map[listIJ[xod][2], listIJ[xod][3]] = 2;
+                map[listIJDamka[xod][0], listIJDamka[xod][1]] = 0;    // Где стояли теперь пустота
+                map[listIJDamka[xod][2], listIJDamka[xod][3]] = 2;    // Куда сходили теперь наша фигура
 
-            buttons[listIJ[xod][0], listIJ[xod][1]].Image = null;
-            buttons[listIJ[xod][2], listIJ[xod][3]].Image = blackFigure;
+                buttons[listIJDamka[xod][0], listIJDamka[xod][1]].Image = null;
+                buttons[listIJDamka[xod][0], listIJDamka[xod][1]].Text = "";
 
-            SwitchButtonToDamka(buttons[listIJ[xod][0], listIJ[xod][1]]);
+                buttons[listIJDamka[xod][2], listIJDamka[xod][3]].Image = blackFigure;
+                buttons[listIJDamka[xod][2], listIJDamka[xod][3]].Text = "D";
 
+                return true;
+            }
+
+            // Есть хоть 1 возможный ход
+            if (listIJ.Count > 0)
+            {
+                Random rnd = new Random();
+                byte xod = Convert.ToByte(rnd.Next(0, listIJ.Count));   // Выбираем случайный ход из возможных
+
+                map[listIJ[xod][0], listIJ[xod][1]] = 0;    // Где стояли теперь пустота
+                map[listIJ[xod][2], listIJ[xod][3]] = 2;    // Куда сходили теперь наша фигура
+
+                buttons[listIJ[xod][0], listIJ[xod][1]].Image = null;
+                buttons[listIJ[xod][2], listIJ[xod][3]].Image = blackFigure;
+
+                SwitchButtonToDamka(buttons[listIJ[xod][0], listIJ[xod][1]]);   // Проверяем не стали ли мы дамкой
+                return true;
+            }
+            { return false; }
         }
+
+        // Проверка хода, если сходить нельзя возвращем массив из -1..
         int[] bot_check_move(int i, int j, int ii, int jj)
         {
             int[] ij = new int[4];
@@ -347,8 +549,8 @@ namespace GameOnHome_WINFORM.Online
         }
 
 
-            // Обработка нажатия на фигуру при онлайн режиме
-            public void OnFigurePressOnline(object sender, EventArgs e)
+        // Обработка нажатия на фигуру при онлайн режиме
+        public void OnFigurePressOnline(object sender, EventArgs e)
         {
             if (client != null)
             {
@@ -377,7 +579,7 @@ namespace GameOnHome_WINFORM.Online
                 pressedButton.BackColor = Color.Red;        // Выделяем нажатую кнопку красным
                 DeactivateAllButtons();                     // Деактивируем все кнопки
                 pressedButton.Enabled = true;               // Нажатую клавишу делаем активной
-                countEatSteps = 0;
+                countEatSteps = 0;                          // Количество съедобных шагов
                 if (pressedButton.Text != "D")              // Проверка, это дамка или нет
                     ShowSteps(pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize, true);
                 else ShowSteps(pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize, false);
@@ -527,23 +729,10 @@ namespace GameOnHome_WINFORM.Online
                 }
             }
             if (!isEatStep)
-                ActivateAllButtons();
-
-
-            for(int i = 0; i < mapSize; i++)
-            {
-                for(int j = 0; j < mapSize; j++)
-                {
-                    if(buttons[i, j].Enabled == true)
-                    {
-                        return;
-                    }
-                }
-            }
-            ActivateAllButtons();
+                ActivateAllButtons();   // Нет съедобных ходов активируем все кнпоки 
         }
-
-        // Проверка ходов по 4 диагоналям
+        
+        // Проверка можем ли мы сходить по 4 диагоналям
         public bool IsButtonHasEatStep(int IcurrFigure, int JcurrFigure, bool isOneStep, int[] dir)
         {
             bool eatStep = false;
@@ -756,8 +945,8 @@ namespace GameOnHome_WINFORM.Online
                 if (map[i, j] != currentPlayer)                   // Если кнопка не пустая, проверяем можно ли её съесть 
                 {
                     if (pressedButton.Text == "D")
-                        ShowEat(i, j, false);
-                    else ShowEat(i, j, true);
+                        ShowEat(i, j, false);       // Дамка
+                    else ShowEat(i, j, true);       // Не дамка
                 }
 
                 return false;
@@ -825,6 +1014,7 @@ namespace GameOnHome_WINFORM.Online
 
         }
 
+        // Вернуть всем кнопкам предыдущий цвет
         public void CloseSteps()
         {
             for (int i = 0; i < mapSize; i++)
@@ -893,6 +1083,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
        
+        // Сделать ход отправленный вторым игроком, после каждого хода карта перерисовывается
         private void ChangeAfterListen(string msg)
         {
             string[] razborMessage = new string[65];
@@ -907,9 +1098,10 @@ namespace GameOnHome_WINFORM.Online
                 {
                     for (int j = 0; j < mapSize; j++)
                     {
-                        int num = Convert.ToInt32(razborMessage[k]);
-                        map[i, j] = num;
+                        int num = Convert.ToInt32(razborMessage[k]);    
+                        map[i, j] = num;    // Переписываем пришедшую карту на нашу
 
+                        // Встретили белую фигуру
                         if (num == 1)
                         {
                             buttons[i, j].Image = whiteFigure;
@@ -918,6 +1110,7 @@ namespace GameOnHome_WINFORM.Online
                         }
                         else
                         {
+                            // Встретили чёрнуб фигуру
                             if(num == 2)
                             {
                                 buttons[i, j].Image = blackFigure;
@@ -926,6 +1119,7 @@ namespace GameOnHome_WINFORM.Online
                             }
                             else
                             {
+                                // Встрели пустую ячейку
                                 if(num == 0)
                                 {
                                     buttons[i, j].Image = null;
@@ -939,7 +1133,7 @@ namespace GameOnHome_WINFORM.Online
                 }
             });
             
-            // Задаём фигуру игроку
+            //  Присваиваем игроку его фигуру
             if(currentPlayer == 0)
             {
                 if(Convert.ToInt32(razborMessage[64]) == 1)
@@ -1044,6 +1238,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
+        // Проверка есть ли соединение с сервером, каждые 10 секунд
         public void CheckConnection()
         {
             while (true)
@@ -1056,7 +1251,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        // Отключение
+        // Отключение, закрывает подключение с сервером и убивает ВСЁ приложение
         void Disconnect()
         {
             if (stream != null)
