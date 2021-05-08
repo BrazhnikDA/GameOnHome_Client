@@ -113,9 +113,9 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blackQuen {
+        internal static System.Drawing.Bitmap blackQueen {
             get {
-                object obj = ResourceManager.GetObject("blackQuen", resourceCulture);
+                object obj = ResourceManager.GetObject("blackQueen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,16 +146,6 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap checlers_icone {
             get {
                 object obj = ResourceManager.GetObject("checlers_icone", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap chess {
-            get {
-                object obj = ResourceManager.GetObject("chess", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -443,9 +433,9 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap whiteQuen {
+        internal static System.Drawing.Bitmap whiteQueen {
             get {
-                object obj = ResourceManager.GetObject("whiteQuen", resourceCulture);
+                object obj = ResourceManager.GetObject("whiteQueen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

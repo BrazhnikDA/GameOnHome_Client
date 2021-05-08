@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
+// ДОБАВТЬТТ ИЗМЕНЕНИЕ КАРТЫ ПРИ СЪЕДЕНИИ ФИГУРЫ!
 
 namespace GameOnHome_WINFORM.Games
 {
@@ -88,14 +85,14 @@ namespace GameOnHome_WINFORM.Games
         public void InitImage()
         {
           whiteKing = Properties.Resources.whiteKing;
-          whiteQueen = Properties.Resources.whiteQuen;
+          whiteQueen = Properties.Resources.whiteQueen;
           whiteElephant = Properties.Resources.whiteElephant;
           whiteHorse = Properties.Resources.whiteHorse;
           whiteTower = Properties.Resources.whiteTower;
           whitePawn = Properties.Resources.whitePawn;
 
           blackKing = Properties.Resources.blackKing;
-          blackQueen = Properties.Resources.blackQuen;
+          blackQueen = Properties.Resources.blackQueen;
           blackElephant = Properties.Resources.blackElephant;
           blackHorse = Properties.Resources.blackHorse;
           blackTower = Properties.Resources.blackTower;
@@ -154,21 +151,22 @@ namespace GameOnHome_WINFORM.Games
                 {
                     if(pressedButton.BackColor == Color.Red)
                     {
-                        //pressedButton.BackColor = GetPrevButtonColor(pressedButton);
+                        pressedButton.BackColor = GetPrevButtonColor(pressedButton);
                         CloseSteps();
                     }
                     if(pressedButton.BackColor == Color.Yellow)
                     {
-                        int swap = map[ConvertNameI(pressedButton), ConvertNameY(pressedButton)];
                         map[ConvertNameI(pressedButton), ConvertNameY(pressedButton)] = map[ConvertNameI(prevButton), ConvertNameY(prevButton)];
-                        map[ConvertNameI(prevButton), ConvertNameY(prevButton)] = swap;
+                        map[ConvertNameI(prevButton), ConvertNameY(prevButton)] = 0;
                         pressedButton.Image = prevButton.Image;
                         prevButton.Image = null;
                         prevButton.BackColor = Color.White;
 
                         isMoving = false;
                         CloseSteps();
+                        DeactivateAllButtons();
                         SendMessage(GetMap() + currentPlayer);
+                        CheckWin();
                     }
                 }
             }
@@ -569,7 +567,6 @@ namespace GameOnHome_WINFORM.Games
                 else
                 {
                     int ii = i + 1;
-                    int jj;
                     if (IsInsideBorders(ii, j))
                     {
                         if (map[ii, j] == 0)
@@ -582,10 +579,32 @@ namespace GameOnHome_WINFORM.Games
             }
             else
             {
+                int ii = i - 1;
+                int jj = j - 1;
+                if (IsInsideBorders(ii, jj))
+                {
+                    if (GetColorFigure(map[ii, jj]) == 1)
+                    {
+                        buttons[ii, jj].Enabled = true;
+                        buttons[ii, jj].BackColor = Color.Yellow;
+                    }
+                }
+
+                ii = i - 1;
+                jj = j + 1;
+                if (IsInsideBorders(ii, jj))
+                {
+                    if (GetColorFigure(map[ii, jj]) == 1)
+                    {
+                        buttons[ii, jj].Enabled = true;
+                        buttons[ii, jj].BackColor = Color.Yellow;
+                    }
+                }
+
                 // Чёрные пешки
                 if (i > 3)
                 {
-                    int ii = i - 1;
+                    ii = i - 1;
                     int iii = i - 2;
                     if (IsInsideBorders(ii, j))
                     {
@@ -607,8 +626,8 @@ namespace GameOnHome_WINFORM.Games
                 }
                 else
                 {
-                    int ii = i - 1;
-                    int jj;
+                    ii = i - 1;
+                    //jj;
                     if (IsInsideBorders(ii, j))
                     {
                         if (map[ii, j] == 0)
@@ -617,34 +636,35 @@ namespace GameOnHome_WINFORM.Games
                             buttons[ii, j].BackColor = Color.Yellow;
                         }
                     }
-                    ii = i - 1;
-                    jj = j - 1;
-                    if (IsInsideBorders(ii, jj))
-                    {
-                        if (GetColorFigure(map[ii, jj]) == 2)
-                        {
-                            buttons[ii, jj].Enabled = true;
-                            buttons[ii, jj].BackColor = Color.Yellow;
-                        }
-                    }
-
-                    ii = i - 1;
-                    jj = j + 1;
-                    if (IsInsideBorders(ii, jj))
-                    {
-                        if (GetColorFigure(map[ii, jj]) == 2)
-                        {
-                            buttons[ii, jj].Enabled = true;
-                            buttons[ii, jj].BackColor = Color.Yellow;
-                        }
-                    }
                 }
             }
         }
 
         public void CheckWin()
         {
+            bool IsLiveWhite = false;
+            bool IsLiveBlack = false;
 
+            for(int i = 0; i < mapSize; i++)
+            {
+                for(int j = 0; j < mapSize; j++)
+                {
+                    if(map[i,j] == 11)
+                    {
+                        IsLiveWhite = true;
+                    }
+                    if(map[i,j] == 21)
+                    {
+                        IsLiveBlack = true;
+                    }
+                }
+            }
+            if(IsLiveBlack && IsLiveWhite) { return; }
+            else 
+            {
+                if(!IsLiveBlack) { MessageBox.Show("Белые выиграли!"); }
+                if(!IsLiveWhite) { MessageBox.Show("Чёрные выиграли!"); }
+            }
         }
 
         public void CloseSteps()
@@ -823,15 +843,8 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (Convert.ToInt32(razborMessage[64]) == 1)
                 { currentPlayer = 2; }
-                else
-                {
-                    if (Convert.ToInt32(razborMessage[64]) == 2)
-                    {
-                        currentPlayer = 1;
-                    }
-                }
             }
-
+            ActivateAllButtons();
         }
 
         // 0 - пустота, 11 - король, 12 - королева, 13 - слон, 14 - конь, 15 - ладья, 16 - пешка
