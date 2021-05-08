@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Net.Sockets;
 using System.Text;
@@ -33,6 +34,8 @@ namespace GameOnHome_WINFORM.Games
         public Button prevButton;                   // Предыдущая нажатая кнопка
 
         public bool isMoving = false;               // Есть ли куда сходить
+
+        public List<int[]> xodBot = new List<int[]>();  // Список ходов бота
 
         public Image whiteKing;                      
         public Image whiteQueen;                      
@@ -113,7 +116,9 @@ namespace GameOnHome_WINFORM.Games
                     butt.Size = new Size(cellSize, cellSize);
                     butt.Location = new Point(j * cellSize, i * cellSize);
                     butt.BackColor = GetPrevButtonColor(butt);
-                    butt.Click += new EventHandler(FigureClick);
+                    if (IsStatus)
+                        butt.Click += new EventHandler(FigureClickOnline);
+                    else butt.Click += new EventHandler(FigureClickOffline);
                     butt.Image = GetImage(map[i, j]);
 
                     this.Controls.Add(butt);
@@ -123,7 +128,226 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void FigureClick(object sender, EventArgs e)
+        public void FigureClickOffline(object sender, EventArgs e)
+        {
+            if (currentPlayer == 0) { currentPlayer = 1; }
+
+            pressedButton = sender as Button;
+
+            if (GetColorFigure(CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton))) != 0 &&
+                GetColorFigure(CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton))) == currentPlayer)
+            {
+                CloseSteps();
+                pressedButton.BackColor = Color.Red;        // Выделяем нажатую кнопку красным
+                pressedButton.Enabled = true;
+                ShowSteps(ConvertNameI(pressedButton), ConvertNameY(pressedButton));
+
+                if (isMoving)
+                {
+                    CloseSteps();           // Закрываем все шаги 
+                    pressedButton.BackColor = GetPrevButtonColor(pressedButton);
+                    ShowSteps(ConvertNameI(pressedButton), ConvertNameY(pressedButton));    // Показываем куда можем сходить
+                    isMoving = false;
+                }
+                else isMoving = true;
+            }
+            else
+            {
+                if (isMoving)
+                {
+                    if (pressedButton.BackColor == Color.Red)
+                    {
+                        pressedButton.BackColor = GetPrevButtonColor(pressedButton);
+
+                    }
+                    if (pressedButton.BackColor == Color.Yellow)
+                    {
+                        map[ConvertNameI(pressedButton), ConvertNameY(pressedButton)] = map[ConvertNameI(prevButton), ConvertNameY(prevButton)];
+                        map[ConvertNameI(prevButton), ConvertNameY(prevButton)] = 0;
+                        pressedButton.Image = prevButton.Image;
+                        prevButton.Image = null;
+                        prevButton.BackColor = Color.White;
+
+                        isMoving = false;
+                        CloseSteps();
+                        bot_brain_easy();
+                        CheckWin();
+                    }
+                }
+            }
+            prevButton = pressedButton;
+        }
+        
+        public void bot_brain_easy()
+        {
+            bool IsEat = false;     // Можно ли кого-то съесть
+            for(int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
+                    if (map[i, j] > 20)
+                    {
+                        bot_check_eat(i, j);
+                    }
+                }
+            }
+            if(xodBot.Count > 0)
+            {
+                // Ищем самый "важный" ход
+                int min = xodBot[0][4];
+                int index = 0;
+                for(int i = 0; i < xodBot.Count; i++)
+                {
+                    if(min > xodBot[i][4]) { min = xodBot[i][4]; index = i; }
+                    MessageBox.Show("i: " + xodBot[index][0] + " j: " + xodBot[index][1] + " ii: " + xodBot[index][2] + " jj: " + xodBot[index][3]);
+                }
+
+                //MessageBox.Show("Было: " + map[xodBot[index][0], xodBot[index][1]] + " Найденная: " + map[xodBot[index][2], xodBot[index][3]]);
+
+                map[xodBot[index][2], xodBot[index][3]] = map[xodBot[index][0], xodBot[index][1]];    // Куда сходили теперь наша фигура
+                map[xodBot[index][0], xodBot[index][1]] = 0;    // Где стояли теперь пустота
+
+                //MessageBox.Show("Было: " + map[xodBot[index][0], xodBot[index][1]] + " Найденная: " + map[xodBot[index][2], xodBot[index][3]]);
+
+                buttons[xodBot[index][2], xodBot[index][3]].Image = buttons[xodBot[index][0], xodBot[index][1]].Image;
+                buttons[xodBot[index][0], xodBot[index][1]].Image = null;
+
+                xodBot.Clear(); // Очищаем ходы
+            }
+        }
+
+        public void bot_check_eat(int i, int j)
+        {
+            int[] steps = new int[4] { 0, 0, 0, 0 };
+            switch (map[i, j])
+            {
+                case 21:
+                    //ShowStepsKing(i, j, 1);
+                    break;
+                case 22:
+                    //ShowStepsQueen(i, j, 1);
+                    break;
+                case 23:
+                    //ShowStepsElephant(i, j, 1);
+                    break;
+                case 24:
+                    //ShowStepsHorse(i, j, 1);
+                    break;
+                case 25:
+                    bot_check_eat_Tower(i, j);
+                    break;
+                case 26:
+                    bot_chec_eat_Pawn(i, j);
+                    break;
+            }
+        }
+
+        public void bot_check_eat_Tower(int i, int j)
+        {
+            int jj = j + 1;
+            while (IsInsideBorders(i, jj))          // вправо
+            {
+                if (GetColorFigure(map[i, jj]) == 2) { break; }
+                if (GetColorFigure(map[i, jj]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i; xod[3] = jj;
+                    xod[4] = GetTypeFigure(map[i, jj]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                jj++;
+            }
+            jj = j - 1;
+            while (IsInsideBorders(i, jj))          // влево
+            {
+                if(GetColorFigure(map[i, jj]) == 2) { break; }
+                if (GetColorFigure(map[i, jj]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i; xod[3] = jj;
+                    xod[4] = GetTypeFigure(map[i, jj]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                jj--;
+            }
+
+            int ii = i + 1;
+            while (IsInsideBorders(ii, j))          // вниз
+            {
+                if (GetColorFigure(map[ii, j]) == 2) { break; }
+                if (GetColorFigure(map[ii, j]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = ii; xod[3] = j;
+                    xod[4] = GetTypeFigure(map[ii, j]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                ii++;
+            }
+
+            ii = i - 1;
+            while (IsInsideBorders(ii, j))          // вверх
+            {
+                if (GetColorFigure(map[ii, j]) == 2) { break; }
+                if (GetColorFigure(map[ii, j]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = ii; xod[3] = j;
+                    xod[4] = GetTypeFigure(map[ii, j]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                ii--;
+            }
+        }
+
+        public void bot_chec_eat_Pawn(int i, int j)
+        {
+            if(IsInsideBorders(i - 1, j - 1))
+            {
+                if(GetColorFigure(map[i - 1, j - 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j - 1;
+                    xod[4] = GetTypeFigure(map[i, j - 1]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i - 1, j + 1))
+            {
+                if (GetColorFigure(map[i - 1, j + 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j + 1;
+                    xod[4] = GetTypeFigure(map[i, j + 1]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                }
+            }
+            //return new int[4] { -1, -1, -1, -1 };
+        }
+
+        public void FigureClickOnline(object sender, EventArgs e)
         {
             if(currentPlayer == 0) { currentPlayer = 1; }
 
@@ -152,7 +376,7 @@ namespace GameOnHome_WINFORM.Games
                     if(pressedButton.BackColor == Color.Red)
                     {
                         pressedButton.BackColor = GetPrevButtonColor(pressedButton);
-                        CloseSteps();
+                        
                     }
                     if(pressedButton.BackColor == Color.Yellow)
                     {

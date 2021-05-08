@@ -37,7 +37,7 @@ namespace GameOnHome_WINFORM
             ListGames main = this.Owner as ListGames;                    //Поределение предка формы
             if (main != null)                                            //Условие, если список игр не закрыт, выбора игры
             {
-                if (name_of_game == "tic_tac") {                         
+                if (name_of_game == "tic_tac") {
                     if (butt_switch == false) {
                         main.tic_tac_plqy(false);
                     }
@@ -52,6 +52,13 @@ namespace GameOnHome_WINFORM
                     else {
                         main.shaski_play(true);
                     }
+                }
+                if (name_of_game == "chess")
+                {
+                    if (butt_switch == false)
+                    {
+                        main.chess_game(false);
+                    }else { main.chess_game(true); }
                 }
             }
         }

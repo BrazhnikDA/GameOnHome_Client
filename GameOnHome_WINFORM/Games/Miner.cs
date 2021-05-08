@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM.Games
@@ -11,6 +13,9 @@ namespace GameOnHome_WINFORM.Games
             InitializeComponent();
             Init();
         }
+
+        DateTime date1;
+
         public const int mapSize = 8;
         public const int cellSize = 75;
 
@@ -40,8 +45,10 @@ namespace GameOnHome_WINFORM.Games
 
         public void Init()
         {
-            this.Width = (mapSize + 1) * cellSize;
-            this.Height = (mapSize + 1) * cellSize;
+            this.Width = (mapSize + 1) * cellSize - 50;
+            this.Height = (mapSize + 1) * cellSize + 80;
+
+            date1 = new DateTime(0, 0);
 
             currentPictureToSet = 0;
             isFirstStep = true;
@@ -58,7 +65,7 @@ namespace GameOnHome_WINFORM.Games
                 for (int j = 0; j < mapSize; j++)
                 {
                     Button button = new Button();
-                    button.Location = new Point(j * cellSize, i * cellSize);
+                    button.Location = new Point(j * cellSize, i * cellSize + 80);
                     button.Anchor = (AnchorStyles.Top | AnchorStyles.Left);
                     button.Size = new Size(cellSize, cellSize);
                     button.Font = new Font(button.Font.FontFamily, 1);
@@ -80,6 +87,7 @@ namespace GameOnHome_WINFORM.Games
         // Относительно нажатой клавиши вызываем определённую функцию
         private void OnButtonPressedMouse(object sender, MouseEventArgs e)
         {
+            timer1.Start();
             Button pressedButton = sender as Button;
             switch (e.Button.ToString())
             {
@@ -136,11 +144,20 @@ namespace GameOnHome_WINFORM.Games
 
             if (map[iButton, jButton] == -1)
             {
+                timer1.Stop();
                 ShowAllBombs(iButton, jButton);
                 MessageBox.Show("Поражение!");
-                Controls.Clear();
+                //Controls.Clear();
                 Init();
+                Restart();
             }else { CheckWin(); }
+        }
+
+        public void Restart()
+        {
+            Miner newMin = new Miner();
+            newMin.Show();
+            this.Close();
         }
 
         // Проверка на победу
@@ -313,6 +330,12 @@ namespace GameOnHome_WINFORM.Games
                 return false;
             }
             return true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            date1 = date1.AddSeconds(1);
+            textBox_Timer.Text = date1.ToString("mm:ss");
         }
     }
 }

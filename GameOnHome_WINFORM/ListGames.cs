@@ -121,7 +121,15 @@ namespace GameOnHome_WINFORM
 
         private void pictureBox_Chess_Click(object sender, EventArgs e)
         {
-            Games.Chess chess = new Games.Chess(true);
+            string name_of_game = "chess";                                            //Задаём имя игры
+            settings_of_game sof = new settings_of_game(name_of_game);                //Вызываем окно настроек с параметром названия игры
+            sof.Owner = this;                                                         //Указываем, что настройки игры - это дочерняя форма от листа с играми
+            sof.ShowDialog();
+        }
+
+        public void chess_game(bool result)
+        {
+            Games.Chess chess = new Games.Chess(result);
             chess.Show();
         }
     }
