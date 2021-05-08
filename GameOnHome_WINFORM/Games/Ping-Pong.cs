@@ -6,19 +6,19 @@ namespace GameOnHome_WINFORM.Games
 {
     public partial class Ping_Pong : Form
     {
-        Graphics graphics;
-        Timer timer = new Timer();
+        Graphics graphics;              // Для рисования
+        Timer timer = new Timer();      // Таймер
 
-        private Point MP;
-        private Point p;
+        private Point MP;               // Для мышки
+        private Point p;                // Для мышки
 
-        int FPS = 100;
-        int player1y;
+        int FPS = 35;                   // Количество отрисовок в секунду
+        int player1y;                   // Значение платформы
 
-        int ballx;
-        int bally;
-        int ballspdx = 5;
-        int ballspdy = 5;
+        int ballx;                      // Координаты мяча по X
+        int bally;                      // Координаты мяча по Y        
+        int ballspdx = 10;              // Скорость по X
+        int ballspdy = 10;              // Скорость по Y
 
         public Ping_Pong()
         {
@@ -37,7 +37,7 @@ namespace GameOnHome_WINFORM.Games
             graphics = CreateGraphics();
             DrawRectangle(0, player1y, 20, 130, new SolidBrush(Color.Black));
 
-            DrawRectangle(ballx, bally, 20, 20, new SolidBrush(Color.Black));
+            DrawRectangle(ballx, bally, 30, 30, new SolidBrush(Color.Red));
         }
 
         //Method for drawing rectangles
@@ -52,12 +52,12 @@ namespace GameOnHome_WINFORM.Games
             ballx += ballspdx;
             bally += ballspdy;
 
-            if (ballx + 40 > this.Width)
+            if (ballx + 50 > this.Width)
             {
                 ballspdx = -ballspdx;
             }
 
-            if (bally < 0 || bally + 40 > this.Height)
+            if (bally < 0 || bally + 80 > this.Height)
             {
                 ballspdy = -ballspdy;
             }
