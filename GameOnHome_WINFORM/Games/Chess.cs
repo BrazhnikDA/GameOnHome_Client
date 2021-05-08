@@ -170,7 +170,9 @@ namespace GameOnHome_WINFORM.Games
 
                         isMoving = false;
                         CloseSteps();
-                        BotBrainEasy();
+
+                        Thread brainBot = new Thread(new ThreadStart(BotBrainEasy));
+                        brainBot.Start(); //старт потока
                         CheckWin();
                     }
                 }
@@ -180,7 +182,7 @@ namespace GameOnHome_WINFORM.Games
         
         private void BotBrainEasy()
         {
-            bool IsEat = false;     // Можно ли кого-то съесть
+            Thread.Sleep(300);
             for(int i = 0; i < mapSize; i++)
             {
                 for (int j = 0; j < mapSize; j++)
@@ -198,9 +200,9 @@ namespace GameOnHome_WINFORM.Games
                 // Ищем самый "важный" ход
                 int min = xodBot[0][4];
                 int indexEat = -1;
-                for(int i = 0; i < xodBot.Count; i++)
+                for(int i = 1; i < xodBot.Count; i++)
                 {
-                    if(min > xodBot[i][4]) { min = xodBot[i][4]; indexEat = i; }
+                    if(min > xodBot[i][4] && xodBot[i][4] < 100) { min = xodBot[i][4]; indexEat = i; }
                     if(xodBot[i][4] > 100) { steps.Add(i); }
                 }
 
@@ -498,12 +500,12 @@ namespace GameOnHome_WINFORM.Games
                 {
                     if (map[i - 1, j] == 0)
                     {
-                        AddStep(i, j, i - 1, j, 110);
+                        AddStep(i, j, i - 1, j, 126);
                         if (IsInsideBorders(i - 2, j))
                         {
                             if (map[i - 2, j] == 0)
                             {
-                                AddStep(i, j, i - 2, j, 110);
+                                AddStep(i, j, i - 2, j, 126);
                             }
                         }
                     }
@@ -513,7 +515,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (IsInsideBorders(i - 1, j))
                 {
-                    if (map[-1, j] == 0)
+                    if (map[i - 1, j] == 0)
                     {
                         AddStep(i, j, i - 1, j, 110);
                     }
