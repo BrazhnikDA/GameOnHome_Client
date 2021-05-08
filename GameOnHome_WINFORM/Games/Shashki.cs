@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GameOnHome_WINFORM.Online
+namespace GameOnHome_WINFORM.Games
 {
     public partial class Shashki : Form
     {
@@ -22,25 +18,25 @@ namespace GameOnHome_WINFORM.Online
         TcpClient client;                           // Клиент
         NetworkStream stream;                       // Поток от клиента до сервера
 
-        const int mapSize = 8;       // Размер карты 8*8
-        const int cellSize = 100;    // Размер кнопки 100*100
-        int currentPlayer = 0;       // Текущий игрок   1 - белые, 2 - чёрные   
+        private const int mapSize = 8;       // Размер карты 8*8
+        private const int cellSize = 100;    // Размер кнопки 100*100
+        private int currentPlayer = 0;       // Текущий игрок   1 - белые, 2 - чёрные   
 
-        List<Button> simpleSteps = new List<Button>();  // Список кнопок во время хода куда можно сходить
+        private List<Button> simpleSteps = new List<Button>();  // Список кнопок во время хода куда можно сходить
 
-        bool isContinue;
+        private bool isContinue;
 
-        int countEatSteps = 0;
-        Button prevButton;          // Предыдущая нажатая кнопка
-        Button pressedButton;       // Нажатая кнпока
+        private int countEatSteps = 0;
+        private Button prevButton;          // Предыдущая нажатая кнопка
+        private Button pressedButton;       // Нажатая кнпока
 
-        bool isMoving;              // Находится ли шашка в процессе ходьбы
+        private bool isMoving;              // Находится ли шашка в процессе ходьбы
 
-        int[,] map = new int[mapSize, mapSize];             // Карта которая харнит 0, 1 и 2 
-        Button[,] buttons = new Button[mapSize, mapSize];   // Массив всех кнопок
+        private int[,] map = new int[mapSize, mapSize];             // Карта которая харнит 0, 1 и 2 
+        private Button[,] buttons = new Button[mapSize, mapSize];   // Массив всех кнопок
 
-        Image whiteFigure;          // Изображение белой фигуры
-        Image blackFigure;          // Изображение чёрной фигуры
+        private Image whiteFigure;          // Изображение белой фигуры
+        private Image blackFigure;          // Изображение чёрной фигуры
 
         public Shashki(bool IsStatus_)
         {
@@ -61,7 +57,7 @@ namespace GameOnHome_WINFORM.Online
 
             InitBoard();        // "Создаём" доску
         }
-        public void InitBoard()
+        private void InitBoard()
         {
             // Инициализируем переменные
             isContinue = false;
@@ -82,7 +78,7 @@ namespace GameOnHome_WINFORM.Online
             };
             CreateMap();    // Рисуем кнопки (карту)
         }
-        public void CreateMap()
+        private void CreateMap()
         {
             // Указываем размер окна относительно размера кнопок
             this.Width = (mapSize + 1) * cellSize + 50;
@@ -115,7 +111,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Проверка на победу
-        public void CheckWin()
+        private void CheckWin()
         {
             bool white = false;
             bool black = false;
@@ -141,7 +137,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Выставляем цвет для кнопки
-        public Color GetPrevButtonColor(Button prevButton)
+        private Color GetPrevButtonColor(Button prevButton)
         {
             if ((prevButton.Location.Y / cellSize % 2) != 0)
             {
@@ -161,7 +157,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Обработка нажатия на фигуру при офлайн режиме
-        public void OnFigurePressOffline(object sender, EventArgs e)
+        private void OnFigurePressOffline(object sender, EventArgs e)
         {
             currentPlayer = 1;      // Пользователь всегда играет за белых
             pressedButton = sender as Button;
@@ -250,7 +246,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Интеллект бота сложность: легко
-        public void Bot_brain_easy()
+        private void Bot_brain_easy()
         {
             bool IsEat = false;         // Есть ли съедобный ход
             for (int i = 0; i < mapSize; i++)
@@ -555,7 +551,7 @@ namespace GameOnHome_WINFORM.Online
 
 
         // Обработка нажатия на фигуру при онлайн режиме
-        public void OnFigurePressOnline(object sender, EventArgs e)
+        private void OnFigurePressOnline(object sender, EventArgs e)
         {
             if (client != null)
             {
@@ -645,7 +641,7 @@ namespace GameOnHome_WINFORM.Online
         }
     
 
-        public void WaitXod()
+        private void WaitXod()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -661,7 +657,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Возвращает значение ячеек на карте через запятую
-        public string GetMap()
+        private string GetMap()
         {
             string res = "";
             for(int i = 0; i < mapSize; i++)
@@ -675,7 +671,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Удаляем съеденную фигуру
-        public void DeleteEaten(Button endButton, Button startButton)
+        private void DeleteEaten(Button endButton, Button startButton)
         {
             int count = Math.Abs(endButton.Location.Y / cellSize - startButton.Location.Y / cellSize);
             int startIndexX = endButton.Location.Y / cellSize - startButton.Location.Y / cellSize;
@@ -698,7 +694,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Проверка может ли шашка стать дамкой
-        public void SwitchButtonToDamka(Button button)
+        private void SwitchButtonToDamka(Button button)
         {
             // Проверка для белых
             if (map[button.Location.Y / cellSize, button.Location.X / cellSize] == 1 && button.Location.Y / cellSize == mapSize - 1)
@@ -713,7 +709,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Показывает возможные ходы для выбранной фигуры
-        public void ShowPossibleSteps()
+        private void ShowPossibleSteps()
         {
             bool isOneStep = true;
             bool isEatStep = false;
@@ -740,7 +736,7 @@ namespace GameOnHome_WINFORM.Online
         }
         
         // Проверка можем ли мы сходить по 4 диагоналям
-        public bool IsButtonHasEatStep(int IcurrFigure, int JcurrFigure, bool isOneStep, int[] dir)
+        private bool IsButtonHasEatStep(int IcurrFigure, int JcurrFigure, bool isOneStep, int[] dir)
         {
             bool eatStep = false;
             int j = JcurrFigure + 1;
@@ -846,7 +842,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Показать возможные шаги для фигуры
-        public void ShowSteps(int iCurrFigure, int jCurrFigure, bool isOnestep = true)
+        private void ShowSteps(int iCurrFigure, int jCurrFigure, bool isOnestep = true)
         {
             simpleSteps.Clear();
             ShowDiagonal(iCurrFigure, jCurrFigure, isOnestep);
@@ -855,7 +851,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Деактивируем шаги на которые не можем сходить во время хода
-        public void CloseSimpleSteps(List<Button> simpleSteps)
+        private void CloseSimpleSteps(List<Button> simpleSteps)
         {
             if (simpleSteps.Count > 0)
             {
@@ -867,7 +863,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        public void ShowDiagonal(int IcurrFigure, int JcurrFigure, bool isOneStep)
+        private void ShowDiagonal(int IcurrFigure, int JcurrFigure, bool isOneStep)
         {
             int j = JcurrFigure + 1;
             for (int i = IcurrFigure - 1; i >= 0; i--)
@@ -938,7 +934,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        public bool DeterminePath(int i, int j)
+        private bool DeterminePath(int i, int j)
         {
 
             if (map[i, j] == 0 && !isContinue)
@@ -962,7 +958,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Показать что можно сьесть, передаются координаты и ход в единицу?
-        public void ShowEat(int i, int j, bool isOneStep)
+        private void ShowEat(int i, int j, bool isOneStep)
         {
             int dirX = i - pressedButton.Location.Y / cellSize;
             int dirY = j - pressedButton.Location.X / cellSize;
@@ -1022,7 +1018,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Вернуть всем кнопкам предыдущий цвет
-        public void CloseSteps()
+        private void CloseSteps()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -1034,21 +1030,21 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Получить позицию кнопки по I
-        public int ConvertNameI(Button b)
+        private int ConvertNameI(Button b)
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[6]) - 48;
         }
 
         // Получить позицию кнопки по Y
-        public int ConvertNameY(Button b)
+        private int ConvertNameY(Button b)
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[8]) - 48;
         }
 
         // Возвращает фигуру находящуюся по переданным координатам
-        public int CheckMap(int i, int j)
+        private int CheckMap(int i, int j)
         {
             if (i < mapSize && j < mapSize)
             {
@@ -1057,7 +1053,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Находится ли переданный индекс за границей доски
-        public bool IsInsideBorders(int i, int j)
+        private bool IsInsideBorders(int i, int j)
         {
             if (i >= mapSize || j >= mapSize || i < 0 || j < 0)
             {
@@ -1067,7 +1063,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Пройтись по всем кнопкам и сделать их активными
-        public void ActivateAllButtons()
+        private void ActivateAllButtons()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -1079,7 +1075,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Пройтись по всем кнопкам и сделать их не активными
-        public void DeactivateAllButtons()
+        private void DeactivateAllButtons()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -1198,7 +1194,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Отправить сообщение
-        public void SendMessage(string message)
+        private void SendMessage(string message)
         {
             if ((message != ""))
             {
@@ -1246,7 +1242,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Проверка есть ли соединение с сервером, каждые 10 секунд
-        public void CheckConnection()
+        private void CheckConnection()
         {
             while (true)
             {

@@ -1,4 +1,4 @@
-﻿namespace GameOnHome_WINFORM
+﻿namespace GameOnHome_WINFORM.Games
 {
     partial class ThreeRow
     {

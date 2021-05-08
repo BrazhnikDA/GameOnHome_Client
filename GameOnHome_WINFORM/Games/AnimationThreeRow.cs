@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace GameOnHome_WINFORM
+namespace GameOnHome_WINFORM.Games
 {
     public abstract class AnimationThreeRow
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameOnHome_WINFORM
+namespace GameOnHome_WINFORM.Games
 {
     public class Index
     {

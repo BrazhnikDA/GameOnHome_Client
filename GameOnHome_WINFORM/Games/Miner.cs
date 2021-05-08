@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM.Games
@@ -16,16 +14,16 @@ namespace GameOnHome_WINFORM.Games
 
         DateTime date1;
 
-        public const int mapSize = 8;
-        public const int cellSize = 75;
+        private const int mapSize = 8;
+        private const int cellSize = 75;
 
         private static int currentPictureToSet = 0;
 
-        public static int[,] map = new int[mapSize, mapSize];
+        private static int[,] map = new int[mapSize, mapSize];
 
-        public static Button[,] buttons = new Button[mapSize, mapSize];
+        private static Button[,] buttons = new Button[mapSize, mapSize];
 
-        public static Image spriteSet;
+        private static Image spriteSet;
 
         private static bool isFirstStep;
 
@@ -43,7 +41,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void Init()
+        private void Init()
         {
             this.Width = (mapSize + 1) * cellSize - 50;
             this.Height = (mapSize + 1) * cellSize + 40;
@@ -153,7 +151,7 @@ namespace GameOnHome_WINFORM.Games
             }else { CheckWin(); }
         }
 
-        public void Restart()
+        private void Restart()
         {
             Miner newMin = new Miner();
             newMin.Show();
@@ -205,7 +203,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Функция для вырезания нужной картинки из массива картинок 
-        public static Image FindNeededImage(int xPos, int yPos)
+        private static Image FindNeededImage(int xPos, int yPos)
         {
             Image image = new Bitmap(cellSize, cellSize);
             Graphics g = Graphics.FromImage(image);

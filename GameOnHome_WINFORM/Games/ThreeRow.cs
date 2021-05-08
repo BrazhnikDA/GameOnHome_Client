@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GameOnHome_WINFORM
+namespace GameOnHome_WINFORM.Games
 {
     public partial class ThreeRow : Form
     {
@@ -213,9 +213,9 @@ namespace GameOnHome_WINFORM
         private void gameField_MouseDown(object sender, MouseEventArgs e)
         {
             //определение элемента, на который нажали
-            Point start = new Point((gameField.Width - m_elementSize * fieldSize) / 2,
+            Point start = new((gameField.Width - (m_elementSize * fieldSize)) / 2,
                                     (gameField.Height - m_elementSize * fieldSize) / 2);
-            Point pos = new Point(e.Location.X - start.X, e.Location.Y - start.Y);
+            Point pos = new(e.Location.X - start.X, e.Location.Y - start.Y);
             int col = pos.X / m_elementSize;
             int row = pos.Y / m_elementSize;
             if (col < fieldSize && row < fieldSize)

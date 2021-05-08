@@ -1,5 +1,5 @@
 ﻿
-namespace GameOnHome_WINFORM.Online
+namespace GameOnHome_WINFORM.Games
 {
     partial class Krestiki_Noliki
     {

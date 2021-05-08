@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-// ДОБАВТЬТТ ИЗМЕНЕНИЕ КАРТЫ ПРИ СЪЕДЕНИИ ФИГУРЫ!
-
 namespace GameOnHome_WINFORM.Games
 {
     public partial class Chess : Form

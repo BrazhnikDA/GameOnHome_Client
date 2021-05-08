@@ -1,4 +1,4 @@
-﻿using GameOnHome_WINFORM.Online;
+﻿using GameOnHome_WINFORM.Games;
 using System;
 using System.Drawing;
 using System.Net.Sockets;
@@ -8,14 +8,6 @@ namespace GameOnHome_WINFORM
 {
     public partial class ListGames : Form
     {
-        private string ID;                          // ID присвоенное сервером
-        private bool IsStatus = false;              // True - онлайн, False - оффлайн
-
-        private const string host = "127.0.0.1";    // IP
-        private const int port = 7770;              // Порт
-        TcpClient client;                           // Клиент
-        NetworkStream stream;                       // Поток от клиента до сервера
-
         Graphics g;
 
         public ListGames() {
@@ -44,7 +36,7 @@ namespace GameOnHome_WINFORM
         //Обработка события наведение на "Крестики-нолики"
         private void pictureBox_tic_tac_MouseEnter(object sender, EventArgs e) {
             g = CreateGraphics();                                                     //Инициализируем графику
-            Pen backPen = new Pen(Color.OrangeRed, 3);                                //Создаём кисть
+            Pen backPen = new(Color.OrangeRed, 3);                                //Создаём кисть
             g.DrawRectangle(backPen, 37, 37, 134, 134);                               //Рисуем прямоугольник
             label_tic_tac.Location = new Point(36, 175);                              //Корректируем положение названия
             label_tic_tac.Font = new Font("Stencil", 10f, FontStyle.Bold);            //Изменяем стиль названия
@@ -61,24 +53,24 @@ namespace GameOnHome_WINFORM
         //Обработка события клик по "Шашки"
         private void pictureBox_shaski_Click(object sender, EventArgs e) {
             string name_of_game = "shaski";                                           //Задаём имя игры
-            settings_of_game sof = new settings_of_game(name_of_game);                //Вызываем окно настроек с параметром названия игры
+            settings_of_game sof = new(name_of_game);                //Вызываем окно настроек с параметром названия игры
             sof.Owner = this;                                                         //Указываем, что настройки игры - это дочерняя форма от листа с играми
             sof.ShowDialog();                                                         //Показываем форму
         }
 
         //Метод для вызова определённого режима игры "Шашки"
         public void shaski_play(bool result) {
-            Shashki shashki = new Shashki(result);       //Когда режимы шашек будут доделаны, нужно будет поставить "result" в конструктор создания Shashki()
+            Shashki shashki = new(result);       //Когда режимы шашек будут доделаны, нужно будет поставить "result" в конструктор создания Shashki()
             shashki.Show();
         }
 
         //Обработка события наведение на "Шашки"
         private void pictureBox_shaski_MouseEnter(object sender, EventArgs e) {
             g = CreateGraphics();                                                      //Инициализируем графику
-            Pen backPen = new Pen(Color.OrangeRed, 3);                                 //Создаём кисть
+            Pen backPen = new(Color.OrangeRed, 3);                                 //Создаём кисть
             g.DrawRectangle(backPen, 205, 37, 134, 134);                               //Рисуем прямоугольник
             label_shaski.Location = new Point(245, 175);                               //Корректируем положение названия
-            label_shaski.Font = new Font("Stencil", 10f, FontStyle.Bold);              //Изменяем стиль названия
+            label_shaski.Font = new("Stencil", 10f, FontStyle.Bold);              //Изменяем стиль названия
         }
 
         //Обработка события покидания из "Шашки"

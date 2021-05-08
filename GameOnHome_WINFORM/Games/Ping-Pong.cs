@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM.Games
@@ -38,7 +32,7 @@ namespace GameOnHome_WINFORM.Games
             bally = this.Height / 2 - 10;
         }
 
-        void MainFormPaint(object sender, PaintEventArgs e)
+        private void MainFormPaint(object sender, PaintEventArgs e)
         {
             graphics = CreateGraphics();
             DrawRectangle(0, player1y, 20, 130, new SolidBrush(Color.Black));
@@ -47,13 +41,13 @@ namespace GameOnHome_WINFORM.Games
         }
 
         //Method for drawing rectangles
-        void DrawRectangle(int x, int y, int w, int h, SolidBrush Color)
+        private void DrawRectangle(int x, int y, int w, int h, SolidBrush Color)
         {
             graphics.FillRectangle(Color, new Rectangle(x, y, w, h));
         }
 
         //Ball border check	
-        void UpdateBall()
+        private void UpdateBall()
         {
             ballx += ballspdx;
             bally += ballspdy;
@@ -81,7 +75,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         //Player and Ball collision
-        bool IsCollided()
+        private bool IsCollided()
         {
             if (ballx < 20 && bally > player1y && bally < player1y + 130)
             {
@@ -94,7 +88,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         //Update graphics
-        void TimerCallback(object sender, EventArgs e)
+        private void TimerCallback(object sender, EventArgs e)
         {
 
             //Draw
@@ -107,7 +101,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         //Keydown event
-        void MainFormKeyDown(object sender, KeyEventArgs e)
+        private void MainFormKeyDown(object sender, KeyEventArgs e)
         {
             int key = e.KeyValue;
             //38 - up arrow

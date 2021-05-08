@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace GameOnHome_WINFORM.Online
+namespace GameOnHome_WINFORM.Games
 {
     public partial class Krestiki_Noliki : Form
     {
@@ -17,17 +17,17 @@ namespace GameOnHome_WINFORM.Online
         TcpClient client;                           // Клиент
         NetworkStream stream;                       // Поток от клиента до сервера
 
-        const int mapSize = 3;          // Размер карты 3*3
-        int cellSize;                   // Размер ячейки
-        string currentPlayer = "";      // X или O
+        private const int mapSize = 3;          // Размер карты 3*3
+        private int cellSize;                   // Размер ячейки
+        private string currentPlayer = "";      // X или O
 
-        int[,] map = new int[mapSize, mapSize];             // Карта игры { 0 - Пусто, 1 - Крестик, 2 - Нолик } 
-        Button[,] buttons = new Button[mapSize, mapSize];   // Массив кнопок
+        private int[,] map = new int[mapSize, mapSize];             // Карта игры { 0 - Пусто, 1 - Крестик, 2 - Нолик } 
+        private Button[,] buttons = new Button[mapSize, mapSize];   // Массив кнопок
 
-        Image tacFigure;            // Изображение крестика
-        Image toeFigure;            // Изображение нолика
+        private Image tacFigure;            // Изображение крестика
+        private Image toeFigure;            // Изображение нолика
 
-        int count = 0;              // Количество сделанных ходов
+        private int count = 0;              // Количество сделанных ходов
         public Krestiki_Noliki(bool IsStatus_)
         {
             InitializeComponent();
@@ -52,7 +52,7 @@ namespace GameOnHome_WINFORM.Online
             CreatePlayBoard();
         }
 
-        public void CreatePlayBoard()
+        private void CreatePlayBoard()
         {
             map = new int[mapSize, mapSize] {
                 { 0,0,0 },
@@ -142,7 +142,7 @@ namespace GameOnHome_WINFORM.Online
                 TableForWinner();
             }else { TableForWinner(); }
         }
-        public void Button_click_online(object sender, EventArgs e)
+        private void Button_click_online(object sender, EventArgs e)
         {
             Button currentButton = sender as Button;
 
@@ -198,7 +198,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Возвращает карту в формате string для отправки на сервер
-        public string GetMap()
+        private string GetMap()
         {
             string res = "";
             for(int i = 0; i < mapSize; i++)
@@ -212,20 +212,20 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Получить позицию кнопки по I
-        public int ConvertNameI(Button b)
+        private int ConvertNameI(Button b)
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[6]) - 48;
         }
 
         // Получить позицию кнопки по Y
-        public int ConvertNameY(Button b)
+        private int ConvertNameY(Button b)
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[8]) - 48;
         }
 
-        public void TableForWinner()
+        private void TableForWinner()
         {
             // Минимальное кол-во ходов для победы 5, начинаем проверять только с этого момента
             if(count > 4)
@@ -355,7 +355,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Активировать все кнопки
-        public void ActivateAllButtons()
+        private void ActivateAllButtons()
         {
             for(int i = 0; i < mapSize; i++)
             {
@@ -367,7 +367,7 @@ namespace GameOnHome_WINFORM.Online
         }
 
         // Деактивировать все кнопки
-        public void DeactivateAllButtons()
+        private void DeactivateAllButtons()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -419,7 +419,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        public void SendMessage(string message)
+        private void SendMessage(string message)
         {
             if ((message != ""))
             {
@@ -465,7 +465,7 @@ namespace GameOnHome_WINFORM.Online
             }
         }
 
-        public void CheckConnection()
+        private void CheckConnection()
         {
             while (true)
             {
