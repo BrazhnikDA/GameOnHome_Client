@@ -12,44 +12,44 @@ namespace GameOnHome_WINFORM.Games
 {
     public partial class Chess : Form
     {
-        private string ID;                          // ID присвоенное сервером
-        private bool IsStatus = false;              // True - онлайн, False - оффлайн
+        public string ID;                          // ID присвоенное сервером
+        public bool IsStatus = false;              // True - онлайн, False - оффлайн
 
         private const string host = "127.0.0.1";    // IP
         private const int port = 7770;              // Порт
         TcpClient client;                           // Клиент
         NetworkStream stream;                       // Поток от клиента до сервера
 
-        public const int mapSize = 8;
+        private const int mapSize = 8;
 
-        public int[,] map = new int[mapSize, mapSize];   // Карта
+        private int[,] map = new int[mapSize, mapSize];   // Карта
 
-        public Button[,] buttons = new Button[mapSize, mapSize];  // Все кнопки
+        private Button[,] buttons = new Button[mapSize, mapSize];  // Все кнопки
 
-        public int cellSize = 150;
+        private int cellSize = 150;
 
-        public int currentPlayer = 0;                  // Текущий игрок
+        private int currentPlayer = 0;                  // Текущий игрок
 
-        public Button pressedButton;                // Нажатая кнопка
-        public Button prevButton;                   // Предыдущая нажатая кнопка
+        private Button pressedButton;                // Нажатая кнопка
+        private Button prevButton;                   // Предыдущая нажатая кнопка
 
-        public bool isMoving = false;               // Есть ли куда сходить
+        private bool isMoving = false;               // Есть ли куда сходить
 
-        public List<int[]> xodBot = new List<int[]>();  // Список ходов бота
+        private List<int[]> xodBot = new List<int[]>();  // Список ходов бота
 
-        public Image whiteKing;                      
-        public Image whiteQueen;                      
-        public Image whiteElephant;                      
-        public Image whiteHorse;                      
-        public Image whiteTower;                      
-        public Image whitePawn;
+        private Image whiteKing;                      
+        private Image whiteQueen;                      
+        private Image whiteElephant;                      
+        private Image whiteHorse;                      
+        private Image whiteTower;                      
+        private Image whitePawn;
 
-        public Image blackKing;
-        public Image blackQueen;
-        public Image blackElephant;
-        public Image blackHorse;
-        public Image blackTower;
-        public Image blackPawn;
+        private Image blackKing;
+        private Image blackQueen;
+        private Image blackElephant;
+        private Image blackHorse;
+        private Image blackTower;
+        private Image blackPawn;
 
         public Chess(bool IsStatus_)
         {
@@ -68,7 +68,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void Initialization()
+        private void Initialization()
         {
             // Белые:  0 - пустота, 11 - король, 12 - королева, 13 - слон, 14 - конь, 15 - ладья, 16 - пешка
             // Чёрные: 0 - пустота, 21 - король, 22 - королева, 23 - слон, 24 - конь, 25 - ладья, 26 - пешка 
@@ -85,7 +85,7 @@ namespace GameOnHome_WINFORM.Games
             };
         }
 
-        public void InitImage()
+        private void InitImage()
         {
           whiteKing = Properties.Resources.whiteKing;
           whiteQueen = Properties.Resources.whiteQueen;
@@ -102,7 +102,7 @@ namespace GameOnHome_WINFORM.Games
           blackPawn = Properties.Resources.blackPawn;
     }
 
-        public void CreateMap()
+        private void CreateMap()
         {
             this.Width = (mapSize + 1) * cellSize - 120;
             this.Height = (mapSize + 1) * cellSize - 88;
@@ -128,7 +128,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void FigureClickOffline(object sender, EventArgs e)
+        private void FigureClickOffline(object sender, EventArgs e)
         {
             if (currentPlayer == 0) { currentPlayer = 1; }
 
@@ -178,7 +178,7 @@ namespace GameOnHome_WINFORM.Games
             prevButton = pressedButton;
         }
         
-        public void bot_brain_easy()
+        private void bot_brain_easy()
         {
             bool IsEat = false;     // Можно ли кого-то съесть
             for(int i = 0; i < mapSize; i++)
@@ -199,7 +199,7 @@ namespace GameOnHome_WINFORM.Games
                 for(int i = 0; i < xodBot.Count; i++)
                 {
                     if(min > xodBot[i][4]) { min = xodBot[i][4]; index = i; }
-                    MessageBox.Show("i: " + xodBot[index][0] + " j: " + xodBot[index][1] + " ii: " + xodBot[index][2] + " jj: " + xodBot[index][3]);
+                    //MessageBox.Show("i: " + xodBot[index][0] + " j: " + xodBot[index][1] + " ii: " + xodBot[index][2] + " jj: " + xodBot[index][3]);
                 }
 
                 //MessageBox.Show("Было: " + map[xodBot[index][0], xodBot[index][1]] + " Найденная: " + map[xodBot[index][2], xodBot[index][3]]);
@@ -216,33 +216,345 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void bot_check_eat(int i, int j)
+        private void bot_check_step(int i, int j)
         {
-            int[] steps = new int[4] { 0, 0, 0, 0 };
+
+        }
+
+        private void bot_check_eat(int i, int j)
+        {
             switch (map[i, j])
             {
                 case 21:
-                    //ShowStepsKing(i, j, 1);
+                    bot_check_eat_King(i, j);
                     break;
                 case 22:
-                    //ShowStepsQueen(i, j, 1);
+                    bot_check_eat_Queen(i, j);
                     break;
                 case 23:
-                    //ShowStepsElephant(i, j, 1);
+                    bot_check_eat_Elephant(i, j);
                     break;
                 case 24:
-                    //ShowStepsHorse(i, j, 1);
+                    bot_check_eat_Horse(i, j);
                     break;
                 case 25:
                     bot_check_eat_Tower(i, j);
                     break;
                 case 26:
-                    bot_chec_eat_Pawn(i, j);
+                    bot_check_eat_Pawn(i, j);
                     break;
             }
         }
 
-        public void bot_check_eat_Tower(int i, int j)
+        private void bot_check_eat_King(int i, int j)
+        {
+            if (IsInsideBorders(i + 1, j))
+            {
+                if (GetColorFigure(map[i + 1, j]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 1; xod[3] = j;
+                    xod[4] = GetTypeFigure(map[i + 1, j]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i - 1, j))
+            {
+                if (GetColorFigure(map[i - 1, j]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j;
+                    xod[4] = GetTypeFigure(map[i - 1, j]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i, j + 1))
+            {
+                if (GetColorFigure(map[i, j + 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i; xod[3] = j + 1;
+                    xod[4] = GetTypeFigure(map[i, j + 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i, j - 1))
+            {
+                if (GetColorFigure(map[i, j - 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i; xod[3] = j - 1;
+                    xod[4] = GetTypeFigure(map[i, j - 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i + 1, j + 1))
+            {
+                if (GetColorFigure(map[i + 1, j + 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 1; xod[3] = j + 1;
+                    xod[4] = GetTypeFigure(map[i + 1, j + 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i - 1, j + 1))
+            {
+                if (GetColorFigure(map[i - 1, j + 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j + 1;
+                    xod[4] = GetTypeFigure(map[i - 1, j + 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i + 1, j - 1))
+            {
+                if (GetColorFigure(map[i + 1, j - 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 1; xod[3] = j - 1;
+                    xod[4] = GetTypeFigure(map[i + 1, j - 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+
+            if (IsInsideBorders(i - 1, j - 1))
+            {
+                if (GetColorFigure(map[i - 1, j - 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j - 1;
+                    xod[4] = GetTypeFigure(map[i - 1, j - 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+        }
+
+        private void bot_check_eat_Queen(int i, int j)
+        {
+            bot_check_eat_Elephant(i, j);
+            bot_check_eat_Tower(i, j);
+        }
+
+        private void bot_check_eat_Elephant(int i, int j)
+        {
+            int ii = i - 1;
+            int jj = j - 1;
+            while (IsInsideBorders(i, jj))          // вправо
+            {
+                if (GetColorFigure(map[ii, jj]) == 2) { break; }
+                if (GetColorFigure(map[ii, jj]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = ii; xod[3] = jj;
+                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                ii--; jj--;
+            }
+
+            ii = i + 1;
+            jj = j - 1;
+            while (IsInsideBorders(ii, jj))          // Вниз-влево
+            {
+                if (GetColorFigure(map[ii, jj]) == 2) { break; }
+                if (GetColorFigure(map[ii, jj]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = ii; xod[3] = jj;
+                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                ii++; jj--;
+            }
+
+            ii = i - 1;
+            jj = j + 1;
+            while (IsInsideBorders(ii, jj))          // Вверх-вправо
+            {
+                if (GetColorFigure(map[ii, jj]) == 2) { break; }
+                if (GetColorFigure(map[ii, jj]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = ii; xod[3] = jj;
+                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                ii--; jj++;
+            }
+
+            ii = i + 1;
+            jj = j + 1;
+            while (IsInsideBorders(ii, jj))          // Вниз-вправо
+            {
+                if (GetColorFigure(map[ii, jj]) == 2) { break; }
+                if (GetColorFigure(map[ii, jj]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = ii; xod[3] = jj;
+                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
+
+                    xodBot.Add(xod);
+                    break;
+                }
+                ii++; jj++;
+            }
+        }
+     
+        private void bot_check_eat_Horse(int i, int j)
+        {
+            if (IsInsideBorders(i - 2, j + 1))
+            {
+                if (GetColorFigure(map[i - 2, j + 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 2; xod[3] = j + 1;
+                    xod[4] = GetTypeFigure(map[i - 2, j + 1]);  
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i - 2, j - 1))
+            {
+                if (GetColorFigure(map[i - 2, j - 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 2; xod[3] = j - 1;
+                    xod[4] = GetTypeFigure(map[i - 2, j - 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i + 2, j + 1))
+            {
+                if (GetColorFigure(map[i + 2, j + 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 2; xod[3] = j + 1;
+                    xod[4] = GetTypeFigure(map[i + 2, j + 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i + 2, j - 1))
+            {
+                if (GetColorFigure(map[i + 2, j - 1]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 2; xod[3] = j - 1;
+                    xod[4] = GetTypeFigure(map[i + 2, j - 1]);
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i - 1, j + 2))
+            {
+                if (GetColorFigure(map[i - 1, j + 2]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j + 2;
+                    xod[4] = GetTypeFigure(map[i - 1, j + 2]);
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i + 1, j + 2))
+            {
+                if (GetColorFigure(map[i - 1, j + 2]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 1; xod[3] = j + 2;
+                    xod[4] = GetTypeFigure(map[i + 1, j + 2]);
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i - 1, j - 2))
+            {
+                if (GetColorFigure(map[i - 1, j - 2]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i - 1; xod[3] = j - 2;
+                    xod[4] = GetTypeFigure(map[i - 1, j - 2]);
+
+                    xodBot.Add(xod);
+                }
+            }
+            if (IsInsideBorders(i + 1, j - 2))
+            {
+                if (GetColorFigure(map[i + 1, j - 2]) == 1)
+                {
+                    int[] xod = new int[5];
+
+                    xod[0] = i; xod[1] = j;
+                    xod[2] = i + 1; xod[3] = j - 2;
+                    xod[4] = GetTypeFigure(map[i + 1, j - 2]);
+
+                    xodBot.Add(xod);
+                }
+            }
+        }
+
+        private void bot_check_eat_Tower(int i, int j)
         {
             int jj = j + 1;
             while (IsInsideBorders(i, jj))          // вправо
@@ -316,7 +628,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void bot_chec_eat_Pawn(int i, int j)
+        private void bot_check_eat_Pawn(int i, int j)
         {
             if(IsInsideBorders(i - 1, j - 1))
             {
@@ -347,7 +659,7 @@ namespace GameOnHome_WINFORM.Games
             //return new int[4] { -1, -1, -1, -1 };
         }
 
-        public void FigureClickOnline(object sender, EventArgs e)
+        private void FigureClickOnline(object sender, EventArgs e)
         {
             if(currentPlayer == 0) { currentPlayer = 1; }
 
@@ -397,7 +709,7 @@ namespace GameOnHome_WINFORM.Games
             prevButton = pressedButton;
         }
 
-        public void ShowSteps(int i, int j)
+        private void ShowSteps(int i, int j)
         {
             // false - black , true - white
             switch (map[i, j])
@@ -444,7 +756,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void ShowStepsKing(int i, int j, int Figure)
+        private void ShowStepsKing(int i, int j, int Figure)
         {
             if (IsInsideBorders(i + 1, j))
             {
@@ -516,18 +828,16 @@ namespace GameOnHome_WINFORM.Games
                     buttons[i - 1, j - 1].Enabled = true;
                     buttons[i - 1, j - 1].BackColor = Color.Yellow;
                 }
-            }
-
-            
+            }          
         }
 
-        public void ShowStepsQueen(int i, int j, int Figure)
+        private void ShowStepsQueen(int i, int j, int Figure)
         {
             ShowStepsElephant(i, j, Figure);
             ShowStepsTower(i, j, Figure);
         }
 
-        public void ShowStepsElephant(int i, int j, int Figure)
+        private void ShowStepsElephant(int i, int j, int Figure)
         {
             int ii = i - 1;
             int jj = j - 1;
@@ -586,7 +896,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void ShowStepsHorse(int i, int j, int Figure)
+        private void ShowStepsHorse(int i, int j, int Figure)
         {
             if (IsInsideBorders(i - 2, j + 1))
             {
@@ -654,7 +964,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void ShowStepsTower(int i, int j, int Figure)
+        private void ShowStepsTower(int i, int j, int Figure)
         {
 
             int jj = j + 1;
@@ -709,7 +1019,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void ShowEatStepsPawn(int i, int j, bool IsColor)
+        private void ShowEatStepsPawn(int i, int j, bool IsColor)
         {
             if(IsColor)
             {
@@ -761,7 +1071,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void ShowStepsPawn(int i, int j, bool IsColor)
+        private void ShowStepsPawn(int i, int j, bool IsColor)
         {
             if(IsColor)
             {
@@ -864,7 +1174,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void CheckWin()
+        private void CheckWin()
         {
             bool IsLiveWhite = false;
             bool IsLiveBlack = false;
@@ -891,7 +1201,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public void CloseSteps()
+        private void CloseSteps()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -902,7 +1212,7 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
-        public Image GetImage(int type) // Белые:  0 - пустота, 11 - король, 12 - королева, 13 - слон, 14 - конь, 15 - ладья, 16 - пешка
+        private Image GetImage(int type) // Белые:  0 - пустота, 11 - король, 12 - королева, 13 - слон, 14 - конь, 15 - ладья, 16 - пешка
         {
             switch(type)
             {
@@ -939,19 +1249,19 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Цвет выбранной фигуры
-        public int GetColorFigure(int val)
+        private int GetColorFigure(int val)
         {
             return val / 10;
         }
 
         // Тип выбранной фигуры
-        public int GetTypeFigure(int val)
+        private int GetTypeFigure(int val)
         {
             return val % 10;
         }
 
         // Возвращает фигуру находящуюся по переданным координатам
-        public int CheckMap(int i, int j)
+        private int CheckMap(int i, int j)
         {
             if (i < mapSize && j < mapSize)
             {
@@ -961,20 +1271,20 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Получить позицию кнопки по I
-        public int ConvertNameI(Button b)
+        private int ConvertNameI(Button b)
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[6]) - 48;
         }
 
         // Получить позицию кнопки по Y
-        public int ConvertNameY(Button b)
+        private int ConvertNameY(Button b)
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[8]) - 48;
         }
 
-        public Color GetPrevButtonColor(Button prevButton)
+        private Color GetPrevButtonColor(Button prevButton)
         {
             if ((prevButton.Location.Y / cellSize % 2) != 0)
             {
@@ -1006,7 +1316,7 @@ namespace GameOnHome_WINFORM.Games
             return res;
         }
 
-        public bool IsInsideBorders(int i, int j)
+        private bool IsInsideBorders(int i, int j)
         {
             if (i >= mapSize || j >= mapSize || i < 0 || j < 0)
             {
@@ -1016,7 +1326,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Пройтись по всем кнопкам и сделать их активными
-        public void ActivateAllButtons()
+        private void ActivateAllButtons()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -1028,7 +1338,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Пройтись по всем кнопкам и сделать их не активными
-        public void DeactivateAllButtons()
+        private void DeactivateAllButtons()
         {
             for (int i = 0; i < mapSize; i++)
             {
@@ -1176,7 +1486,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Отправить сообщение
-        public void SendMessage(string message)
+        private void SendMessage(string message)
         {
             if ((message != ""))
             {
@@ -1224,7 +1534,7 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Проверка есть ли соединение с сервером, каждые 10 секунд
-        public void CheckConnection()
+        private void CheckConnection()
         {
             while (true)
             {

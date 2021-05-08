@@ -132,5 +132,11 @@ namespace GameOnHome_WINFORM
             Games.Chess chess = new Games.Chess(result);
             chess.Show();
         }
+
+        private void pictureBox_Ping_Pong_Click(object sender, EventArgs e)
+        {
+            Games.Ping_Pong ping_Pong = new Games.Ping_Pong();
+            ping_Pong.Show();
+        }
     }
 }

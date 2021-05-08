@@ -40,11 +40,14 @@ namespace GameOnHome_WINFORM
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tic_tac)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shashki)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Three_Row)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_saper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox_tic_tac
@@ -169,6 +172,31 @@ namespace GameOnHome_WINFORM
             this.label2.TabIndex = 1;
             this.label2.Text = "Шахматы";
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(57, 265);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(136, 128);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox_Ping_Pong_Click);
+            this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox_Three_Row_MouseEnter);
+            this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox_Three_Row_MouseLeave);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(83, 398);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(92, 24);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Пинг-понг";
+            // 
             // ListGames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -177,11 +205,13 @@ namespace GameOnHome_WINFORM
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1219, 849);
             this.Controls.Add(this.label_shaski);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label_3ryd);
             this.Controls.Add(this.label_tic_tac);
             this.Controls.Add(this.pictureBox_shashki);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox_saper);
             this.Controls.Add(this.pictureBox_Three_Row);
@@ -195,6 +225,7 @@ namespace GameOnHome_WINFORM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Three_Row)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_saper)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,5 +243,7 @@ namespace GameOnHome_WINFORM
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label3;
     }
 }
