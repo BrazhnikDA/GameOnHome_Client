@@ -201,7 +201,7 @@ namespace GameOnHome_WINFORM.Games
                 for(int i = 0; i < xodBot.Count; i++)
                 {
                     if(min > xodBot[i][4]) { min = xodBot[i][4]; indexEat = i; }
-                    if(xodBot[i][4] == 10) { steps.Add(i); }
+                    if(xodBot[i][4] > 100) { steps.Add(i); }
                 }
 
                 if (indexEat == -1)
@@ -254,7 +254,69 @@ namespace GameOnHome_WINFORM.Games
 
         private void BotCheckStepKing(int i, int j)
         {
-            //throw new NotImplementedException();
+            if (IsInsideBorders(i + 1, j))
+            {
+                if (map[i + 1, j] == 0)
+                {
+                    AddStep(i, j, i + 1, j, 100 + GetTypeFigure(map[i + 1, j]));
+                }
+            }
+
+            if (IsInsideBorders(i - 1, j))
+            {
+                if (map[i - 1, j] == 0)
+                {
+                    AddStep(i, j, i - 1, j, 100 + GetTypeFigure(map[i - 1, j]));
+                }
+            }
+
+            if (IsInsideBorders(i, j + 1))
+            {
+                if (map[i, j + 1] == 0)
+                {
+                    AddStep(i, j, i, j + 1, 100 + GetTypeFigure(map[i, j + 1]));
+                }
+            }
+
+            if (IsInsideBorders(i, j - 1))
+            {
+                if (map[i, j - 1] == 0)
+                {
+                    AddStep(i, j, i, j - 1, 100 + GetTypeFigure(map[i, j - 1]));
+                }
+            }
+
+            if (IsInsideBorders(i + 1, j + 1))
+            {
+                if (map[i + 1, j + 1] == 0)
+                {
+                    AddStep(i, j, i + 1, j + 1, 100 + GetTypeFigure(map[i + 1, j + 1]));
+                }
+            }
+
+            if (IsInsideBorders(i - 1, j + 1))
+            {
+                if (map[i - 1, j + 1] == 0)
+                {
+                    AddStep(i, j, i - 1, j + 1, 100 + GetTypeFigure(map[i - 1, j + 1]));
+                }
+            }
+
+            if (IsInsideBorders(i + 1, j - 1))
+            {
+                if (map[i + 1, j - 1] == 0)
+                {
+                    AddStep(i, j, i + 1, j - 1, 100 + GetTypeFigure(map[i + 1, j - 1]));
+                }
+            }
+
+            if (IsInsideBorders(i - 1, j - 1))
+            {
+                if (map[i - 1, j - 1] == 0)
+                {
+                    AddStep(i, j, i - 1, j - 1, 100 + GetTypeFigure(map[i - 1, j - 1]));
+                }
+            }
         }
 
         private void BotCheckStepQueen(int i, int j)
@@ -265,7 +327,53 @@ namespace GameOnHome_WINFORM.Games
 
         private void BotCheckStepElephant(int i, int j)
         {
-            //throw new NotImplementedException();
+            int ii = i - 1;
+            int jj = j - 1;
+            while (IsInsideBorders(ii, jj))          // Вверх-влево
+            {
+                if (map[ii, jj] == 0)
+                {
+                    AddStep(i, j, ii, jj, 100 + GetTypeFigure(map[ii, jj]));
+                }
+                else { break; }
+                ii--; jj--;
+            }
+
+            ii = i + 1;
+            jj = j - 1;
+            while (IsInsideBorders(ii, jj))          // Вниз-влево
+            {
+                if (map[ii, jj] == 0)
+                {
+                    AddStep(i, j, ii, jj, 100 + GetTypeFigure(map[ii, jj]));
+                }
+                else { break; }
+                ii++; jj--;
+            }
+
+            ii = i - 1;
+            jj = j + 1;
+            while (IsInsideBorders(ii, jj))          // Вверх-вправо
+            {
+                if (map[ii, jj] == 0)
+                {
+                    AddStep(i, j, ii, jj, 100 + GetTypeFigure(map[ii, jj]));
+                }
+                else { break; }
+                ii--; jj++;
+            }
+
+            ii = i + 1;
+            jj = j + 1;
+            while (IsInsideBorders(ii, jj))          // Вниз-вправо
+            {
+                if (map[ii, jj] == 0)
+                {
+                    AddStep(i, j, ii, jj, 100 + GetTypeFigure(map[ii, jj]));
+                }
+                else { break; }
+                ii++; jj++;
+            }
         }
 
         private void BotCheckStepHorse(int i, int j)
@@ -274,56 +382,56 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i - 2, j + 1] == 0)
                 {
-                    AddStep(i, j, i - 2, j + 1, GetTypeFigure(map[i - 2, j + 1]));
+                    AddStep(i, j, i - 2, j + 1, 100 + GetTypeFigure(map[i - 2, j + 1]));
                 }
             }
             if (IsInsideBorders(i - 2, j - 1))
             {
                 if (map[i - 2, j - 1] == 0)
                 {
-                    AddStep(i, j, i - 2, j - 1, GetTypeFigure(map[i - 2, j - 1]));
+                    AddStep(i, j, i - 2, j - 1, 100 + GetTypeFigure(map[i - 2, j - 1]));
                 }
             }
             if (IsInsideBorders(i + 2, j + 1))
             {
                 if (map[i + 2, j + 1] == 0)
                 {
-                    AddStep(i, j, i + 2, j + 1, GetTypeFigure(map[i + 2, j + 1]));
+                    AddStep(i, j, i + 2, j + 1, 100 + GetTypeFigure(map[i + 2, j + 1]));
                 }
             }
             if (IsInsideBorders(i + 2, j - 1))
             {
                 if (map[i + 2, j - 1] == 0)
                 {
-                    AddStep(i, j, i + 2, j - 1, GetTypeFigure(map[i + 2, j - 1]));
+                    AddStep(i, j, i + 2, j - 1, 100 + GetTypeFigure(map[i + 2, j - 1]));
                 }
             }
             if (IsInsideBorders(i - 1, j + 2))
             {
                 if (map[i - 1, j + 2] == 0)
                 {
-                    AddStep(i, j, i - 1, j + 2, GetTypeFigure(map[i - 1, j + 2]));
+                    AddStep(i, j, i - 1, j + 2, 100 + GetTypeFigure(map[i - 1, j + 2]));
                 }
             }
             if (IsInsideBorders(i + 1, j + 2))
             {
                 if (map[i + 1, j + 2] == 0)
                 {
-                    AddStep(i, j, i + 1, j + 2, GetTypeFigure(map[i + 1, j + 2]));
+                    AddStep(i, j, i + 1, j + 2, 100 + GetTypeFigure(map[i + 1, j + 2]));
                 }
             }
             if (IsInsideBorders(i - 1, j - 2))
             {
                 if (map[i - 1, j - 2] == 0)
                 {
-                    AddStep(i, j, i - 1, j - 2, GetTypeFigure(map[i - 1, j - 2]));
+                    AddStep(i, j, i - 1, j - 2, 100 + GetTypeFigure(map[i - 1, j - 2]));
                 }
             }
             if (IsInsideBorders(i + 1, j - 2))
             {
                 if (map[i + 1, j - 2] == 0)
                 {
-                    AddStep(i, j, i + 1, j - 2, GetTypeFigure(map[i + 1, j - 2]));
+                    AddStep(i, j, i + 1, j - 2, 100 + GetTypeFigure(map[i + 1, j - 2]));
                 }
             }
         }
@@ -335,7 +443,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i, jj] == 0)
                 {
-                    AddStep(i, j, i, jj, GetTypeFigure(map[i, jj]));
+                    AddStep(i, j, i, jj, 100 + GetTypeFigure(map[i, jj]));
                 }
                 else { break; }
                 jj++;
@@ -345,7 +453,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i, jj] == 0)
                 {
-                    AddStep(i, j, i, jj, GetTypeFigure(map[i, jj]));
+                    AddStep(i, j, i, jj, 100 + GetTypeFigure(map[i, jj]));
                 }
                 else { break; }
                 jj--;
@@ -356,7 +464,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[ii, j] == 0)
                 {
-                    AddStep(i, j, ii, j, GetTypeFigure(map[ii, j]));
+                    AddStep(i, j, ii, j, 100 + GetTypeFigure(map[ii, j]));
                 }
                 else { break; }
                 ii++;
@@ -367,7 +475,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[ii, j] == 0)
                 {
-                    AddStep(i, j, ii, j, GetTypeFigure(map[ii, j]));
+                    AddStep(i, j, ii, j, 100 + GetTypeFigure(map[ii, j]));
                 }
                 else { break; }
                 ii--;
@@ -390,12 +498,12 @@ namespace GameOnHome_WINFORM.Games
                 {
                     if (map[i - 1, j] == 0)
                     {
-                        AddStep(i, j, i - 1, j, 10);
+                        AddStep(i, j, i - 1, j, 110);
                         if (IsInsideBorders(i - 2, j))
                         {
                             if (map[i - 2, j] == 0)
                             {
-                                AddStep(i, j, i - 2, j, 10);
+                                AddStep(i, j, i - 2, j, 110);
                             }
                         }
                     }
@@ -407,7 +515,7 @@ namespace GameOnHome_WINFORM.Games
                 {
                     if (map[-1, j] == 0)
                     {
-                        AddStep(i, j, i - 1, j, 10);
+                        AddStep(i, j, i - 1, j, 110);
                     }
                 }
             }
