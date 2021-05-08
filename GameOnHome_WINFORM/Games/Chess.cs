@@ -170,7 +170,7 @@ namespace GameOnHome_WINFORM.Games
 
                         isMoving = false;
                         CloseSteps();
-                        bot_brain_easy();
+                        BotBrainEasy();
                         CheckWin();
                     }
                 }
@@ -178,7 +178,7 @@ namespace GameOnHome_WINFORM.Games
             prevButton = pressedButton;
         }
         
-        private void bot_brain_easy()
+        private void BotBrainEasy()
         {
             bool IsEat = false;     // Можно ли кого-то съесть
             for(int i = 0; i < mapSize; i++)
@@ -187,78 +187,268 @@ namespace GameOnHome_WINFORM.Games
                 {
                     if (map[i, j] > 20)
                     {
-                        bot_check_eat(i, j);
+                        BotCheckEat(i, j);
+                        BotCheckStep(i, j);
                     }
                 }
             }
             if(xodBot.Count > 0)
             {
+                List<int> steps = new List<int>();
                 // Ищем самый "важный" ход
                 int min = xodBot[0][4];
-                int index = 0;
+                int indexEat = -1;
                 for(int i = 0; i < xodBot.Count; i++)
                 {
-                    if(min > xodBot[i][4]) { min = xodBot[i][4]; index = i; }
-                    //MessageBox.Show("i: " + xodBot[index][0] + " j: " + xodBot[index][1] + " ii: " + xodBot[index][2] + " jj: " + xodBot[index][3]);
+                    if(min > xodBot[i][4]) { min = xodBot[i][4]; indexEat = i; }
+                    if(xodBot[i][4] == 10) { steps.Add(i); }
                 }
 
-                //MessageBox.Show("Было: " + map[xodBot[index][0], xodBot[index][1]] + " Найденная: " + map[xodBot[index][2], xodBot[index][3]]);
+                if (indexEat == -1)
+                {
+                    Random rnd = new Random();
+                    int xod = rnd.Next(0, steps.Count);
 
-                map[xodBot[index][2], xodBot[index][3]] = map[xodBot[index][0], xodBot[index][1]];    // Куда сходили теперь наша фигура
-                map[xodBot[index][0], xodBot[index][1]] = 0;    // Где стояли теперь пустота
+                    map[xodBot[xod][2], xodBot[xod][3]] = map[xodBot[xod][0], xodBot[xod][1]];    // Куда сходили теперь наша фигура
+                    map[xodBot[xod][0], xodBot[xod][1]] = 0;    // Где стояли теперь пустота
 
-                //MessageBox.Show("Было: " + map[xodBot[index][0], xodBot[index][1]] + " Найденная: " + map[xodBot[index][2], xodBot[index][3]]);
+                    buttons[xodBot[xod][2], xodBot[xod][3]].Image = buttons[xodBot[xod][0], xodBot[xod][1]].Image;
+                    buttons[xodBot[xod][0], xodBot[xod][1]].Image = null;
+                }
+                else
+                {
+                    map[xodBot[indexEat][2], xodBot[indexEat][3]] = map[xodBot[indexEat][0], xodBot[indexEat][1]];    // Куда сходили теперь наша фигура
+                    map[xodBot[indexEat][0], xodBot[indexEat][1]] = 0;    // Где стояли теперь пустота
 
-                buttons[xodBot[index][2], xodBot[index][3]].Image = buttons[xodBot[index][0], xodBot[index][1]].Image;
-                buttons[xodBot[index][0], xodBot[index][1]].Image = null;
-
+                    buttons[xodBot[indexEat][2], xodBot[indexEat][3]].Image = buttons[xodBot[indexEat][0], xodBot[indexEat][1]].Image;
+                    buttons[xodBot[indexEat][0], xodBot[indexEat][1]].Image = null;
+                }
                 xodBot.Clear(); // Очищаем ходы
             }
         }
 
-        private void bot_check_step(int i, int j)
-        {
-
-        }
-
-        private void bot_check_eat(int i, int j)
+        private void BotCheckStep(int i, int j)
         {
             switch (map[i, j])
             {
                 case 21:
-                    bot_check_eat_King(i, j);
+                    BotCheckStepKing(i, j);
                     break;
                 case 22:
-                    bot_check_eat_Queen(i, j);
+                    BotCheckStepQueen(i, j);
                     break;
                 case 23:
-                    bot_check_eat_Elephant(i, j);
+                    BotCheckStepElephant(i, j);
                     break;
                 case 24:
-                    bot_check_eat_Horse(i, j);
+                    BotCheckStepHorse(i, j);
                     break;
                 case 25:
-                    bot_check_eat_Tower(i, j);
+                    BotCheckStepTower(i, j);
                     break;
                 case 26:
-                    bot_check_eat_Pawn(i, j);
+                    BotCheckStepPawn(i, j);
                     break;
             }
         }
 
-        private void bot_check_eat_King(int i, int j)
+        private void BotCheckStepKing(int i, int j)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void BotCheckStepQueen(int i, int j)
+        {
+            BotCheckStepElephant(i, j);
+            BotCheckStepTower(i, j);
+        }
+
+        private void BotCheckStepElephant(int i, int j)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void BotCheckStepHorse(int i, int j)
+        {
+            if (IsInsideBorders(i - 2, j + 1))
+            {
+                if (map[i - 2, j + 1] == 0)
+                {
+                    AddStep(i, j, i - 2, j + 1, GetTypeFigure(map[i - 2, j + 1]));
+                }
+            }
+            if (IsInsideBorders(i - 2, j - 1))
+            {
+                if (map[i - 2, j - 1] == 0)
+                {
+                    AddStep(i, j, i - 2, j - 1, GetTypeFigure(map[i - 2, j - 1]));
+                }
+            }
+            if (IsInsideBorders(i + 2, j + 1))
+            {
+                if (map[i + 2, j + 1] == 0)
+                {
+                    AddStep(i, j, i + 2, j + 1, GetTypeFigure(map[i + 2, j + 1]));
+                }
+            }
+            if (IsInsideBorders(i + 2, j - 1))
+            {
+                if (map[i + 2, j - 1] == 0)
+                {
+                    AddStep(i, j, i + 2, j - 1, GetTypeFigure(map[i + 2, j - 1]));
+                }
+            }
+            if (IsInsideBorders(i - 1, j + 2))
+            {
+                if (map[i - 1, j + 2] == 0)
+                {
+                    AddStep(i, j, i - 1, j + 2, GetTypeFigure(map[i - 1, j + 2]));
+                }
+            }
+            if (IsInsideBorders(i + 1, j + 2))
+            {
+                if (map[i + 1, j + 2] == 0)
+                {
+                    AddStep(i, j, i + 1, j + 2, GetTypeFigure(map[i + 1, j + 2]));
+                }
+            }
+            if (IsInsideBorders(i - 1, j - 2))
+            {
+                if (map[i - 1, j - 2] == 0)
+                {
+                    AddStep(i, j, i - 1, j - 2, GetTypeFigure(map[i - 1, j - 2]));
+                }
+            }
+            if (IsInsideBorders(i + 1, j - 2))
+            {
+                if (map[i + 1, j - 2] == 0)
+                {
+                    AddStep(i, j, i + 1, j - 2, GetTypeFigure(map[i + 1, j - 2]));
+                }
+            }
+        }
+
+        private void BotCheckStepTower(int i, int j)
+        {
+            int jj = j + 1;
+            while (IsInsideBorders(i, jj))          // вправо
+            {
+                if (map[i, jj] == 0)
+                {
+                    AddStep(i, j, i, jj, GetTypeFigure(map[i, jj]));
+                }
+                else { break; }
+                jj++;
+            }
+            jj = j - 1;
+            while (IsInsideBorders(i, jj))          // влево
+            {
+                if (map[i, jj] == 0)
+                {
+                    AddStep(i, j, i, jj, GetTypeFigure(map[i, jj]));
+                }
+                else { break; }
+                jj--;
+            }
+
+            int ii = i + 1;
+            while (IsInsideBorders(ii, j))          // вниз
+            {
+                if (map[ii, j] == 0)
+                {
+                    AddStep(i, j, ii, j, GetTypeFigure(map[ii, j]));
+                }
+                else { break; }
+                ii++;
+            }
+
+            ii = i - 1;
+            while (IsInsideBorders(ii, j))          // вверх
+            {
+                if (map[ii, j] == 0)
+                {
+                    AddStep(i, j, ii, j, GetTypeFigure(map[ii, j]));
+                }
+                else { break; }
+                ii--;
+            }
+        }
+
+        private void BotCheckStepPawn(int i, int j)
+        {
+            if(IsInsideBorders(i + 1, j))
+            {
+                if(map[i + 1, j] > 20 && map[i + 1, j] < 23)
+                {
+                    return;
+                }
+            }
+
+            if (i > 3)
+            {
+                if (IsInsideBorders(i - 1, j))
+                {
+                    if (map[i - 1, j] == 0)
+                    {
+                        AddStep(i, j, i - 1, j, 10);
+                        if (IsInsideBorders(i - 2, j))
+                        {
+                            if (map[i - 2, j] == 0)
+                            {
+                                AddStep(i, j, i - 2, j, 10);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (IsInsideBorders(i - 1, j))
+                {
+                    if (map[-1, j] == 0)
+                    {
+                        AddStep(i, j, i - 1, j, 10);
+                    }
+                }
+            }
+            
+        }
+
+        private void BotCheckEat(int i, int j)
+        {
+            switch (map[i, j])
+            {
+                case 21:
+                    BotCheckEatKing(i, j);
+                    break;
+                case 22:
+                    BotCheckEatQueen(i, j);
+                    break;
+                case 23:
+                    BotCheckEatElephant(i, j);
+                    break;
+                case 24:
+                    BotCheckEatHorse(i, j);
+                    break;
+                case 25:
+                    BotCheckEatTower(i, j);
+                    break;
+                case 26:
+                    BotCheckEatPawn(i, j);
+                    break;
+            }
+        }
+
+        private void BotCheckEatKing(int i, int j)
         {
             if (IsInsideBorders(i + 1, j))
             {
                 if (GetColorFigure(map[i + 1, j]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 1; xod[3] = j;
-                    xod[4] = GetTypeFigure(map[i + 1, j]);
-
-                    xodBot.Add(xod);
+                    if (GetColorFigure(map[i + 1, j]) == 1)
+                    {
+                        AddStep(i, j, i + 1, j, GetTypeFigure(map[i + 1, j]));
+                    }
                 }
             }
 
@@ -266,13 +456,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i - 1, j]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j;
-                    xod[4] = GetTypeFigure(map[i - 1, j]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j, GetTypeFigure(map[i - 1, j]));
                 }
             }
 
@@ -280,13 +464,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i, j + 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i; xod[3] = j + 1;
-                    xod[4] = GetTypeFigure(map[i, j + 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i, j + 1, GetTypeFigure(map[i, j + 1]));
                 }
             }
 
@@ -294,13 +472,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i, j - 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i; xod[3] = j - 1;
-                    xod[4] = GetTypeFigure(map[i, j - 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i, j - 1, GetTypeFigure(map[i, j - 1]));
                 }
             }
 
@@ -308,13 +480,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i + 1, j + 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 1; xod[3] = j + 1;
-                    xod[4] = GetTypeFigure(map[i + 1, j + 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i + 1, j + 1, GetTypeFigure(map[i + 1, j + 1]));
                 }
             }
 
@@ -322,13 +488,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i - 1, j + 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j + 1;
-                    xod[4] = GetTypeFigure(map[i - 1, j + 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j + 1, GetTypeFigure(map[i - 1, j + 1]));
                 }
             }
 
@@ -336,13 +496,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i + 1, j - 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 1; xod[3] = j - 1;
-                    xod[4] = GetTypeFigure(map[i + 1, j - 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i + 1, j - 1, GetTypeFigure(map[i + 1, j - 1]));
                 }
             }
 
@@ -350,39 +504,27 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (GetColorFigure(map[i - 1, j - 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j - 1;
-                    xod[4] = GetTypeFigure(map[i - 1, j - 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j - 1, GetTypeFigure(map[i - 1, j - 1]));
                 }
             }
         }
 
-        private void bot_check_eat_Queen(int i, int j)
+        private void BotCheckEatQueen(int i, int j)
         {
-            bot_check_eat_Elephant(i, j);
-            bot_check_eat_Tower(i, j);
+            BotCheckEatElephant(i, j);
+            BotCheckEatTower(i, j);
         }
 
-        private void bot_check_eat_Elephant(int i, int j)
+        private void BotCheckEatElephant(int i, int j)
         {
             int ii = i - 1;
             int jj = j - 1;
-            while (IsInsideBorders(i, jj))          // вправо
+            while (IsInsideBorders(ii, jj))          // вправо
             {
                 if (GetColorFigure(map[ii, jj]) == 2) { break; }
                 if (GetColorFigure(map[ii, jj]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = ii; xod[3] = jj;
-                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, ii, jj, GetTypeFigure(map[ii, jj]));
                     break;
                 }
                 ii--; jj--;
@@ -395,13 +537,7 @@ namespace GameOnHome_WINFORM.Games
                 if (GetColorFigure(map[ii, jj]) == 2) { break; }
                 if (GetColorFigure(map[ii, jj]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = ii; xod[3] = jj;
-                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, ii, jj, GetTypeFigure(map[ii, jj]));
                     break;
                 }
                 ii++; jj--;
@@ -414,13 +550,7 @@ namespace GameOnHome_WINFORM.Games
                 if (GetColorFigure(map[ii, jj]) == 2) { break; }
                 if (GetColorFigure(map[ii, jj]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = ii; xod[3] = jj;
-                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, ii, jj, GetTypeFigure(map[ii, jj]));
                     break;
                 }
                 ii--; jj++;
@@ -433,128 +563,74 @@ namespace GameOnHome_WINFORM.Games
                 if (GetColorFigure(map[ii, jj]) == 2) { break; }
                 if (GetColorFigure(map[ii, jj]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = ii; xod[3] = jj;
-                    xod[4] = GetTypeFigure(map[ii, jj]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, ii, jj, GetTypeFigure(map[ii, jj]));
                     break;
                 }
                 ii++; jj++;
             }
         }
      
-        private void bot_check_eat_Horse(int i, int j)
+        private void BotCheckEatHorse(int i, int j)
         {
             if (IsInsideBorders(i - 2, j + 1))
             {
                 if (GetColorFigure(map[i - 2, j + 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 2; xod[3] = j + 1;
-                    xod[4] = GetTypeFigure(map[i - 2, j + 1]);  
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 2, j + 1, GetTypeFigure(map[i - 2, j + 1]));
                 }
             }
             if (IsInsideBorders(i - 2, j - 1))
             {
                 if (GetColorFigure(map[i - 2, j - 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 2; xod[3] = j - 1;
-                    xod[4] = GetTypeFigure(map[i - 2, j - 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 2, j - 1, GetTypeFigure(map[i - 2, j - 1]));
                 }
             }
             if (IsInsideBorders(i + 2, j + 1))
             {
                 if (GetColorFigure(map[i + 2, j + 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 2; xod[3] = j + 1;
-                    xod[4] = GetTypeFigure(map[i + 2, j + 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i + 2, j + 1, GetTypeFigure(map[i + 2, j + 1]));
                 }
             }
             if (IsInsideBorders(i + 2, j - 1))
             {
                 if (GetColorFigure(map[i + 2, j - 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 2; xod[3] = j - 1;
-                    xod[4] = GetTypeFigure(map[i + 2, j - 1]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i + 2, j - 1, GetTypeFigure(map[i + 2, j - 1]));
                 }
             }
             if (IsInsideBorders(i - 1, j + 2))
             {
                 if (GetColorFigure(map[i - 1, j + 2]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j + 2;
-                    xod[4] = GetTypeFigure(map[i - 1, j + 2]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j + 2, GetTypeFigure(map[i - 1, j + 2]));
                 }
             }
             if (IsInsideBorders(i + 1, j + 2))
             {
                 if (GetColorFigure(map[i - 1, j + 2]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 1; xod[3] = j + 2;
-                    xod[4] = GetTypeFigure(map[i + 1, j + 2]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i + 1, j + 2, GetTypeFigure(map[i + 1, j + 2]));
                 }
             }
             if (IsInsideBorders(i - 1, j - 2))
             {
                 if (GetColorFigure(map[i - 1, j - 2]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j - 2;
-                    xod[4] = GetTypeFigure(map[i - 1, j - 2]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j - 2, GetTypeFigure(map[i - 1, j - 2]));
                 }
             }
             if (IsInsideBorders(i + 1, j - 2))
             {
                 if (GetColorFigure(map[i + 1, j - 2]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i + 1; xod[3] = j - 2;
-                    xod[4] = GetTypeFigure(map[i + 1, j - 2]);
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i + 1, j - 2, GetTypeFigure(map[i + 1, j - 2]));
                 }
             }
         }
 
-        private void bot_check_eat_Tower(int i, int j)
+        private void BotCheckEatTower(int i, int j)
         {
             int jj = j + 1;
             while (IsInsideBorders(i, jj))          // вправо
@@ -562,13 +638,7 @@ namespace GameOnHome_WINFORM.Games
                 if (GetColorFigure(map[i, jj]) == 2) { break; }
                 if (GetColorFigure(map[i, jj]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i; xod[3] = jj;
-                    xod[4] = GetTypeFigure(map[i, jj]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i, jj, GetTypeFigure(map[i, jj]));
                     break;
                 }
                 jj++;
@@ -579,13 +649,7 @@ namespace GameOnHome_WINFORM.Games
                 if(GetColorFigure(map[i, jj]) == 2) { break; }
                 if (GetColorFigure(map[i, jj]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i; xod[3] = jj;
-                    xod[4] = GetTypeFigure(map[i, jj]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i, jj, GetTypeFigure(map[i, jj]));
                     break;
                 }
                 jj--;
@@ -597,13 +661,7 @@ namespace GameOnHome_WINFORM.Games
                 if (GetColorFigure(map[ii, j]) == 2) { break; }
                 if (GetColorFigure(map[ii, j]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = ii; xod[3] = j;
-                    xod[4] = GetTypeFigure(map[ii, j]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, ii, j, GetTypeFigure(map[ii, j]));
                     break;
                 }
                 ii++;
@@ -615,48 +673,29 @@ namespace GameOnHome_WINFORM.Games
                 if (GetColorFigure(map[ii, j]) == 2) { break; }
                 if (GetColorFigure(map[ii, j]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = ii; xod[3] = j;
-                    xod[4] = GetTypeFigure(map[ii, j]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, ii, j, GetTypeFigure(map[ii, j]));
                     break;
                 }
                 ii--;
             }
         }
 
-        private void bot_check_eat_Pawn(int i, int j)
+        private void BotCheckEatPawn(int i, int j)
         {
             if(IsInsideBorders(i - 1, j - 1))
             {
                 if(GetColorFigure(map[i - 1, j - 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j - 1;
-                    xod[4] = GetTypeFigure(map[i, j - 1]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j - 1, GetTypeFigure(map[i - 1, j - 1]));
                 }
             }
             if (IsInsideBorders(i - 1, j + 1))
             {
                 if (GetColorFigure(map[i - 1, j + 1]) == 1)
                 {
-                    int[] xod = new int[5];
-
-                    xod[0] = i; xod[1] = j;
-                    xod[2] = i - 1; xod[3] = j + 1;
-                    xod[4] = GetTypeFigure(map[i, j + 1]);  // Важность фигуры
-
-                    xodBot.Add(xod);
+                    AddStep(i, j, i - 1, j + 1, GetTypeFigure(map[i - 1, j + 1]));
                 }
             }
-            //return new int[4] { -1, -1, -1, -1 };
         }
 
         private void FigureClickOnline(object sender, EventArgs e)
@@ -1325,6 +1364,17 @@ namespace GameOnHome_WINFORM.Games
             return true; // Находится
         }
 
+        private void AddStep(int i, int j, int ii, int jj, int wt)
+        {
+            int[] xod = new int[5];
+
+            xod[0] = i; xod[1] = j;
+            xod[2] = ii; xod[3] = jj;
+            xod[4] = wt;
+
+            xodBot.Add(xod);
+        }
+
         // Пройтись по всем кнопкам и сделать их активными
         private void ActivateAllButtons()
         {
@@ -1388,60 +1438,48 @@ namespace GameOnHome_WINFORM.Games
             {
                 case 11:
                     buttons[i, j].Image = whiteKing;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 12:
                     buttons[i, j].Image = whiteQueen;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 13:
                     buttons[i, j].Image = whiteElephant;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 14:
                     buttons[i, j].Image = whiteHorse;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 15:
                     buttons[i, j].Image = whiteTower;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 16:
                     buttons[i, j].Image = whitePawn;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
 
                 // Black
                 case 21:
                     buttons[i, j].Image = blackKing;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 22:
                     buttons[i, j].Image = blackQueen;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 23:
                     buttons[i, j].Image = blackElephant;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 24:
                     buttons[i, j].Image = blackHorse;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 25:
                     buttons[i, j].Image = blackTower;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 case 26:
                     buttons[i, j].Image = blackPawn;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
                 
                 case 0:
                     buttons[i, j].Image = null;
-                    buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
                     break;
-            }    
+            }
+            buttons[i, j].BackColor = GetPrevButtonColor(buttons[i, j]);
         }
 
         // Подключение к серверу

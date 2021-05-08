@@ -46,7 +46,7 @@ namespace GameOnHome_WINFORM.Games
         public void Init()
         {
             this.Width = (mapSize + 1) * cellSize - 50;
-            this.Height = (mapSize + 1) * cellSize + 80;
+            this.Height = (mapSize + 1) * cellSize + 40;
 
             date1 = new DateTime(0, 0);
 
@@ -65,7 +65,7 @@ namespace GameOnHome_WINFORM.Games
                 for (int j = 0; j < mapSize; j++)
                 {
                     Button button = new Button();
-                    button.Location = new Point(j * cellSize, i * cellSize + 80);
+                    button.Location = new Point(j * cellSize, i * cellSize);
                     button.Anchor = (AnchorStyles.Top | AnchorStyles.Left);
                     button.Size = new Size(cellSize, cellSize);
                     button.Font = new Font(button.Font.FontFamily, 1);

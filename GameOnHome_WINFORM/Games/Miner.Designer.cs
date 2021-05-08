@@ -40,20 +40,27 @@ namespace GameOnHome_WINFORM.Games
             // textBox_Timer
             // 
             this.textBox_Timer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_Timer.Location = new System.Drawing.Point(133, 11);
+            this.textBox_Timer.CausesValidation = false;
+            this.textBox_Timer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.textBox_Timer.Font = new System.Drawing.Font("Poor Richard", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBox_Timer.Location = new System.Drawing.Point(151, 6);
             this.textBox_Timer.Name = "textBox_Timer";
             this.textBox_Timer.ReadOnly = true;
-            this.textBox_Timer.Size = new System.Drawing.Size(150, 31);
+            this.textBox_Timer.Size = new System.Drawing.Size(108, 48);
             this.textBox_Timer.TabIndex = 0;
+            this.textBox_Timer.TabStop = false;
+            this.textBox_Timer.Text = "00:00";
+            this.textBox_Timer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_Timer.WordWrap = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Font = new System.Drawing.Font("Lilita One Rus", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Font = new System.Drawing.Font("Lilita One Rus", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(11, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 32);
+            this.label1.Size = new System.Drawing.Size(134, 41);
             this.label1.TabIndex = 1;
             this.label1.Text = "Время: ";
             // 
@@ -61,10 +68,11 @@ namespace GameOnHome_WINFORM.Games
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.textBox_Timer);
-            this.panel1.Location = new System.Drawing.Point(0, 1);
+            this.panel1.Location = new System.Drawing.Point(0, 600);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(799, 57);
+            this.panel1.Size = new System.Drawing.Size(600, 65);
             this.panel1.TabIndex = 2;
             // 
             // timer1
@@ -76,15 +84,15 @@ namespace GameOnHome_WINFORM.Games
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(609, 666);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
             this.Name = "Miner";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Сапёр";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
