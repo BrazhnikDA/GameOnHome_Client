@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Net.Sockets;
 using System.Text;
@@ -119,31 +120,175 @@ namespace GameOnHome_WINFORM.Games
             count++;
 
             // Если нет победителя играем дальше
-            if(!TableForWinner())
-                Bot_xod_easy();      // Ход бота
+            if (!TableForWinner())
+                BotXodHard();      // Ход бота
+            else
+            {
+                TableForWinner();
+            }
         }
 
-        private void Bot_xod_easy()
+        private void BotXodHard()
+        {
+            // Проверяем можно сходить в центр
+            if (map[1, 1] == 0)
+            {
+                SetXodBot(1, 1);
+                return;
+            }
+
+            // Проверяем можем ли мы перекрыть игроку выгрышный ход по ГОРИЗОНТАЛИ и ВЕРТИКАЛЕ
+            for (int i = 0; i < mapSize; i++)
+            {
+                if (map[i, 0] == 1 && map[i, 1] == 1)
+                {
+                    if (map[i, 2] == 0)
+                    {
+                        SetXodBot(i, 2);
+                        return;
+                    }
+                }
+                if (map[i, 1] == 1 && map[i, 2] == 1)
+                {
+                    if (map[i, 0] == 0)
+                    {
+                        SetXodBot(i, 0);
+                        return;
+                    }
+                }
+                if (map[i, 0] == 1 && map[i, 2] == 1)
+                {
+                    if (map[i, 1] == 0)
+                    {
+                        SetXodBot(i, 1);
+                        return;
+                    }
+                }
+                if (map[0, i] == 1 && map[1, i] == 1)
+                {
+                    if (map[2, i] == 0)
+                    {
+                        SetXodBot(2, i);
+                        return;
+                    }
+                }
+                if (map[1, i] == 1 && map[2, i] == 1)
+                {
+                    if (map[0, i] == 0)
+                    {
+                        SetXodBot(0, i);
+                        return;
+                    }
+                }
+                if (map[0, i] == 1 && map[2, i] == 1)
+                {
+                    if (map[1, i] == 0)
+                    {
+                        SetXodBot(1, i);
+                        return;
+                    }
+                }
+            }
+
+            // Проверяем дигонали
+            if (map[1, 1] == 1 && map[2, 2] == 1)
+            {
+                if (map[0, 0] == 0)
+                {
+                    SetXodBot(0, 0);
+                    return;
+                }
+            }
+            if (map[0, 0] == 1 && map[1, 1] == 1)
+            {
+                if (map[2, 2] == 0)
+                {
+                    SetXodBot(2, 2);
+                    return;
+                }
+            }
+            if (map[0, 0] == 1 && map[2, 2] == 0)
+            {
+                if (map[1, 1] == 0)
+                {
+                    SetXodBot(1, 1);
+                    return;
+                }
+            }
+            if (map[1, 1] == 1 && map[2, 0] == 1)
+            {
+                if (map[0, 2] == 0)
+                {
+                    SetXodBot(0, 2);
+                    return;
+                }
+            }
+            if (map[0, 2] == 1 && map[1, 1] == 1)
+            {
+                if (map[2, 0] == 0)
+                {
+                    SetXodBot(2, 0);
+                    return;
+                }
+            }
+            if (map[0, 2] == 1 && map[2, 0] == 1)
+            {
+                if (map[1, 1] == 0)
+                {
+                    SetXodBot(1, 1);
+                    return;
+                }
+            }
+
+            // Проверяем можно ли сходить по диагонали
+            List<int[]> corners = new List<int[]>(4);
+            if (map[0, 0] == 0)
+                corners.Add(new int[2] { 0, 0 });
+            if (map[0, 2] == 0)
+                corners.Add(new int[2] { 0, 2 });
+            if (map[2, 0] == 0)
+                corners.Add(new int[2] { 2, 0 });
+            if (map[2, 2] == 0)
+                corners.Add(new int[2] { 2, 2 });
+
+            if (corners.Count > 0)
+            {
+                Random rnd = new Random();
+                int xod = rnd.Next(0, corners.Count);
+
+                SetXodBot(corners[xod][0], corners[xod][1]);
+            }
+            else
+            {
+                BotXodEasy();       // Выбираем ход рандомно
+            }
+        }
+
+        private void SetXodBot(int i, int j)
+        {
+            map[i, j] = 2;
+
+            buttons[i, j].Image = toeFigure;
+            buttons[i, j].BackColor = Color.White;
+
+            count++;
+        }
+
+        private void BotXodEasy()
         {
             if (count != 9)
             {
                 Random rnd = new Random();
                 // Получить случайное число (в диапазоне от 0 до 9)
-                int xodI = rnd.Next(0, 3);
-                int xodJ = rnd.Next(0, 3);
+                int xodI = rnd.Next(0, mapSize);
+                int xodJ = rnd.Next(0, mapSize);
 
                 while (map[xodI, xodJ] != 0)
                 {
-                    xodI = rnd.Next(0, 3);
-                    xodJ = rnd.Next(0, 3);
+                    xodI = rnd.Next(0, mapSize);
+                    xodJ = rnd.Next(0, mapSize);
                 }
-                map[xodI, xodJ] = 2;
-
-                buttons[xodI, xodJ].Image = toeFigure;
-                buttons[xodI, xodJ].BackColor = Color.White;
-
-                count++;
-                TableForWinner();
+                SetXodBot(xodI, xodJ);
             }
         }
         private void Button_click_online(object sender, EventArgs e)
@@ -229,11 +374,6 @@ namespace GameOnHome_WINFORM.Games
             return Convert.ToInt32(sym[8]) - 48;
         }
 
-        public void restart()
-        {
-
-        }
-
         private bool TableForWinner()
         {
             // Минимальное кол-во ходов для победы 5, начинаем проверять только с этого момента
@@ -247,9 +387,9 @@ namespace GameOnHome_WINFORM.Games
                         // Выиграл X
                         if(currentPlayer == "X")
                         {
-                            EndGame = new end_of_game.end_of_game(this, true, "tic-tac");
+                            EndGame = new end_of_game.end_of_game(true, "tic-tac");
                             EndGame.Show();
-                        }else { EndGame = new end_of_game.end_of_game(this, false, "tic-tac"); EndGame.Show(); }
+                        }else { EndGame = new end_of_game.end_of_game(false, "tic-tac"); EndGame.Show(); }
                         DeactivateAllButtons();
                         return true;
 
@@ -257,11 +397,11 @@ namespace GameOnHome_WINFORM.Games
                         // Выиграл O
                         if (currentPlayer == "O")
                         {
-                            EndGame = new end_of_game.end_of_game(this, true, "tic-tac");
+                            EndGame = new end_of_game.end_of_game(true, "tic-tac");
                             EndGame.Show();
                             
                         }
-                        else { EndGame = new end_of_game.end_of_game(this, false, "tic-tac"); EndGame.Show(); }
+                        else { EndGame = new end_of_game.end_of_game(false, "tic-tac"); EndGame.Show(); }
                         DeactivateAllButtons();
                         return true;
 
@@ -269,6 +409,9 @@ namespace GameOnHome_WINFORM.Games
                         // Ничья
                         DeactivateAllButtons();
                         MessageBox.Show("Nichya win");
+                        Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(false);
+                        krestiki_Noliki.Show();
+                        this.Close();
                         return true;
                 }
             }
