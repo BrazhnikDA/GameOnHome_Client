@@ -9,6 +9,8 @@ namespace GameOnHome_WINFORM.Games
 {
     public partial class Krestiki_Noliki : Form
     {
+        private end_of_game.end_of_game EndGame;
+
         private string ID;                          // ID присвоенное сервером
         private bool IsStatus = false;              // True - онлайн, False - оффлайн
 
@@ -116,7 +118,9 @@ namespace GameOnHome_WINFORM.Games
             map[ConvertNameI(currentButton), ConvertNameY(currentButton)] = 1;
             count++;
 
-            Bot_xod_easy();      // Ход бота
+            // Если нет победителя играем дальше
+            if(!TableForWinner())
+                Bot_xod_easy();      // Ход бота
         }
 
         private void Bot_xod_easy()
@@ -140,7 +144,7 @@ namespace GameOnHome_WINFORM.Games
 
                 count++;
                 TableForWinner();
-            }else { TableForWinner(); }
+            }
         }
         private void Button_click_online(object sender, EventArgs e)
         {
@@ -225,7 +229,7 @@ namespace GameOnHome_WINFORM.Games
             return Convert.ToInt32(sym[8]) - 48;
         }
 
-        private void TableForWinner()
+        private bool TableForWinner()
         {
             // Минимальное кол-во ходов для победы 5, начинаем проверять только с этого момента
             if(count > 4)
@@ -238,28 +242,32 @@ namespace GameOnHome_WINFORM.Games
                         // Выиграл X
                         if(currentPlayer == "X")
                         {
-                            pictureWinGame.Visible = true;
-                            pictureWait.Visible = false;
-
-                        }
+                            EndGame = new end_of_game.end_of_game(this, true, "tic-tac");
+                            EndGame.Show();
+                        }else { EndGame = new end_of_game.end_of_game(this, false, "tic-tac"); EndGame.Show(); }
                         DeactivateAllButtons();
-                        MessageBox.Show("Player X win");
-                        break;
+                        return true;
 
                     case 2:
                         // Выиграл O
+                        if (currentPlayer == "O")
+                        {
+                            EndGame = new end_of_game.end_of_game(this, true, "tic-tac");
+                            EndGame.Show();
+                            
+                        }
+                        else { EndGame = new end_of_game.end_of_game(this, false, "tic-tac"); EndGame.Show(); }
                         DeactivateAllButtons();
-                        MessageBox.Show("Player O win");
-                        break;
+                        return true;
 
                     case 3:
                         // Ничья
                         DeactivateAllButtons();
                         MessageBox.Show("Nichya win");
-                        break;
-
-                }            
+                        return true;
+                }
             }
+            return false;
         }
 
         private int IsWin()
@@ -295,9 +303,9 @@ namespace GameOnHome_WINFORM.Games
             else if (map[0, 2] == 2 && map[1, 1] == 2 && map[2, 0] == 2)
                 return 2;
             else if (map[0, 1] == 2 && map[1, 1] == 2 && map[2, 1] == 2)
-                return 1;
+                return 2;
             else if (map[1, 0] == 2 && map[1, 1] == 2 && map[1, 2] == 2)
-                return 1;
+                return 2;
 
             else if (count == 9) // Ничья
                 return 3;
