@@ -229,6 +229,11 @@ namespace GameOnHome_WINFORM.Games
             return Convert.ToInt32(sym[8]) - 48;
         }
 
+        public void restart()
+        {
+
+        }
+
         private bool TableForWinner()
         {
             // Минимальное кол-во ходов для победы 5, начинаем проверять только с этого момента

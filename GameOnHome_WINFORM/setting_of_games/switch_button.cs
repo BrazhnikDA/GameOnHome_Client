@@ -21,7 +21,7 @@ namespace GameOnHome_WINFORM.setting_of_games
             Size = new Size(40,15);                                             //размер элемента
 
             Font = new Font("Verdana", 9F, FontStyle.Regular);                  //Стиль элемента
-            BackColor = Color.White;                                            //Задний фон
+            BackColor = Color.Transparent;                                      //Задний фон
 
             rect = new Rectangle(1, 1, Width - 3, Height - 3);                  //Отрисовка элемента
             SwitchOff_X = rect.X;                                               //Координаты элемента при Off

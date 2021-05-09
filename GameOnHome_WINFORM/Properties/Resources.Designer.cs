@@ -153,6 +153,16 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap chess {
+            get {
+                object obj = ResourceManager.GetObject("chess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chocolate_icing {
             get {
                 object obj = ResourceManager.GetObject("chocolate_icing", resourceCulture);
@@ -223,9 +233,29 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ListGamesBack {
+            get {
+                object obj = ResourceManager.GetObject("ListGamesBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Main_Menu {
             get {
                 object obj = ResourceManager.GetObject("Main_Menu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Main_Menu_Back {
+            get {
+                object obj = ResourceManager.GetObject("Main_Menu_Back", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -296,6 +326,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap red_krug {
             get {
                 object obj = ResourceManager.GetObject("red_krug", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sapper {
+            get {
+                object obj = ResourceManager.GetObject("sapper", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

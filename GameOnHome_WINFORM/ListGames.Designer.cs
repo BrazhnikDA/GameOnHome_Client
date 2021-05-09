@@ -29,203 +29,195 @@ namespace GameOnHome_WINFORM
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListGames));
+            this.pictureBox_back = new System.Windows.Forms.PictureBox();
             this.pictureBox_tic_tac = new System.Windows.Forms.PictureBox();
-            this.label_tic_tac = new System.Windows.Forms.Label();
-            this.pictureBox_shashki = new System.Windows.Forms.PictureBox();
-            this.label_shaski = new System.Windows.Forms.Label();
+            this.pictureBox_shaski = new System.Windows.Forms.PictureBox();
             this.pictureBox_Three_Row = new System.Windows.Forms.PictureBox();
+            this.pictureBox_sapper = new System.Windows.Forms.PictureBox();
+            this.label_tic_tac = new System.Windows.Forms.Label();
+            this.label_shaski = new System.Windows.Forms.Label();
             this.label_3ryd = new System.Windows.Forms.Label();
-            this.pictureBox_saper = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label_saper = new System.Windows.Forms.Label();
+            this.pictureBox_chess = new System.Windows.Forms.PictureBox();
+            this.label_chess = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_back)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tic_tac)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shashki)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shaski)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Three_Row)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_saper)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_sapper)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chess)).BeginInit();
             this.SuspendLayout();
+            // 
+            // pictureBox_back
+            // 
+            this.pictureBox_back.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_back.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.ListGamesBack;
+            this.pictureBox_back.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_back.Name = "pictureBox_back";
+            this.pictureBox_back.Size = new System.Drawing.Size(1079, 717);
+            this.pictureBox_back.TabIndex = 2;
+            this.pictureBox_back.TabStop = false;
+            this.pictureBox_back.Click += new System.EventHandler(this.pictureBox_back_Click);
             // 
             // pictureBox_tic_tac
             // 
+            this.pictureBox_tic_tac.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_tic_tac.Image = global::GameOnHome_WINFORM.Properties.Resources.Tic_tac_icone;
-            this.pictureBox_tic_tac.Location = new System.Drawing.Point(57, 67);
-            this.pictureBox_tic_tac.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_tic_tac.Location = new System.Drawing.Point(40, 40);
             this.pictureBox_tic_tac.Name = "pictureBox_tic_tac";
-            this.pictureBox_tic_tac.Size = new System.Drawing.Size(129, 128);
-            this.pictureBox_tic_tac.TabIndex = 0;
+            this.pictureBox_tic_tac.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox_tic_tac.TabIndex = 3;
             this.pictureBox_tic_tac.TabStop = false;
             this.pictureBox_tic_tac.Click += new System.EventHandler(this.pictureBox_tic_tac_Click);
             this.pictureBox_tic_tac.MouseEnter += new System.EventHandler(this.pictureBox_tic_tac_MouseEnter);
             this.pictureBox_tic_tac.MouseLeave += new System.EventHandler(this.pictureBox_tic_tac_MouseLeave);
             // 
-            // label_tic_tac
+            // pictureBox_shaski
             // 
-            this.label_tic_tac.AutoSize = true;
-            this.label_tic_tac.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label_tic_tac.Location = new System.Drawing.Point(43, 200);
-            this.label_tic_tac.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_tic_tac.Name = "label_tic_tac";
-            this.label_tic_tac.Size = new System.Drawing.Size(155, 24);
-            this.label_tic_tac.TabIndex = 1;
-            this.label_tic_tac.Text = "Крестики-Нолики";
-            // 
-            // pictureBox_shashki
-            // 
-            this.pictureBox_shashki.Image = global::GameOnHome_WINFORM.Properties.Resources.checlers_icone;
-            this.pictureBox_shashki.Location = new System.Drawing.Point(297, 67);
-            this.pictureBox_shashki.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.pictureBox_shashki.Name = "pictureBox_shashki";
-            this.pictureBox_shashki.Size = new System.Drawing.Size(125, 128);
-            this.pictureBox_shashki.TabIndex = 0;
-            this.pictureBox_shashki.TabStop = false;
-            this.pictureBox_shashki.Click += new System.EventHandler(this.pictureBox_shaski_Click);
-            this.pictureBox_shashki.MouseEnter += new System.EventHandler(this.pictureBox_shaski_MouseEnter);
-            this.pictureBox_shashki.MouseLeave += new System.EventHandler(this.pictureBox_shaski_MouseLeave);
-            // 
-            // label_shaski
-            // 
-            this.label_shaski.AutoSize = true;
-            this.label_shaski.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label_shaski.Location = new System.Drawing.Point(325, 200);
-            this.label_shaski.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_shaski.Name = "label_shaski";
-            this.label_shaski.Size = new System.Drawing.Size(68, 24);
-            this.label_shaski.TabIndex = 1;
-            this.label_shaski.Text = "Шашки";
+            this.pictureBox_shaski.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_shaski.Image = global::GameOnHome_WINFORM.Properties.Resources.checlers_icone;
+            this.pictureBox_shaski.Location = new System.Drawing.Point(208, 40);
+            this.pictureBox_shaski.Name = "pictureBox_shaski";
+            this.pictureBox_shaski.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox_shaski.TabIndex = 4;
+            this.pictureBox_shaski.TabStop = false;
+            this.pictureBox_shaski.Click += new System.EventHandler(this.pictureBox_shaski_Click);
+            this.pictureBox_shaski.MouseEnter += new System.EventHandler(this.pictureBox_shaski_MouseEnter);
+            this.pictureBox_shaski.MouseLeave += new System.EventHandler(this.pictureBox_shaski_MouseLeave);
             // 
             // pictureBox_Three_Row
             // 
+            this.pictureBox_Three_Row.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_Three_Row.Image = global::GameOnHome_WINFORM.Properties.Resources.three_in_a_row_icone;
-            this.pictureBox_Three_Row.Location = new System.Drawing.Point(537, 67);
-            this.pictureBox_Three_Row.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_Three_Row.Location = new System.Drawing.Point(376, 40);
             this.pictureBox_Three_Row.Name = "pictureBox_Three_Row";
-            this.pictureBox_Three_Row.Size = new System.Drawing.Size(136, 128);
-            this.pictureBox_Three_Row.TabIndex = 0;
+            this.pictureBox_Three_Row.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox_Three_Row.TabIndex = 5;
             this.pictureBox_Three_Row.TabStop = false;
             this.pictureBox_Three_Row.Click += new System.EventHandler(this.pictureBox_Three_Row_Click);
             this.pictureBox_Three_Row.MouseEnter += new System.EventHandler(this.pictureBox_Three_Row_MouseEnter);
             this.pictureBox_Three_Row.MouseLeave += new System.EventHandler(this.pictureBox_Three_Row_MouseLeave);
             // 
+            // pictureBox_sapper
+            // 
+            this.pictureBox_sapper.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_sapper.Image = global::GameOnHome_WINFORM.Properties.Resources.sapper;
+            this.pictureBox_sapper.Location = new System.Drawing.Point(544, 40);
+            this.pictureBox_sapper.Name = "pictureBox_sapper";
+            this.pictureBox_sapper.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox_sapper.TabIndex = 6;
+            this.pictureBox_sapper.TabStop = false;
+            this.pictureBox_sapper.Click += new System.EventHandler(this.pictureBox_saper_Click);
+            this.pictureBox_sapper.MouseEnter += new System.EventHandler(this.pictureBox_saper_MouseEnter);
+            this.pictureBox_sapper.MouseLeave += new System.EventHandler(this.pictureBox_saper_MouseLeave);
+            // 
+            // label_tic_tac
+            // 
+            this.label_tic_tac.AutoSize = true;
+            this.label_tic_tac.BackColor = System.Drawing.Color.Transparent;
+            this.label_tic_tac.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_tic_tac.Location = new System.Drawing.Point(40, 173);
+            this.label_tic_tac.MinimumSize = new System.Drawing.Size(128, 30);
+            this.label_tic_tac.Name = "label_tic_tac";
+            this.label_tic_tac.Size = new System.Drawing.Size(128, 30);
+            this.label_tic_tac.TabIndex = 7;
+            this.label_tic_tac.Text = "Крестики-Нолики";
+            this.label_tic_tac.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_shaski
+            // 
+            this.label_shaski.AutoSize = true;
+            this.label_shaski.BackColor = System.Drawing.Color.Transparent;
+            this.label_shaski.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_shaski.Location = new System.Drawing.Point(208, 172);
+            this.label_shaski.MinimumSize = new System.Drawing.Size(128, 30);
+            this.label_shaski.Name = "label_shaski";
+            this.label_shaski.Size = new System.Drawing.Size(128, 30);
+            this.label_shaski.TabIndex = 8;
+            this.label_shaski.Text = "Шашки";
+            this.label_shaski.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label_3ryd
             // 
             this.label_3ryd.AutoSize = true;
-            this.label_3ryd.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label_3ryd.Location = new System.Drawing.Point(562, 200);
-            this.label_3ryd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_3ryd.BackColor = System.Drawing.Color.Transparent;
+            this.label_3ryd.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_3ryd.Location = new System.Drawing.Point(376, 172);
+            this.label_3ryd.MinimumSize = new System.Drawing.Size(128, 30);
             this.label_3ryd.Name = "label_3ryd";
-            this.label_3ryd.Size = new System.Drawing.Size(93, 24);
-            this.label_3ryd.TabIndex = 1;
+            this.label_3ryd.Size = new System.Drawing.Size(128, 30);
+            this.label_3ryd.TabIndex = 9;
             this.label_3ryd.Text = "Три в ряд";
+            this.label_3ryd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pictureBox_saper
+            // label_saper
             // 
-            this.pictureBox_saper.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_saper.Image")));
-            this.pictureBox_saper.Location = new System.Drawing.Point(803, 67);
-            this.pictureBox_saper.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.pictureBox_saper.Name = "pictureBox_saper";
-            this.pictureBox_saper.Size = new System.Drawing.Size(136, 128);
-            this.pictureBox_saper.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox_saper.TabIndex = 0;
-            this.pictureBox_saper.TabStop = false;
-            this.pictureBox_saper.Click += new System.EventHandler(this.pictureBox_saper_Click);
-            this.pictureBox_saper.MouseEnter += new System.EventHandler(this.pictureBox_Three_Row_MouseEnter);
-            this.pictureBox_saper.MouseLeave += new System.EventHandler(this.pictureBox_Three_Row_MouseLeave);
+            this.label_saper.AutoSize = true;
+            this.label_saper.BackColor = System.Drawing.Color.Transparent;
+            this.label_saper.Location = new System.Drawing.Point(544, 172);
+            this.label_saper.MinimumSize = new System.Drawing.Size(128, 30);
+            this.label_saper.Name = "label_saper";
+            this.label_saper.Size = new System.Drawing.Size(128, 30);
+            this.label_saper.TabIndex = 11;
+            this.label_saper.Text = "Сапёр";
+            this.label_saper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // pictureBox_chess
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(843, 200);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 24);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Сапёр";
+            this.pictureBox_chess.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_chess.Image = global::GameOnHome_WINFORM.Properties.Resources.chess;
+            this.pictureBox_chess.Location = new System.Drawing.Point(712, 40);
+            this.pictureBox_chess.Name = "pictureBox_chess";
+            this.pictureBox_chess.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox_chess.TabIndex = 12;
+            this.pictureBox_chess.TabStop = false;
+            this.pictureBox_chess.Click += new System.EventHandler(this.pictureBox_chess_Click);
+            this.pictureBox_chess.MouseEnter += new System.EventHandler(this.pictureBox_chess_MouseEnter);
+            this.pictureBox_chess.MouseLeave += new System.EventHandler(this.pictureBox_chess_MouseLeave);
             // 
-            // pictureBox1
+            // label_chess
             // 
-            this.pictureBox1.Image = global::GameOnHome_WINFORM.Properties.Resources.online_mod;
-            this.pictureBox1.Location = new System.Drawing.Point(1039, 67);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(136, 128);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox_Chess_Click);
-            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox_Three_Row_MouseEnter);
-            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox_Three_Row_MouseLeave);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(1065, 200);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 24);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Шахматы";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(57, 265);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(136, 128);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox_Ping_Pong_Click);
-            this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox_Three_Row_MouseEnter);
-            this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox_Three_Row_MouseLeave);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Stencil", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(83, 398);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 24);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Пинг-понг";
+            this.label_chess.AutoSize = true;
+            this.label_chess.BackColor = System.Drawing.Color.Transparent;
+            this.label_chess.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label_chess.Location = new System.Drawing.Point(712, 172);
+            this.label_chess.MinimumSize = new System.Drawing.Size(128, 30);
+            this.label_chess.Name = "label_chess";
+            this.label_chess.Size = new System.Drawing.Size(128, 30);
+            this.label_chess.TabIndex = 13;
+            this.label_chess.Text = "Шахматы";
+            this.label_chess.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ListGames
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1219, 849);
-            this.Controls.Add(this.label_shaski);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(1079, 717);
+            this.Controls.Add(this.label_chess);
+            this.Controls.Add(this.pictureBox_chess);
+            this.Controls.Add(this.label_saper);
             this.Controls.Add(this.label_3ryd);
+            this.Controls.Add(this.label_shaski);
             this.Controls.Add(this.label_tic_tac);
-            this.Controls.Add(this.pictureBox_shashki);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.pictureBox_saper);
+            this.Controls.Add(this.pictureBox_sapper);
             this.Controls.Add(this.pictureBox_Three_Row);
+            this.Controls.Add(this.pictureBox_shaski);
             this.Controls.Add(this.pictureBox_tic_tac);
+            this.Controls.Add(this.pictureBox_back);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ListGames";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список игр";
             this.Load += new System.EventHandler(this.ListGames_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_back)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tic_tac)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shashki)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shaski)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Three_Row)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_saper)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_sapper)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chess)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,17 +225,16 @@ namespace GameOnHome_WINFORM
 
         #endregion
 
+        private System.Windows.Forms.PictureBox pictureBox_back;
         private System.Windows.Forms.PictureBox pictureBox_tic_tac;
-        private System.Windows.Forms.Label label_tic_tac;
-        private System.Windows.Forms.PictureBox pictureBox_shashki;
-        private System.Windows.Forms.Label label_shaski;
+        private System.Windows.Forms.PictureBox pictureBox_shaski;
         private System.Windows.Forms.PictureBox pictureBox_Three_Row;
+        private System.Windows.Forms.PictureBox pictureBox_sapper;
+        private System.Windows.Forms.Label label_tic_tac;
+        private System.Windows.Forms.Label label_shaski;
         private System.Windows.Forms.Label label_3ryd;
-        private System.Windows.Forms.PictureBox pictureBox_saper;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label_saper;
+        private System.Windows.Forms.PictureBox pictureBox_chess;
+        private System.Windows.Forms.Label label_chess;
     }
 }

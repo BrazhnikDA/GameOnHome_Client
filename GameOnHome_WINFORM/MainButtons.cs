@@ -1,122 +1,126 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace GameOnHome_WINFORM
 {
-    class MainButtons {
+    class MainButtons
+    {
+
         MainMenu parent;
-        Button But_Play, But_Setting, But_Exit;
+        Button lab1, lab2, lab3;
 
         public MainButtons(MainMenu form)
         {
-            parent = form;                                                                         //Инициализация контейнера
+            parent = form;
 
-            //Кнопка "Играть"
-            But_Play = new Button();                                                               //Инациализация новой кнопки
-            But_Play.BackgroundImage = Properties.Resources.Play;                                  //Инициализация заднего фона
-            But_Play.Font = new Font("Comic Sans MS", 22f);                                        //Характеристика текста
-            But_Play.FlatAppearance.BorderSize = 0;                                                //Размер рамок по перимитру 
-            But_Play.FlatStyle = FlatStyle.Flat;                                                   //Стиль рамки = плоская линия
-            But_Play.Text = "Играть";                                                              //Текст
-            But_Play.Size = new Size(180, 60);                                                     //Размер кнопки
-            But_Play.TabStop = false;
-            But_Play.Location = new Point(120, 350);                                               //Расположение кнопки
-            But_Play.Click += new EventHandler(But_Play_Click);                                  //Событие - при нажатии
-            But_Play.MouseEnter += new EventHandler(But_play_Mouse_Enter);                         //Событие - при наведении
-            But_Play.MouseLeave += new EventHandler(But_play_Mouse_Leave);                         //Событие - при покидании
+            //Лейбл "Играть"
+            lab1 = new Button();
+            lab1.Location = new Point(450, 220);
+            lab1.Size = new Size(250, 70);
+            lab1.Font = new Font("Comic Sans MS", 25f);
+            lab1.FlatStyle = FlatStyle.Flat;
+            lab1.FlatAppearance.BorderSize = 5;
+            lab1.ForeColor = Color.Black;
+            lab1.BackColor = Color.White;
+            lab1.Text = "Играть";
+            lab1.TabStop = false;
+            lab1.TextAlign = ContentAlignment.MiddleCenter;
+            lab1.Click += new EventHandler(lab1_click);
+            lab1.MouseEnter += new EventHandler(lab1_enter);
+            lab1.MouseLeave += new EventHandler(lab1_leave);
 
-            parent.Controls.Add(But_Play);                                                         //Заполнение контейнера
+            parent.Controls.Add(lab1);
 
-            //Кнопка "Настройки"
+            //Лейбл "Настройки"
+            lab2 = new Button();
+            lab2.Location = new Point(450, 300);
+            lab2.Size = new Size(250, 70);
+            lab2.Font = new Font("Comic Sans MS", 25f);
+            lab2.FlatStyle = FlatStyle.Flat;
+            lab2.FlatAppearance.BorderSize = 5;
+            lab2.ForeColor = Color.Black;
+            lab2.BackColor = Color.White;
+            lab2.Text = "Настройки";
+            lab2.TabStop = false;
+            lab2.TextAlign = ContentAlignment.MiddleCenter;
+            lab2.Click += new EventHandler(lab2_click);
+            lab2.MouseEnter += new EventHandler(lab2_enter);
+            lab2.MouseLeave += new EventHandler(lab2_leave);
 
-            But_Setting = new Button();                                                             //Инациализация новой кнопки
-            But_Setting.BackgroundImage = Properties.Resources.Settings;                            //Инициализация заднего фона
-            But_Setting.Font = new Font("Comic Sans MS", 22f);                                      //Характеристика текста
-            But_Setting.FlatAppearance.BorderSize = 0;                                              //Размер рамок по перимитру 
-            But_Setting.FlatStyle = FlatStyle.Flat;                                                 //Стиль рамки = плоская линия
-            But_Setting.Text = "Настройки";                                                         //Текст
-            But_Setting.Size = new Size(180, 60);                                                   //Размер кнопки
-            But_Setting.TabStop = false;
-            But_Setting.Location = new Point(120, 420);                                             //Расположение кнопки
-            But_Setting.Click += new EventHandler(But_Setting_Click);                               //Событие - при нажатии
-            But_Setting.MouseEnter += new EventHandler(But_Setting_Mouse_Enter);                    //Событие - при наведении
-            But_Setting.MouseLeave += new EventHandler(But_Setting_Mouse_Leave);                    //Событие - при покидании
+            parent.Controls.Add(lab2);
 
-            parent.Controls.Add(But_Setting);                                                       //Заполнение контейнера
+            //Лейбл "Выход"
+            lab3 = new Button();
+            lab3.Location = new Point(450, 380);
+            lab3.Size = new Size(250, 70);
+            lab3.Font = new Font("Comic Sans MS", 25f);
+            lab3.FlatStyle = FlatStyle.Flat;
+            lab3.FlatAppearance.BorderSize = 5;
+            lab3.ForeColor = Color.Black;
+            lab3.BackColor = Color.White;
+            lab3.Text = "Выход";
+            lab3.TabStop = false;
+            lab3.TextAlign = ContentAlignment.MiddleCenter;
+            lab3.Click += new EventHandler(lab3_click);
+            lab3.MouseEnter += new EventHandler(lab3_enter);
+            lab3.MouseLeave += new EventHandler(lab3_leave);
 
-            //Кнопка "Выход"
+            parent.Controls.Add(lab3);
 
-            But_Exit = new Button();                                                                 //Инациализация новой кнопки
-            But_Exit.BackgroundImage = Properties.Resources.Exit;                                    //Инициализация заднего фона
-            But_Exit.Font = new Font("Comic Sans MS", 22f);                                          //Характеристика текста
-            But_Exit.FlatAppearance.BorderSize = 0;                                                  //Размер рамок по перимитру 
-            But_Exit.FlatStyle = FlatStyle.Flat;                                                     //Стиль рамки = плоская линия
-            But_Exit.Text = "Выход";                                                                 //Текст
-            But_Exit.Size = new Size(180, 60);                                                       //Размер кнопки
-            But_Exit.TabStop = false;
-            But_Exit.Location = new Point(120, 490);                                                 //Расположение кнопки
-            But_Exit.Click += new EventHandler(But_Exit_Click);                                      //Событие - при нажатии
-            But_Exit.MouseEnter += new EventHandler(But_Exit_Mouse_Enter);                           //Событие - при наведении
-            But_Exit.MouseLeave += new EventHandler(But_Exit_Mouse_Leave);                           //Событие - при покидании
-
-            parent.Controls.Add(But_Exit);                                                           //Заполнение контейнера
         }
 
-        //Описание события нажатия на "Играть"
-        private void But_Play_Click(object sender, EventArgs e)
+        private void lab1_click(object sender, EventArgs e)
         {
-            ListGames play = new ListGames();                                                                  //Инициализация новой формы
-            play.Show();                                                                             //Показать новую форму
+            ListGames lg = new ListGames();                                              //Инициализация новой формы
+            lg.Show();                                                                   //Показ новой формы
+            MainMenu mm = parent;
+            mm.Hide();
         }
 
-        //Описание события наведения на "Играть"
-        private void But_play_Mouse_Enter(object sender, EventArgs e)
+        private void lab1_enter(object sender, EventArgs e)
         {
-            But_Play.Font = new Font("Comic Sans MS", 23f, FontStyle.Bold);                          //Инициализация новго стиля текста
+            lab1.Font = new Font("Comic Sans MS", 28f, FontStyle.Bold);                  //Создание нового стиля
         }
 
-        //Описание события покидания на "Играть"
-        private void But_play_Mouse_Leave(object sender, EventArgs e)
+        private void lab1_leave(object sender, EventArgs e)
         {
-            But_Play.Font = new Font("Comic Sans MS", 22f);                                          //Инициализация новго стиля текста
+            lab1.Font = new Font("Comic Sans MS", 25f);                                  //Создание нового стиля
         }
 
-        //Описание события нажатия на "Настройки"
-        private void But_Setting_Click(object sender, EventArgs e)
+        private void lab2_click(object sender, EventArgs e)
         {
-            Settings settings = new Settings();                                                      //Инициализация новой формы
-            settings.Show();                                                                         //Показать новую форму
+            Settings settings = new Settings();                                          //Инициализация новой формы
+            settings.Show();
         }
 
-        //Описание события наведения на "Настройки"
-        private void But_Setting_Mouse_Enter(object sender, EventArgs e)
+        private void lab2_enter(object sender, EventArgs e)
         {
-            But_Setting.Font = new Font("Comic Sans MS", 21f, FontStyle.Bold);                          //Инициализация новго стиля текста
+            lab2.Font = new Font("Comic Sans MS", 28f, FontStyle.Bold);                  //Создание нового стиля
         }
 
-        //Описание события покидания на "Настройки"
-        private void But_Setting_Mouse_Leave(object sender, EventArgs e)
+        private void lab2_leave(object sender, EventArgs e)
         {
-            But_Setting.Font = new Font("Comic Sans MS", 22f);                                          //Инициализация новго стиля текста
+            lab2.Font = new Font("Comic Sans MS", 25f);                                  //Создание нового стиля
         }
 
-        //Описание события нажатия на "Выход"
-        private void But_Exit_Click(object sender, EventArgs e)
+        private void lab3_click(object sender, EventArgs e)
         {
-            Application.Exit();                                                                      //Выход из приложения
+            Application.Exit();                                                          //Конец события
         }
 
-        //Описание события наведения на "Выход"
-        private void But_Exit_Mouse_Enter(object sender, EventArgs e)
+        private void lab3_enter(object sender, EventArgs e)
         {
-            But_Exit.Font = new Font("Comic Sans MS", 23f, FontStyle.Bold);                          //Инициализация новго стиля текста
+            lab3.Font = new Font("Comic Sans MS", 28f, FontStyle.Bold);                  //Создание нового стиля
         }
 
-        //Описание события покидания на "Выход"
-        private void But_Exit_Mouse_Leave(object sender, EventArgs e)
+        private void lab3_leave(object sender, EventArgs e)
         {
-            But_Exit.Font = new Font("Comic Sans MS", 22f);                                           //Инициализация новго стиля текста
+            lab3.Font = new Font("Comic Sans MS", 25f);                                  //Создание нового стиля
         }
     }
 }

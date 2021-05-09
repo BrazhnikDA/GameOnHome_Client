@@ -12,15 +12,12 @@ namespace GameOnHome_WINFORM.end_of_game
 {
     public partial class end_of_game : Form
     {
-        Form game;
         bool isStatus;
         string nameGame;
         // False - проиграл, True - выиграл
-        public end_of_game(Form _game, bool _isStatus, string _nameGame)
+        public end_of_game(bool _isStatus, string _nameGame)
         {
             InitializeComponent();
-
-            game = _game;
             isStatus = _isStatus;
             nameGame = _nameGame;
         }
