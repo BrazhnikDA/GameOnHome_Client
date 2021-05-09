@@ -120,8 +120,11 @@ namespace GameOnHome_WINFORM.Games
             count++;
 
             // Если нет победителя играем дальше
-            if (!TableForWinner())
-                BotXodHard();      // Ход бота
+            if (IsWin() == 0)
+            {
+                Thread brainBot = new Thread(new ThreadStart(BotXodHard));      // Ход бота
+                brainBot.Start();
+            }
             else
             {
                 TableForWinner();
@@ -130,6 +133,7 @@ namespace GameOnHome_WINFORM.Games
 
         private void BotXodHard()
         {
+            Thread.Sleep(300);
             // Проверяем можно сходить в центр
             if (map[1, 1] == 0)
             {

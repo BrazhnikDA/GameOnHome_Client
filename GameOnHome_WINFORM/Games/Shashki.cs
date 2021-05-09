@@ -38,6 +38,9 @@ namespace GameOnHome_WINFORM.Games
         private Image whiteFigure;          // Изображение белой фигуры
         private Image blackFigure;          // Изображение чёрной фигуры
 
+        List<int[]> listIJ = new List<int[]>();          // Список ходов которые бот может сделать пешкой 
+        List<int[]> listIJDamka = new List<int[]>();     // Список ходов которые бот может сделать дамкой
+
         public Shashki(bool IsStatus_)
         {
             InitializeComponent();
@@ -237,7 +240,9 @@ namespace GameOnHome_WINFORM.Games
                     if (IsEnd)
                     {
                         CheckWin();                                 // Нет ли победителя? 
-                        Bot_brain_easy();                           // Ход бота
+                        //Thread brainBot = new Thread(new ThreadStart(BotBrainEasy));
+                        //brainBot.Start();
+                        BotBrainEasy();
                         CheckWin();                                 // Нет ли победителя после хода бота?
                     }
                 }
@@ -246,129 +251,178 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Интеллект бота сложность: легко
-        private void Bot_brain_easy()
+        private void BotBrainEasy()
         {
+            //Thread.Sleep(150);
             bool IsEat = false;         // Есть ли съедобный ход
             for (int i = 0; i < mapSize; i++)
             {
                 for(int j = 0; j < mapSize; j++)
                 {
-                    if(map[i,j] == 2)   // Мы нашли чёрную фигуру
+                    if(map[i,j] == 2)   // Нашли чёрную фигуру
                     {
-                        // Сразу проверяем хода по 4 диагоналям, можно ли кого нибудь съесть 
-                        if(buttons[i,j].Text == "D")
+                        // Сразу проверяем ходы по 4 диагоналям, можно ли кого нибудь съесть 
+                        // Дамка
+                        if (buttons[i, j].Text == "D")
                         {
-                            int ii = i - 1;
-                            int jj = j - 1;
-                            while (IsInsideBorders(ii, jj))     // Вверх-влево
-                            {
-                                if(map[ii, jj] == 1) 
-                                {
-                                    if (IsInsideBorders(ii - 1, jj - 1))
-                                    {
-                                        if (map[ii - 1, jj - 1] == 0)
-                                        {
-                                            IsEat = bot_check_eat(i, j, ii, jj, ii - 1, jj - 1);
-                                            buttons[ii - 1, jj - 1].Text = "D";
-                                            if (IsEat)
-                                                return;
-                                        }
-                                    }
-                                }
-                                ii--;jj--;
-                            }
-                            ii = i - 1;
-                            jj = j + 1;
-                            while (IsInsideBorders(ii, jj))     // Вверх-вправо 
-                            {
-                                if (map[ii, jj] == 1)
-                                {
-                                    if (IsInsideBorders(ii - 1, jj + 1))
-                                    {
-                                        if (map[ii - 1, jj + 1] == 0)
-                                        {
-                                            IsEat = bot_check_eat(i, j, ii, jj, ii - 1, jj + 1);
-                                            buttons[ii - 1, jj + 1].Text = "D";
-                                            if (IsEat)
-                                                return;
-                                        }
-                                    }
-                                }
-                                ii--; jj++;
-                            }
-                            ii = i + 1;
-                            jj = j - 1;
-                            while (IsInsideBorders(ii, jj))     // Вниз-влево 
-                            {
-                                if (map[ii, jj] == 1)
-                                {
-                                    if (IsInsideBorders(ii + 1, jj - 1))
-                                    {
-                                        if (map[ii + 1, jj - 1] == 0)
-                                        {
-                                            IsEat = bot_check_eat(i, j, ii, jj, ii + 1, jj - 1);
-                                            buttons[ii + 1, jj - 1].Text = "D";
-                                            if (IsEat)
-                                                return;
-                                        }
-                                    }
-                                }
-                                ii++; jj--;
-                            }
-                            ii = i + 1;
-                            jj = j + 1;
-                            while (IsInsideBorders(ii, jj))     // Вниз-вправо
-                            {
-                                if (map[ii, jj] == 1)
-                                {
-                                    if (IsInsideBorders(ii + 1, jj + 1))
-                                    {
-                                        if (map[ii + 1, jj + 1] == 0)
-                                        {
-                                            IsEat = bot_check_eat(i, j, ii, jj, ii + 1, jj + 1);
-                                            buttons[ii + 1, jj + 1].Text = "D";
-                                            if (IsEat)
-                                                return;
-                                        }
-                                    }
-                                }
-                                ii++; jj++;
-                            }
+                            IsEat = BotCheckEatDamka(i, j);
+                            if (IsEat)
+                                return;
                         }
+                        else
+                        {
+                            //Thread.Sleep(50);
+                            // Обычная шашка
+                            // Для 2-3 хода
 
-                        // Обычная пешка
-                        IsEat = bot_check_eat(i, j, i - 1, j - 1, i - 2, j - 2);      // Проверить диагональ слева вверх
-                        if (IsEat)
-                            return;
-                        IsEat = bot_check_eat(i, j, i - 1, j + 1, i - 2, j + 2);      // Проверить диагональ справа вверх
-                        if (IsEat)
-                            return;
+                            int I = i; int J = j;
+
+                            int ii = I - 1;
+                            int iii = I - 2;
+
+                            int Ljj = J - 1; int Ljjj = J - 2;
+                            int Rjj = J + 1; int Rjjj = J + 2;
+
+                            while (true)
+                            {
+                                IsEat = BotCheckEat(I, J, ii, Ljj, iii, Ljjj);      // Проверить диагональ слева вверх
+                                if (IsEat)
+                                {
+                                    I = iii; J = Ljjj;
+                                    ii = I - 1; iii = I - 2;
+                                    Ljj = J - 1; Ljjj = J - 2;
+                                    MessageBox.Show("Left");
+                                    continue;
+                                }
+                                IsEat = BotCheckEat(I, J, ii, Rjj, iii, Rjjj);      // Проверить диагональ справа вверх
+                                if (IsEat)
+                                {
+                                    I = iii; J = Rjjj;
+                                    ii = I - 1; iii = I - 2;
+                                    Rjj = J + 1; Rjjj = J + 2;
+                                    MessageBox.Show("Right");
+                                    continue;
+                                }
+                                if (!IsEat) { break; }                               // Нет хода, выходим из цикла
+
+                            }
+                            if (IsEat)
+                            {
+                                SwitchButtonToDamka(buttons[i, j]);
+                                return;
+                            }
+                        }
                     }
+
                 }
             }
-            if(!bot_move())     // Нет съедобных ходов, делаем обычный ход
-            {
-                // Если единственный доступный ход для ПРОСТОЙ пешки, сьесть назад, съедаем назад
-                for (int i = 0; i < mapSize; i++)
+                if (!BotCheckStep() && !IsEat)     // Нет съедобных ходов, делаем обычный ход
                 {
-                    for (int j = 0; j < mapSize; j++)
+                    // Если единственный доступный ход для ПРОСТОЙ пешки, сьесть назад, съедаем назад
+                    for (int i = 0; i < mapSize; i++)
                     {
-                        if (map[i, j] == 2)   // Мы нашли чёрную фигуру
+                        for (int j = 0; j < mapSize; j++)
                         {
-                            IsEat = bot_check_eat(i, j, i + 1, j - 1, i + 2, j - 2);      // Проверить диагональ слева вниз
-                            if (IsEat)
-                                return;
-                            IsEat = bot_check_eat(i, j, i + 1, j + 1, i + 2, j + 2);      // Проверить диагональ справа вниз
-                            if (IsEat)
-                                return;
+                            if (map[i, j] == 2)   // Мы нашли чёрную фигуру
+                            {
+                                IsEat = BotCheckEat(i, j, i + 1, j - 1, i + 2, j - 2);      // Проверить диагональ слева вниз
+                                if (IsEat)
+                                    return;
+                                IsEat = BotCheckEat(i, j, i + 1, j + 1, i + 2, j + 2);      // Проверить диагональ справа вниз
+                                if (IsEat)
+                                    return;
+                            }
                         }
                     }
                 }
-            }
+                listIJ.Clear();
+                listIJDamka.Clear();
         }
 
-        // Проверить есть ли съедобный ход пи дагонали, если есть - съедаем
-        bool bot_check_eat(int i, int j, int ii, int jj, int iii, int jjj)
+        private bool BotCheckEatDamka(int i, int j)
+        {
+            bool IsEat = false;
+            int ii = i - 1;
+            int jj = j - 1;
+            while (IsInsideBorders(ii, jj))     // Вверх-влево
+            {
+                if (map[ii, jj] == 1)
+                {
+                    if (IsInsideBorders(ii - 1, jj - 1))
+                    {
+                        if (map[ii - 1, jj - 1] == 0)
+                        {
+                            IsEat = BotCheckEat(i, j, ii, jj, ii - 1, jj - 1);
+                            buttons[ii - 1, jj - 1].Text = "D";
+                            if (IsEat)
+                                return true;
+                        }
+                    }
+                }
+                ii--; jj--;
+            }
+            ii = i - 1;
+            jj = j + 1;
+            while (IsInsideBorders(ii, jj))     // Вверх-вправо 
+            {
+                if (map[ii, jj] == 1)
+                {
+                    if (IsInsideBorders(ii - 1, jj + 1))
+                    {
+                        if (map[ii - 1, jj + 1] == 0)
+                        {
+                            IsEat = BotCheckEat(i, j, ii, jj, ii - 1, jj + 1);
+                            buttons[ii - 1, jj + 1].Text = "D";
+                            if (IsEat)
+                                return true;
+                        }
+                    }
+                }
+                ii--; jj++;
+            }
+            ii = i + 1;
+            jj = j - 1;
+            while (IsInsideBorders(ii, jj))     // Вниз-влево 
+            {
+                if (map[ii, jj] == 1)
+                {
+                    if (IsInsideBorders(ii + 1, jj - 1))
+                    {
+                        if (map[ii + 1, jj - 1] == 0)
+                        {
+                            IsEat = BotCheckEat(i, j, ii, jj, ii + 1, jj - 1);
+                            buttons[ii + 1, jj - 1].Text = "D";
+                            if (IsEat)
+                                return true;
+                        }
+                    }
+                }
+                ii++; jj--;
+            }
+            ii = i + 1;
+            jj = j + 1;
+            while (IsInsideBorders(ii, jj))     // Вниз-вправо
+            {
+                if (map[ii, jj] == 1)
+                {
+                    if (IsInsideBorders(ii + 1, jj + 1))
+                    {
+                        if (map[ii + 1, jj + 1] == 0)
+                        {
+                            IsEat = BotCheckEat(i, j, ii, jj, ii + 1, jj + 1);
+                            buttons[ii + 1, jj + 1].Text = "D";
+                            if (IsEat)
+                                return true;
+                        }
+                    }
+                }
+                ii++; jj++;
+            }
+            return false;
+        }
+
+        // Проверить есть ли съедобный ход по дагонали, если есть - съедаем
+        private bool BotCheckEat(int i, int j, int ii, int jj, int iii, int jjj)
         {
             if (IsInsideBorders(ii, jj))
             {
@@ -416,11 +470,8 @@ namespace GameOnHome_WINFORM.Games
         }
 
         // Просто ход бота, без съедания
-        private bool bot_move()
+        private bool BotCheckStep()
         {
-            List<int[]> listIJ = new List<int[]>();          // Список ходов которые мы можем сделать пешкой
-            List<int[]> listIJDamka = new List<int[]>();     // Список ходов которые мы можем сделать дамкой
-
             for (int i = 0; i < mapSize; i++)
             {
                 for (int j = 0; j < mapSize; j++)
