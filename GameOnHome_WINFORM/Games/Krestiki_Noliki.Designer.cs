@@ -50,7 +50,7 @@ namespace GameOnHome_WINFORM.Games
             // 
             // pictureWinGame
             // 
-            this.pictureWinGame.Image = global::GameOnHome_WINFORM.Properties.Resources.Вы_выиграли;
+            this.pictureWinGame.Image = global::GameOnHome_WINFORM.Properties.Resources.win;
             this.pictureWinGame.Location = new System.Drawing.Point(12, 292);
             this.pictureWinGame.Name = "pictureWinGame";
             this.pictureWinGame.Size = new System.Drawing.Size(1138, 352);

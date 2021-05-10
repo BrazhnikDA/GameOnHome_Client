@@ -31,6 +31,12 @@ namespace GameOnHome_WINFORM.Games
         private Image toeFigure;            // Изображение нолика
 
         private int count = 0;              // Количество сделанных ходов
+
+        public bool GetStatus
+        {
+            get { return IsStatus; }
+        }
+
         public Krestiki_Noliki(bool IsStatus_)
         {
             InitializeComponent();
@@ -118,7 +124,7 @@ namespace GameOnHome_WINFORM.Games
             currentButton.BackColor = Color.White;
             map[ConvertNameI(currentButton), ConvertNameY(currentButton)] = 1;
             count++;
-
+            //DeactivateAllButtons();     // Ждём ответ бота
             // Если нет победителя играем дальше
             if (IsWin() == 0)
             {
@@ -133,7 +139,7 @@ namespace GameOnHome_WINFORM.Games
 
         private void BotXodHard()
         {
-            Thread.Sleep(300);
+            Thread.Sleep(250);
             // Проверяем можно сходить в центр
             if (map[1, 1] == 0)
             {
@@ -266,6 +272,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 BotXodEasy();       // Выбираем ход рандомно
             }
+            //ActivateAllButtons();
         }
 
         private void SetXodBot(int i, int j)
@@ -378,6 +385,11 @@ namespace GameOnHome_WINFORM.Games
             return Convert.ToInt32(sym[8]) - 48;
         }
 
+        public void Restart()
+        {
+            MessageBox.Show("RESTART!");
+        }
+
         private bool TableForWinner()
         {
             // Минимальное кол-во ходов для победы 5, начинаем проверять только с этого момента
@@ -391,9 +403,16 @@ namespace GameOnHome_WINFORM.Games
                         // Выиграл X
                         if(currentPlayer == "X")
                         {
-                            EndGame = new end_of_game.end_of_game(true, "tic-tac");
+                            EndGame = new end_of_game.end_of_game(true, this);
+                            EndGame.Owner = this;
                             EndGame.Show();
-                        }else { EndGame = new end_of_game.end_of_game(false, "tic-tac"); EndGame.Show(); }
+                        }
+                        else 
+                        { 
+                            EndGame = new end_of_game.end_of_game(false, this); 
+                            EndGame.Owner = this; 
+                            EndGame.Show(); 
+                        }
                         DeactivateAllButtons();
                         return true;
 
@@ -401,11 +420,17 @@ namespace GameOnHome_WINFORM.Games
                         // Выиграл O
                         if (currentPlayer == "O")
                         {
-                            EndGame = new end_of_game.end_of_game(true, "tic-tac");
+                            EndGame = new end_of_game.end_of_game(true, this);
+                            EndGame.Owner = this;
                             EndGame.Show();
-                            
                         }
-                        else { EndGame = new end_of_game.end_of_game(false, "tic-tac"); EndGame.Show(); }
+                        else 
+                        {
+                            EndGame = new end_of_game.end_of_game(false, this);
+                            EndGame.Owner = this;
+ 
+                            EndGame.Show();
+                        }
                         DeactivateAllButtons();
                         return true;
 
@@ -413,7 +438,7 @@ namespace GameOnHome_WINFORM.Games
                         // Ничья
                         DeactivateAllButtons();
                         MessageBox.Show("Nichya win");
-                        Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(false);
+                        Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(IsStatus);
                         krestiki_Noliki.Show();
                         this.Close();
                         return true;

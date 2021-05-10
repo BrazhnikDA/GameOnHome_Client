@@ -10,6 +10,8 @@ namespace GameOnHome_WINFORM.Games
 {
     public partial class Shashki : Form
     {
+        private end_of_game.end_of_game EndGame;
+
         private string ID;                          // ID присвоенное сервером
         private bool IsStatus = false;              // True - онлайн, False - оффлайн
 
@@ -40,6 +42,11 @@ namespace GameOnHome_WINFORM.Games
 
         List<int[]> listIJ = new List<int[]>();          // Список ходов которые бот может сделать пешкой 
         List<int[]> listIJDamka = new List<int[]>();     // Список ходов которые бот может сделать дамкой
+
+        public bool GetStatus
+        {
+            get { return IsStatus; }
+        }
 
         public Shashki(bool IsStatus_)
         {
@@ -131,11 +138,33 @@ namespace GameOnHome_WINFORM.Games
             }
             if (white == false)
             {
-                MessageBox.Show("Чёрные выиграли!");
+                if (currentPlayer == 2)
+                {
+                    EndGame = new end_of_game.end_of_game(true, this);
+                    EndGame.Owner = this;
+                    EndGame.Show();
+                }
+                else
+                {
+                    EndGame = new end_of_game.end_of_game(false, this);
+                    EndGame.Owner = this;
+                    EndGame.Show();
+                }
             }
             if (black == false)
             {
-                MessageBox.Show("Белые выиграли!");
+                if (currentPlayer == 1)
+                {
+                    EndGame = new end_of_game.end_of_game(true, this);
+                    EndGame.Owner = this;
+                    EndGame.Show();
+                }
+                else
+                {
+                    EndGame = new end_of_game.end_of_game(false, this);
+                    EndGame.Owner = this;
+                    EndGame.Show();
+                }
             }
         }
 
@@ -291,7 +320,7 @@ namespace GameOnHome_WINFORM.Games
                                     I = iii; J = Ljjj;
                                     ii = I - 1; iii = I - 2;
                                     Ljj = J - 1; Ljjj = J - 2;
-                                    MessageBox.Show("Left");
+                                    //MessageBox.Show("Left");
                                     continue;
                                 }
                                 IsEat = BotCheckEat(I, J, ii, Rjj, iii, Rjjj);      // Проверить диагональ справа вверх
@@ -300,7 +329,7 @@ namespace GameOnHome_WINFORM.Games
                                     I = iii; J = Rjjj;
                                     ii = I - 1; iii = I - 2;
                                     Rjj = J + 1; Rjjj = J + 2;
-                                    MessageBox.Show("Right");
+                                    //MessageBox.Show("Right");
                                     continue;
                                 }
                                 if (!IsEat) { break; }                               // Нет хода, выходим из цикла

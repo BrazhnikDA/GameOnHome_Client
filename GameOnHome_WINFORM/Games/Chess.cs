@@ -10,6 +10,8 @@ namespace GameOnHome_WINFORM.Games
 {
     public partial class Chess : Form
     {
+        private end_of_game.end_of_game EndGame;
+
         public string ID;                          // ID присвоенное сервером
         public bool IsStatus = false;              // True - онлайн, False - оффлайн
 
@@ -49,9 +51,15 @@ namespace GameOnHome_WINFORM.Games
         private Image blackTower;
         private Image blackPawn;
 
+        public bool GetStatus
+        {
+            get { return IsStatus; }
+        }
         public Chess(bool IsStatus_)
         {
             InitializeComponent();
+
+            this.Name = "Chess";
 
             IsStatus = IsStatus_;
 
@@ -1343,8 +1351,36 @@ namespace GameOnHome_WINFORM.Games
             if(IsLiveBlack && IsLiveWhite) { return; }
             else 
             {
-                if(!IsLiveBlack) { MessageBox.Show("Белые выиграли!"); }
-                if(!IsLiveWhite) { MessageBox.Show("Чёрные выиграли!"); }
+                if(!IsLiveBlack) 
+                {
+                    if (currentPlayer == 1)
+                    {
+                        EndGame = new end_of_game.end_of_game(true, this);
+                        EndGame.Owner = this;
+                        EndGame.Show();
+                    }
+                    else
+                    {
+                        EndGame = new end_of_game.end_of_game(false, this);
+                        EndGame.Owner = this;
+                        EndGame.Show();
+                    }
+                }
+                if(!IsLiveWhite) 
+                {
+                    if (currentPlayer == 2)
+                    {
+                        EndGame = new end_of_game.end_of_game(true, this);
+                        EndGame.Owner = this;
+                        EndGame.Show();
+                    }
+                    else
+                    {
+                        EndGame = new end_of_game.end_of_game(false, this);
+                        EndGame.Owner = this;
+                        EndGame.Show();
+                    }
+                }
             }
         }
 
