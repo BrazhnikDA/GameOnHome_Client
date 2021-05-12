@@ -39,11 +39,8 @@ namespace GameOnHome_WINFORM.end_of_game
             {
                 case "Krestiki_Noliki":
                     Krestiki_Noliki tic_tac = this.Owner as Krestiki_Noliki;
-                    if (tic_tac != null)
-                    {
-                        tic_tac.Close();
-                        selectForm = new Krestiki_Noliki(tic_tac.GetStatus);
-                    }
+                    tic_tac.Restart();
+                       // selectForm = new Krestiki_Noliki(tic_tac.GetStatus);
                     break;
                 case "Shashki":
                     Shashki shashki = this.Owner as Shashki;

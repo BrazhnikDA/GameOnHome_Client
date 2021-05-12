@@ -69,44 +69,68 @@ namespace GameOnHome_WINFORM.Games
                 { 0,0,0 },
             };
            
-            this.Width = (mapSize) * cellSize + 35;
-            this.Height = (mapSize) * cellSize + 65;
+            this.Width = (mapSize) * cellSize + 226;
+            this.Height = (mapSize) * cellSize + 99;
 
             for (int i = 0; i < mapSize; i++)
             {
                 for (int j = 0; j < mapSize; j++)
                 {
-                    // Создаём кнопку и указвыаем нужные нам параметры
+                    //Разметка кнопок
+                    int otstopX = 0, otstopY = 0;
+                    if (j > 0)
+                    {
+                        otstopX = 5;
+                    }
+                    if (j > 1)
+                    {
+                        otstopX = 10;
+                    }
+                    if (i > 0)
+                    {
+                        otstopY = 5;
+                    }
+                    if (i > 1)
+                    {
+                        otstopY = 10;
+                    }
+
+                    //Параметры кнопок
                     Button button = new Button();
-                    button.Location = new Point(j * cellSize, i * cellSize);    // Местоположение
+                    button.Size = new Size(cellSize, cellSize);                 //Размер
+                    button.Location = new Point(j * cellSize + otstopX + 100, i * cellSize + otstopY + 25);    //Местоположение
+                    button.TabStop = false;                                     //Выделение
+                    button.FlatStyle = FlatStyle.Flat;                          //Стиль рамок
+                    button.FlatAppearance.BorderSize = 0;                       //Ширина рамок
                     button.BackColor = Color.Gray;
-                    button.Size = new Size(cellSize, cellSize);
-                    if(IsStatus)
+                    if (IsStatus)
                         button.Click += new EventHandler(Button_click_online);  // Привязываем функцию обработчика нажатий
                     else button.Click += new EventHandler(Button_click_ofline);
                     button.Name = "button" + i.ToString() + "_" + j.ToString(); // Даём ей имя, что бы можно это использовать где потребуется (псевдо ID)
 
                     buttons[i, j] = button;                                     // Заносим в наш массив кнопок
 
-                    this.Controls.Add(button);                                  // Привязываем кнопки к нашему окну
+                    this.Controls.Add(button);                                  // Привязываем
                 }
             }
         }
 
-        // Функция для изменения размера кнопок при изменении размера окна
-        private void Krestiki_Noliki_SizeChanged(object sender, EventArgs e)
+        public void Restart()
         {
-            if(buttons[0,0] == null) { return; }
-            cellSize = (Width / 5) + (Height / 9);
-
-            for (int i = 0; i < mapSize; i++)
+            for(int i = 0; i < mapSize; i++)
             {
-                for (int j = 0; j < mapSize; j++)
+                for(int j = 0; j < mapSize; j++)
                 {
-                    buttons[i,j].Location = new Point(j * cellSize, i * cellSize);
-                    buttons[i,j].Size = new Size(cellSize, cellSize);
+                    map[i, j] = 0;
+                    buttons[i, j].Image = null;
+                    buttons[i, j].BackColor = Color.Gray; ;
                 }
             }
+            count = 0;
+            //CreatePlayBoard();
+            Krestiki_Noliki_Load(null, null);
+            ActivateAllButtons();
+            currentPlayer = "";
         }
 
         private void Button_click_ofline(object sender, EventArgs e)
@@ -383,11 +407,6 @@ namespace GameOnHome_WINFORM.Games
         {
             string sym = b.Name;
             return Convert.ToInt32(sym[8]) - 48;
-        }
-
-        public void Restart()
-        {
-            MessageBox.Show("RESTART!");
         }
 
         private bool TableForWinner()
@@ -669,6 +688,42 @@ namespace GameOnHome_WINFORM.Games
             if (client != null)
                 client.Close();     // Отключение клиента
             Environment.Exit(0);    // Закртиые приложения
+        }
+
+        private void Krestiki_Noliki_Load(object sender, EventArgs e)
+        {
+            PictureBox PB = new PictureBox();
+            PB.Dock = DockStyle.Fill;
+            PB.Location = new Point(0, 0);
+            PB.Image = Properties.Resources.tic_tac_back;
+
+
+            Graphics g = Graphics.FromImage(PB.Image);
+            Pen PenGird = new Pen(Color.Black, 5);
+
+            //Отрисовка линий по вертикали
+            for (int i = 0; i < 4; i++)
+            {
+                int tmp = 0;
+                if (i == 1) { tmp = 5; }
+                if (i == 2) { tmp = 10; }
+                if (i == 3) { tmp = 15; }
+
+                g.DrawLine(PenGird, new Point(97 + cellSize * i + tmp, 20), new Point(97 + cellSize * i + tmp, Height - 59));
+            }
+
+            //Отрисовка линий по горизонтали
+            for (int i = 0; i < 4; i++)
+            {
+                int tmp = 0;
+                if (i == 1) { tmp = 5; }
+                if (i == 2) { tmp = 10; }
+                if (i == 3) { tmp = 15; }
+
+                g.DrawLine(PenGird, new Point(95, 22 + cellSize * i + tmp), new Point(Width - 115, 22 + cellSize * i + tmp));
+            }
+
+            this.Controls.Add(PB);
         }
     }
 }

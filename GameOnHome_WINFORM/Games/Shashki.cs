@@ -91,8 +91,8 @@ namespace GameOnHome_WINFORM.Games
         private void CreateMap()
         {
             // Указываем размер окна относительно размера кнопок
-            this.Width = (mapSize + 1) * cellSize + 50;
-            this.Height = (mapSize + 1) * cellSize + 50;
+            this.Width = (mapSize + 1) * cellSize + 116;
+            this.Height = (mapSize + 1) * cellSize - 11;
 
             for (int i = 0; i < mapSize; i++)
             {
@@ -282,6 +282,7 @@ namespace GameOnHome_WINFORM.Games
         // Интеллект бота сложность: легко
         private void BotBrainEasy()
         {
+            int steps = 0;              // Количество ходов которые схели врага
             //Thread.Sleep(150);
             bool IsEat = false;         // Есть ли съедобный ход
             for (int i = 0; i < mapSize; i++)
@@ -296,7 +297,10 @@ namespace GameOnHome_WINFORM.Games
                         {
                             IsEat = BotCheckEatDamka(i, j);
                             if (IsEat)
+                            {
+                                steps++;
                                 return;
+                            }
                         }
                         else
                         {
@@ -320,6 +324,7 @@ namespace GameOnHome_WINFORM.Games
                                     I = iii; J = Ljjj;
                                     ii = I - 1; iii = I - 2;
                                     Ljj = J - 1; Ljjj = J - 2;
+                                    steps++;
                                     //MessageBox.Show("Left");
                                     continue;
                                 }
@@ -329,6 +334,7 @@ namespace GameOnHome_WINFORM.Games
                                     I = iii; J = Rjjj;
                                     ii = I - 1; iii = I - 2;
                                     Rjj = J + 1; Rjjj = J + 2;
+                                    steps++;
                                     //MessageBox.Show("Right");
                                     continue;
                                 }
@@ -340,12 +346,13 @@ namespace GameOnHome_WINFORM.Games
                                 SwitchButtonToDamka(buttons[i, j]);
                                 return;
                             }
+                            if(steps>0) { return; }
                         }
                     }
 
                 }
             }
-                if (!BotCheckStep() && !IsEat)     // Нет съедобных ходов, делаем обычный ход
+            if (!BotCheckStep() && !IsEat && steps == 0)     // Нет съедобных ходов, делаем обычный ход
                 {
                     // Если единственный доступный ход для ПРОСТОЙ пешки, сьесть назад, съедаем назад
                     for (int i = 0; i < mapSize; i++)
@@ -560,7 +567,7 @@ namespace GameOnHome_WINFORM.Games
                                 ii++; jj++;
                             }
                         }
-
+                       
                         int[] check = new int[4];       // Переменная для хранения координат где стоит фигура и куда она может сходить (i, j, ii, jj) 
 
                         check = bot_check_move(i, j, i - 1, j - 1);
@@ -573,12 +580,13 @@ namespace GameOnHome_WINFORM.Games
                         {
                             listIJ.Add(check);
                         }
+                        ActivateAllButtons();
                     }
                 }
             }
 
             // Есть дамка, ходим дамкой
-            if (listIJDamka.Count > 0)
+            if (listIJDamka.Count > 1)
             {
                 Random rnd = new Random();
                 byte xod = Convert.ToByte(rnd.Next(0, listIJDamka.Count));   // Выбираем случайный ход из возможных
@@ -594,23 +602,25 @@ namespace GameOnHome_WINFORM.Games
 
                 return true;
             }
-
-            // Есть хоть 1 возможный ход
-            if (listIJ.Count > 0)
+            else
             {
-                Random rnd = new Random();
-                byte xod = Convert.ToByte(rnd.Next(0, listIJ.Count));   // Выбираем случайный ход из возможных
+                // Есть хоть 1 возможный ход
+                if (listIJ.Count > 0)
+                {
+                    Random rnd = new Random();
+                    byte xod = Convert.ToByte(rnd.Next(0, listIJ.Count));   // Выбираем случайный ход из возможных
 
-                map[listIJ[xod][0], listIJ[xod][1]] = 0;    // Где стояли теперь пустота
-                map[listIJ[xod][2], listIJ[xod][3]] = 2;    // Куда сходили теперь наша фигура
+                    map[listIJ[xod][0], listIJ[xod][1]] = 0;    // Где стояли теперь пустота
+                    map[listIJ[xod][2], listIJ[xod][3]] = 2;    // Куда сходили теперь наша фигура
 
-                buttons[listIJ[xod][0], listIJ[xod][1]].Image = null;
-                buttons[listIJ[xod][2], listIJ[xod][3]].Image = blackFigure;
+                    buttons[listIJ[xod][0], listIJ[xod][1]].Image = null;
+                    buttons[listIJ[xod][2], listIJ[xod][3]].Image = blackFigure;
 
-                SwitchButtonToDamka(buttons[listIJ[xod][0], listIJ[xod][1]]);   // Проверяем не стали ли мы дамкой
-                return true;
+                    SwitchButtonToDamka(buttons[listIJ[xod][2], listIJ[xod][3]]);   // Проверяем не стали ли мы дамкой
+                    return true;
+                }
+                { return false; }
             }
-            { return false; }
         }
 
         // Проверка хода, если сходить нельзя возвращем массив из -1...
@@ -810,6 +820,10 @@ namespace GameOnHome_WINFORM.Games
                         }
                     }
                 }
+            }
+            if(!isEatStep) 
+            {
+                CheckWin();
             }
             if (!isEatStep)
                 ActivateAllButtons();   // Нет съедобных ходов активируем все кнпоки 
@@ -1342,6 +1356,37 @@ namespace GameOnHome_WINFORM.Games
             if (client != null)
                 client.Close();//отключение клиента
             Environment.Exit(0); //завершение процесса
-        }     
+        }
+
+        private void Shashki_Load(object sender, EventArgs e)
+        {
+            PictureBox PB = new PictureBox();
+            PB.Dock = DockStyle.Fill;
+            PB.Location = new Point(0, 0);
+            PB.Image = Properties.Resources.shashki_back;
+
+            Graphics g = Graphics.FromImage(PB.Image);
+            Pen PenGird = new Pen(Color.Black, 5);
+
+            //Отрисовка линий по вертикали
+            for (int i = 0; i < 4; i++)
+            {
+                int tmp = 0;
+                if (i == 1) { tmp = 5; }
+
+                g.DrawLine(PenGird, new Point(97 + 8 * cellSize * i + tmp, 20), new Point(97 + 8 * cellSize * i + tmp, Height - 59));
+            }
+
+            //Отрисовка линий по горизонтали
+            for (int i = 0; i < 4; i++)
+            {
+                int tmp = 0;
+                if (i == 1) { tmp = 5; }
+
+                g.DrawLine(PenGird, new Point(95, 22 + 8 * cellSize * i + tmp), new Point(Width - 115, 22 + 8 * cellSize * i + tmp));
+            }
+
+            this.Controls.Add(PB);
+        }
     }
 }

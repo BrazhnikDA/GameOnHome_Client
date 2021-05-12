@@ -54,7 +54,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 2F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(628, 594);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(634, 611);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // timerLabel
@@ -63,9 +63,9 @@
             this.timerLabel.AutoSize = true;
             this.timerLabel.Font = new System.Drawing.Font("Book Antiqua", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.timerLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.timerLabel.Location = new System.Drawing.Point(290, 564);
+            this.timerLabel.Location = new System.Drawing.Point(300, 581);
             this.timerLabel.Name = "timerLabel";
-            this.timerLabel.Size = new System.Drawing.Size(47, 30);
+            this.timerLabel.Size = new System.Drawing.Size(33, 30);
             this.timerLabel.TabIndex = 4;
             this.timerLabel.Text = "time";
             this.timerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -74,9 +74,9 @@
             // 
             this.horizontalLine1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.horizontalLine1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.horizontalLine1.Location = new System.Drawing.Point(3, 522);
+            this.horizontalLine1.Location = new System.Drawing.Point(3, 539);
             this.horizontalLine1.Name = "horizontalLine1";
-            this.horizontalLine1.Size = new System.Drawing.Size(622, 2);
+            this.horizontalLine1.Size = new System.Drawing.Size(628, 2);
             this.horizontalLine1.TabIndex = 1;
             // 
             // scoreLabel
@@ -85,9 +85,9 @@
             this.scoreLabel.AutoSize = true;
             this.scoreLabel.Font = new System.Drawing.Font("Book Antiqua", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.scoreLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.scoreLabel.Location = new System.Drawing.Point(274, 532);
+            this.scoreLabel.Location = new System.Drawing.Point(290, 558);
             this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(79, 32);
+            this.scoreLabel.Size = new System.Drawing.Size(54, 23);
             this.scoreLabel.TabIndex = 2;
             this.scoreLabel.Text = "score";
             this.scoreLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -95,19 +95,20 @@
             // gameField
             // 
             this.gameField.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameField.Image = global::GameOnHome_WINFORM.Properties.Resources._3ryd_back;
             this.gameField.Location = new System.Drawing.Point(3, 3);
             this.gameField.Name = "gameField";
-            this.gameField.Size = new System.Drawing.Size(622, 516);
+            this.gameField.Size = new System.Drawing.Size(628, 533);
             this.gameField.TabIndex = 5;
             this.gameField.TabStop = false;
             this.gameField.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gameField_MouseDown);
             // 
             // ThreeRow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(628, 594);
+            this.ClientSize = new System.Drawing.Size(634, 611);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Font = new System.Drawing.Font("Book Antiqua", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.KeyPreview = true;

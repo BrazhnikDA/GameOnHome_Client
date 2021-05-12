@@ -33,11 +33,14 @@ namespace GameOnHome_WINFORM.Games
             // 
             // Shashki
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1159, 871);
+            this.ClientSize = new System.Drawing.Size(811, 523);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Shashki";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Шашки";
+            this.Load += new System.EventHandler(this.Shashki_Load);
             this.ResumeLayout(false);
 
         }

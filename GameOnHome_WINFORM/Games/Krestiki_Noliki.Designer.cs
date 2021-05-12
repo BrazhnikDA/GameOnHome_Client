@@ -30,9 +30,7 @@ namespace GameOnHome_WINFORM.Games
         private void InitializeComponent()
         {
             this.pictureWait = new System.Windows.Forms.PictureBox();
-            this.pictureWinGame = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureWait)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureWinGame)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureWait
@@ -48,34 +46,21 @@ namespace GameOnHome_WINFORM.Games
             this.pictureWait.UseWaitCursor = true;
             this.pictureWait.Visible = false;
             // 
-            // pictureWinGame
-            // 
-            this.pictureWinGame.Image = global::GameOnHome_WINFORM.Properties.Resources.win;
-            this.pictureWinGame.Location = new System.Drawing.Point(12, 292);
-            this.pictureWinGame.Name = "pictureWinGame";
-            this.pictureWinGame.Size = new System.Drawing.Size(1138, 352);
-            this.pictureWinGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureWinGame.TabIndex = 4;
-            this.pictureWinGame.TabStop = false;
-            this.pictureWinGame.Visible = false;
-            // 
             // Krestiki_Noliki
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 694);
-            this.Controls.Add(this.pictureWinGame);
+            this.ClientSize = new System.Drawing.Size(510, 416);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Krestiki_Noliki";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.SizeChanged += new System.EventHandler(this.Krestiki_Noliki_SizeChanged);
+            this.Load += new System.EventHandler(this.Krestiki_Noliki_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureWait)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureWinGame)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.PictureBox pictureWait;
-        private System.Windows.Forms.PictureBox pictureWinGame;
     }
 }

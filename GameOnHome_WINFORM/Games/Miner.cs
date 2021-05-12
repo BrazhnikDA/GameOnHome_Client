@@ -335,6 +335,17 @@ namespace GameOnHome_WINFORM.Games
             date1 = date1.AddSeconds(1);
             textBox_Timer.Text = date1.ToString("mm:ss");
         }
+
+        private void Miner_Load(object sender, EventArgs e)
+        {
+            Label time = new Label();
+            TextBox timebox = new TextBox();
+            Timer timer = new Timer();
+
+            time.Font = new Font("Segoe UI Emoji", 18f);
+            time.Text = "Время";
+            time.Location = new Point();
+        }
     }
 }
 
