@@ -139,6 +139,19 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        public void Restart()
+        {
+            this.Controls.Clear();
+            stepsBot.Clear();
+            stepsPlayer.Clear();
+            pathToKing.Clear();
+            isMoving = false;
+            isRakirovka = false;
+            currentPlayer = 0;
+            Initialization();
+            CreateMap();
+        }
+
         private void FigureClickOffline(object sender, EventArgs e)
         {
             if (currentPlayer == 0) { currentPlayer = 1; }

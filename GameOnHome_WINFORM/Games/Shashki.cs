@@ -120,6 +120,21 @@ namespace GameOnHome_WINFORM.Games
             }
         }
 
+        public void Restart()
+        {
+            this.Controls.Clear();
+            simpleSteps.Clear();
+
+            InitBoard();
+
+            Shashki_Load(null, null);
+            
+            currentPlayer = 0;
+            listIJ.Clear();
+            listIJDamka.Clear();
+            ActivateAllButtons();
+        }
+
         // Проверка на победу
         private void CheckWin()
         {

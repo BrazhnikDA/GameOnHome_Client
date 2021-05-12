@@ -40,23 +40,14 @@ namespace GameOnHome_WINFORM.end_of_game
                 case "Krestiki_Noliki":
                     Krestiki_Noliki tic_tac = this.Owner as Krestiki_Noliki;
                     tic_tac.Restart();
-                       // selectForm = new Krestiki_Noliki(tic_tac.GetStatus);
                     break;
                 case "Shashki":
                     Shashki shashki = this.Owner as Shashki;
-                    if (shashki != null)
-                    {
-                        shashki.Close();
-                        selectForm = new Shashki(shashki.GetStatus);
-                    }
+                    shashki.Restart();
                     break;
                 case "Chess":
                     Chess chess = this.Owner as Chess;
-                    if (chess != null)
-                    {
-                        chess.Close();
-                        selectForm = new Chess(chess.GetStatus);
-                    }
+                    chess.Restart();
                     break;
             }
             selectForm.Show();
