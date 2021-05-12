@@ -150,6 +150,7 @@ namespace GameOnHome_WINFORM.Games
             count++;
             //DeactivateAllButtons();     // Ждём ответ бота
             // Если нет победителя играем дальше
+            DeactivateAllButtons();
             if (IsWin() == 0)
             {
                 Thread brainBot = new Thread(new ThreadStart(BotXodHard));      // Ход бота
@@ -296,7 +297,11 @@ namespace GameOnHome_WINFORM.Games
             {
                 BotXodEasy();       // Выбираем ход рандомно
             }
-            //ActivateAllButtons();
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                ActivateAllButtons();
+                TableForWinner();
+            });
         }
 
         private void SetXodBot(int i, int j)
@@ -307,6 +312,12 @@ namespace GameOnHome_WINFORM.Games
             buttons[i, j].BackColor = Color.White;
 
             count++;
+
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                ActivateAllButtons();
+                TableForWinner();
+            });
         }
 
         private void BotXodEasy()

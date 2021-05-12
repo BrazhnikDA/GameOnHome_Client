@@ -40,7 +40,6 @@ namespace GameOnHome_WINFORM
             this.label_saper = new System.Windows.Forms.Label();
             this.pictureBox_chess = new System.Windows.Forms.PictureBox();
             this.label_chess = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_back)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tic_tac)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_shaski)).BeginInit();
@@ -211,7 +210,6 @@ namespace GameOnHome_WINFORM
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1541, 1195);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_chess);
             this.Controls.Add(this.pictureBox_chess);
             this.Controls.Add(this.label_saper);
@@ -252,6 +250,5 @@ namespace GameOnHome_WINFORM
         private System.Windows.Forms.Label label_saper;
         private System.Windows.Forms.PictureBox pictureBox_chess;
         private System.Windows.Forms.Label label_chess;
-        private System.Windows.Forms.Button button1;
     }
 }

@@ -283,7 +283,7 @@ namespace GameOnHome_WINFORM.Games
         private void BotBrainEasy()
         {
             int steps = 0;              // Количество ходов которые схели врага
-            //Thread.Sleep(150);
+            Thread.Sleep(150);
             bool IsEat = false;         // Есть ли съедобный ход
             for (int i = 0; i < mapSize; i++)
             {

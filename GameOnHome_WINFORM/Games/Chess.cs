@@ -25,6 +25,7 @@ namespace GameOnHome_WINFORM.Games
         private int[,] map = new int[mapSize, mapSize];   // Карта
 
         private Button[,] buttons = new Button[mapSize, mapSize];  // Все кнопки
+        private List<Color> colorMap = new List<Color>();
 
         private int cellSize = 150;
 
@@ -34,6 +35,7 @@ namespace GameOnHome_WINFORM.Games
         private Button prevButton;                   // Предыдущая нажатая кнопка
 
         private bool isMoving = false;               // Есть ли куда сходить
+        private bool isContinue = false;
 
         private List<int[]> xodBot = new List<int[]>();  // Список ходов бота
 
@@ -127,6 +129,7 @@ namespace GameOnHome_WINFORM.Games
                     else butt.Click += new EventHandler(FigureClickOffline);
                     butt.Image = GetImage(map[i, j]);
 
+                    colorMap.Add(butt.BackColor);
                     this.Controls.Add(butt);
 
                     buttons[i, j] = butt;
@@ -137,35 +140,43 @@ namespace GameOnHome_WINFORM.Games
         private void FigureClickOffline(object sender, EventArgs e)
         {
             if (currentPlayer == 0) { currentPlayer = 1; }
-
             pressedButton = sender as Button;
 
             if (GetColorFigure(CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton))) != 0 &&
                 GetColorFigure(CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton))) == currentPlayer)
             {
-                CloseSteps();
+                // Очищаем поле после второго нажатие на ту же фигуру
+                if (pressedButton.BackColor == Color.Red)
+                {
+                    pressedButton.BackColor = GetPrevButtonColor(pressedButton);
+                    RefreshColorMap();
+                    ActivateAllButtons();
+                    isMoving = false;
+                    return;
+                }
+                RefreshColorMap();
+                DeactivateAllButtons();
                 pressedButton.BackColor = Color.Red;        // Выделяем нажатую кнопку красным
                 pressedButton.Enabled = true;
                 ShowSteps(ConvertNameI(pressedButton), ConvertNameY(pressedButton));
 
                 if (isMoving)
                 {
-                    CloseSteps();           // Закрываем все шаги 
+                    RefreshColorMap();
                     pressedButton.BackColor = GetPrevButtonColor(pressedButton);
                     ShowSteps(ConvertNameI(pressedButton), ConvertNameY(pressedButton));    // Показываем куда можем сходить
                     isMoving = false;
+
                 }
-                else isMoving = true;
+                else
+                {
+                    isMoving = true;
+                }
             }
             else
             {
                 if (isMoving)
                 {
-                    if (pressedButton.BackColor == Color.Red)
-                    {
-                        pressedButton.BackColor = GetPrevButtonColor(pressedButton);
-
-                    }
                     if (pressedButton.BackColor == Color.Yellow)
                     {
                         map[ConvertNameI(pressedButton), ConvertNameY(pressedButton)] = map[ConvertNameI(prevButton), ConvertNameY(prevButton)];
@@ -175,11 +186,12 @@ namespace GameOnHome_WINFORM.Games
                         prevButton.BackColor = Color.White;
 
                         isMoving = false;
-                        CloseSteps();
+                        RefreshColorMap();
 
                         Thread brainBot = new Thread(new ThreadStart(BotBrainEasy));
                         brainBot.Start(); //старт потока
                         CheckWin();
+                        ActivateAllButtons();
                     }
                 }
             }
@@ -1053,68 +1065,92 @@ namespace GameOnHome_WINFORM.Games
 
         private void ShowStepsHorse(int i, int j, int Figure)
         {
-            if (IsInsideBorders(i - 2, j + 1))
+            int ii = i - 2;
+            int jj = j + 1;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i - 2, j + 1] == 0 || GetColorFigure(map[i - 2, j + 1]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i - 2, j + 1].Enabled = true;
-                    buttons[i - 2, j + 1].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;
                 }
             }
-            if (IsInsideBorders(i - 2, j - 1))
+            ii = i - 2;
+            jj = j - 1;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i - 2, j - 1] == 0 || GetColorFigure(map[i - 2, j - 1]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i - 2, j - 1].Enabled = true;
-                    buttons[i - 2, j - 1].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;
                 }
             }
-            if (IsInsideBorders(i + 2, j + 1))
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i + 2, j + 1] == 0 || GetColorFigure(map[i + 2, j + 1]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i + 2, j + 1].Enabled = true;
-                    buttons[i + 2, j + 1].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow; 
                 }
             }
-            if (IsInsideBorders(i + 2, j - 1))
+            ii = i + 2;
+            jj = j - 1;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i + 2, j - 1] == 0 || GetColorFigure(map[i + 2, j - 1]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i + 2, j - 1].Enabled = true;
-                    buttons[i + 2, j - 1].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;
                 }
             }
-            if (IsInsideBorders(i - 1, j + 2))
+            ii = i + 2;
+            jj = j + 1;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i - 1, j + 2] == 0 || GetColorFigure(map[i - 1, j + 2]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i - 1, j + 2].Enabled = true;
-                    buttons[i - 1, j + 2].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;
                 }
             }
-            if (IsInsideBorders(i + 1, j + 2))
+            ii = i - 1;
+            jj = j + 2;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i + 1, j + 2] == 0 || GetColorFigure(map[i + 1, j + 2]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i + 1, j + 2].Enabled = true;
-                    buttons[i + 1, j + 2].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;
                 }
             }
-            if (IsInsideBorders(i - 1, j - 2))
+            ii = i + 1;
+            jj = j + 2;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i - 1, j - 2] == 0 || GetColorFigure(map[i - 1, j - 2]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i - 1, j - 2].Enabled = true;
-                    buttons[i - 1, j - 2].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow; 
                 }
             }
-            if (IsInsideBorders(i + 1, j - 2))
+            ii = i - 1;
+            jj = j - 2;
+            if (IsInsideBorders(ii, jj))
             {
-                if (map[i + 1, j - 2] == 0 || GetColorFigure(map[i + 1, j - 2]) == Figure)
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
                 {
-                    buttons[i + 1, j - 2].Enabled = true;
-                    buttons[i + 1, j - 2].BackColor = Color.Yellow;
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;    
+                }
+            }
+            ii = i + 1;
+            jj = j - 2;
+            if (IsInsideBorders(ii, jj))
+            {
+                if (map[ii, jj] == 0 || GetColorFigure(map[ii, jj]) == Figure)
+                {
+                    buttons[ii, jj].Enabled = true;
+                    buttons[ii, jj].BackColor = Color.Yellow;    
                 }
             }
         }
@@ -1486,6 +1522,19 @@ namespace GameOnHome_WINFORM.Games
             return Color.White;
         }
 
+        private void RefreshColorMap()
+        {
+            int k = 0;
+            for(int i = 0; i < mapSize; i++)
+            {
+                for(int j = 0; j < mapSize; j++)
+                {
+                    buttons[i, j].BackColor = colorMap[k];
+                    k++;
+                }
+            }
+        }
+
         public string GetMap()
         {
             string res = "";
@@ -1538,7 +1587,10 @@ namespace GameOnHome_WINFORM.Games
             {
                 for (int j = 0; j < mapSize; j++)
                 {
-                    buttons[i, j].Enabled = false;
+                    if (buttons[i, j].BackColor != Color.Yellow)
+                    {
+                        buttons[i, j].Enabled = false;
+                    }
                 }
             }
         }
