@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM.Games
@@ -13,6 +14,9 @@ namespace GameOnHome_WINFORM.Games
         public ThreeRow()
         {
             InitializeComponent();
+
+            SoundPlayer sound = new SoundPlayer(Properties.Resources._3Throw);
+            sound.Play();
         }
 
         public int getScore

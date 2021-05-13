@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Media;
 
 namespace GameOnHome_WINFORM
 {
@@ -74,8 +75,15 @@ namespace GameOnHome_WINFORM
 
         }
 
+        private void PlaySound()
+        {
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.button_20);
+            sound.Play();
+        }
+
         private void lab1_click(object sender, EventArgs e)
         {
+            PlaySound();
             ListGames lg = new ListGames();                                              //Инициализация новой формы
             lg.Show();                                                                   //Показ новой формы
             MainMenu mm = parent;
@@ -94,6 +102,7 @@ namespace GameOnHome_WINFORM
 
         private void lab2_click(object sender, EventArgs e)
         {
+            PlaySound();
             Settings settings = new Settings();                                          //Инициализация новой формы
             settings.Show();
         }
@@ -110,6 +119,7 @@ namespace GameOnHome_WINFORM
 
         private void lab3_click(object sender, EventArgs e)
         {
+            PlaySound();
             Application.Exit();                                                          //Конец события
         }
 

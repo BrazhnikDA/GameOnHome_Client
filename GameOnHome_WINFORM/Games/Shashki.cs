@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -66,6 +67,9 @@ namespace GameOnHome_WINFORM.Games
             }
 
             InitBoard();        // "Создаём" доску
+
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.fonMusic);
+            sound.Play();
         }
         private void InitBoard()
         {

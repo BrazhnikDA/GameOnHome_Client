@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -11,6 +12,8 @@ namespace GameOnHome_WINFORM.Games
     public partial class Krestiki_Noliki : Form
     {
         private end_of_game.end_of_game EndGame;
+
+        SoundPlayer sound;
 
         private string ID;                          // ID присвоенное сервером
         private bool IsStatus = false;              // True - онлайн, False - оффлайн
@@ -50,6 +53,9 @@ namespace GameOnHome_WINFORM.Games
 
             tacFigure = Properties.Resources.krest;
             toeFigure = Properties.Resources.nol;
+
+            sound = new SoundPlayer(Properties.Resources.fonMusic);
+            sound.Play();
 
             Text = "Крестики-нолики";
 
@@ -734,6 +740,30 @@ namespace GameOnHome_WINFORM.Games
             }
 
             this.Controls.Add(PB);
+        }
+
+        private void Krestiki_Noliki_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ListGames lg = new ListGames();
+
+            if (count > 0)
+            {
+                DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                if (dialog == DialogResult.OK)
+                {
+                    sound.Stop();
+                    e.Cancel = false;
+                    lg.Show();
+                    this.Close();
+                }
+            }
+            else
+            {
+                sound.Stop();
+                e.Cancel = false;
+                lg.Show();
+                this.Close();
+            }
         }
     }
 }

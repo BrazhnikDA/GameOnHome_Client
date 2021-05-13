@@ -81,6 +81,15 @@ namespace GameOnHome_WINFORM.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.IO.UnmanagedMemoryStream, аналогичного System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream _3Throw {
+            get {
+                return ResourceManager.GetStream("_3Throw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap black {
@@ -161,6 +170,15 @@ namespace GameOnHome_WINFORM.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.IO.UnmanagedMemoryStream, аналогичного System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream button_20 {
+            get {
+                return ResourceManager.GetStream("button_20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap checlers_icone {
@@ -237,6 +255,15 @@ namespace GameOnHome_WINFORM.Properties {
             get {
                 object obj = ResourceManager.GetObject("fail", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.IO.UnmanagedMemoryStream, аналогичного System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream fonMusic {
+            get {
+                return ResourceManager.GetStream("fonMusic", resourceCulture);
             }
         }
         

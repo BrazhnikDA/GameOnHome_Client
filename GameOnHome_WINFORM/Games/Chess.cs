@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -62,6 +63,9 @@ namespace GameOnHome_WINFORM.Games
         public Chess(bool IsStatus_)
         {
             InitializeComponent();
+
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.fonMusic);
+            sound.Play();
 
             this.Name = "Chess";
 
@@ -1587,8 +1591,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i + 1, j] == 0 || GetColorFigure(map[i + 1, j]) == Figure)
                 {
-                    buttons[i + 1, j].Enabled = true;
-                    buttons[i + 1, j].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i + 1, j, GetTypeFigure(map[i + 1, j]) });
                 }
             }
 
@@ -1596,8 +1599,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i - 1, j] == 0 || GetColorFigure(map[i - 1, j]) == Figure)
                 {
-                    buttons[i - 1, j].Enabled = true;
-                    buttons[i - 1, j].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i - 1, j, GetTypeFigure(map[i - 1, j]) });
                 }
             }
 
@@ -1605,8 +1607,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i, j + 1] == 0 || GetColorFigure(map[i, j + 1]) == Figure)
                 {
-                    buttons[i, j + 1].Enabled = true;
-                    buttons[i, j + 1].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i, j + 1, GetTypeFigure(map[i, j + 1]) });
                 }
             }
 
@@ -1614,8 +1615,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i, j - 1] == 0 || GetColorFigure(map[i, j - 1]) == Figure)
                 {
-                    buttons[i, j - 1].Enabled = true;
-                    buttons[i, j - 1].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i, j - 1, GetTypeFigure(map[i, j - 1]) });
                 }
             }
 
@@ -1623,8 +1623,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i + 1, j + 1] == 0 || GetColorFigure(map[i + 1, j + 1]) == Figure)
                 {
-                    buttons[i + 1, j + 1].Enabled = true;
-                    buttons[i + 1, j + 1].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i + 1, j + 1, GetTypeFigure(map[i + 1, j + 1]) });
                 }
             }
 
@@ -1632,8 +1631,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i - 1, j + 1] == 0 || GetColorFigure(map[i - 1, j + 1]) == Figure)
                 {
-                    buttons[i - 1, j + 1].Enabled = true;
-                    buttons[i - 1, j + 1].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i - 1, j + 1, GetTypeFigure(map[i - 1, j + 1]) });
                 }
             }
 
@@ -1641,8 +1639,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i + 1, j - 1] == 0 || GetColorFigure(map[i + 1, j - 1]) == Figure)
                 {
-                    buttons[i + 1, j - 1].Enabled = true;
-                    buttons[i + 1, j - 1].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i + 1, j - 1, GetTypeFigure(map[i + 1, j - 1]) });
                 }
             }
 
@@ -1650,8 +1647,7 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (map[i - 1, j - 1] == 0 || GetColorFigure(map[i - 1, j - 1]) == Figure)
                 {
-                    buttons[i - 1, j - 1].Enabled = true;
-                    buttons[i - 1, j - 1].BackColor = Color.Yellow;
+                    stepsPlayer.Add(new int[5] { i, j, i - 1, j - 1, GetTypeFigure(map[i - 1, j - 1]) });
                 }
             }
         }

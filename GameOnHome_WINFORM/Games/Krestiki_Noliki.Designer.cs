@@ -55,6 +55,7 @@ namespace GameOnHome_WINFORM.Games
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Krestiki_Noliki";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Krestiki_Noliki_FormClosing);
             this.Load += new System.EventHandler(this.Krestiki_Noliki_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureWait)).EndInit();
             this.ResumeLayout(false);

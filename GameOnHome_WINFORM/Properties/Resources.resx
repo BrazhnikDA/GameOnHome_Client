@@ -142,6 +142,9 @@
   <data name="blue_icing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\blue_icing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="button_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button-20.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="checlers_icone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\checlers_icone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -165,6 +168,9 @@
   </data>
   <data name="fail" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fail.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fonMusic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fonMusic.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="green_icing_green_sprinkles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\green_icing_green_sprinkles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -270,6 +276,9 @@
   </data>
   <data name="_3ryd_back" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\3ryd_back.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_3Throw" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3Throw.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Вы_выиграли" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Вы_выиграли.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -1,6 +1,7 @@
 ﻿using GameOnHome_WINFORM.Games;
 using System;
 using System.Drawing;
+using System.Media;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
@@ -26,6 +27,12 @@ namespace GameOnHome_WINFORM
             label_chess.Parent = pictureBox_back;
         }
 
+        private void PlaySound()
+        {
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.button_20);
+            sound.Play();
+        }
+
         private void ListGames_Load(object sender, EventArgs e)
         {
 
@@ -34,10 +41,11 @@ namespace GameOnHome_WINFORM
         //Обработка события клик по "Крестики_Нолики"
         private void pictureBox_tic_tac_Click(object sender, EventArgs e)
         {
+            PlaySound();
             string name_of_game = "tic_tac";                                                             //Задаём имя игры
             settings_of_game sof = new settings_of_game(name_of_game, this);                             //Вызываем окно настроек с параметром названия игры
             sof.Owner = this;                                                                            //Указываем, что настройки игры - это дочерняя форма от листа с играми
-            sof.ShowDialog();                                                                            //Показываем форму
+            sof.Show();                                                                            //Показываем форму
         }
 
         //Метод для вызова определённого режима игры "Крестики-Нолики"
@@ -69,15 +77,17 @@ namespace GameOnHome_WINFORM
         //Обработка события клик по "Шашки"
         private void pictureBox_shaski_Click(object sender, EventArgs e)
         {
+            PlaySound();
             string name_of_game = "shaski";                                                              //Задаём имя игры
             settings_of_game sof = new settings_of_game(name_of_game, this);                             //Вызываем окно настроек с параметром названия игры
             sof.Owner = this;                                                                            //Указываем, что настройки игры - это дочерняя форма от листа с играми
-            sof.ShowDialog();                                                                            //Показываем форму
+            sof.Show();                                                                            //Показываем форму
         }
 
         //Метод для вызова определённого режима игры "Шашки"
         public void shaski_play(bool result)
         {
+            PlaySound();
             Shashki shashki = new Shashki(result);
             shashki.Show();
         }
@@ -104,9 +114,10 @@ namespace GameOnHome_WINFORM
         //Обработка события клик на "3 в ряд"
         private void pictureBox_Three_Row_Click(object sender, EventArgs e)
         {
+            PlaySound();
             ThreeRow three = new ThreeRow();
             this.Close();
-            three.ShowDialog();
+            three.Show();
         }
 
         //Обработка события наведения на "3 в ряд"
@@ -131,9 +142,10 @@ namespace GameOnHome_WINFORM
         //Обработка события клик по "Сапёр"
         private void pictureBox_saper_Click(object sender, EventArgs e)
         {
+            PlaySound();
             Miner miner = new Miner();
             this.Close();
-            miner.ShowDialog();
+            miner.Show();
         }
 
         //Обработка события наведения на "Сапёр"
@@ -158,10 +170,11 @@ namespace GameOnHome_WINFORM
         //Обработка события клик по "Шахматы"
         private void pictureBox_chess_Click(object sender, EventArgs e)
         {
+            PlaySound();
             string name_of_game = "chess";                                                               //Задаём имя игры
             settings_of_game sof = new settings_of_game(name_of_game, this);                             //Вызываем окно настроек с параметром названия игры
             sof.Owner = this;                                                                            //Указываем, что настройки игры - это дочерняя форма от листа с играми
-            sof.ShowDialog();                                                                            //Показываем форму
+            sof.Show();                                                                            //Показываем форму
         }
 
         //Метод для вызова определённого режима игры "Шахматы"
