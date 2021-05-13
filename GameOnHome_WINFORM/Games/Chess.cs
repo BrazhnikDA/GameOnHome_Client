@@ -989,20 +989,35 @@ namespace GameOnHome_WINFORM.Games
             if (GetColorFigure(CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton))) != 0 &&
                 GetColorFigure(CheckMap(ConvertNameI(pressedButton), ConvertNameY(pressedButton))) == currentPlayer)
             {
-                CloseSteps();
+                // Очищаем поле после второго нажатие на ту же фигуру
+                if (pressedButton.BackColor == Color.Red)
+                {
+                    pressedButton.BackColor = GetPrevButtonColor(pressedButton);
+                    RefreshColorMap();
+                    ActivateAllButtons();
+                    isMoving = false;
+                    return;
+                }
+                RefreshColorMap();
+                DeactivateAllButtons();
                 pressedButton.BackColor = Color.Red;        // Выделяем нажатую кнопку красным
                 pressedButton.Enabled = true;
                 ShowSteps(ConvertNameI(pressedButton), ConvertNameY(pressedButton));
 
                 if (isMoving)
                 {
-                    CloseSteps();           // Закрываем все шаги 
+                    RefreshColorMap();
                     pressedButton.BackColor = GetPrevButtonColor(pressedButton);
                     ShowSteps(ConvertNameI(pressedButton), ConvertNameY(pressedButton));    // Показываем куда можем сходить
                     isMoving = false;
+
                 }
-                else isMoving = true;
-            }else
+                else
+                {
+                    isMoving = true;
+                }
+            }
+            else
             {
                 if(isMoving)
                 {
@@ -1959,32 +1974,32 @@ namespace GameOnHome_WINFORM.Games
             if(IsLiveBlack && IsLiveWhite) { return; }
             else 
             {
-                if(!IsLiveBlack) 
+                if (!IsLiveBlack)
                 {
                     if (currentPlayer == 1)
                     {
-                        EndGame = new end_of_game.end_of_game(true, this);
+                        EndGame = new end_of_game.end_of_game("Win", this);
                         EndGame.Owner = this;
                         EndGame.Show();
                     }
                     else
                     {
-                        EndGame = new end_of_game.end_of_game(false, this);
+                        EndGame = new end_of_game.end_of_game("Fail", this);
                         EndGame.Owner = this;
                         EndGame.Show();
                     }
                 }
-                if(!IsLiveWhite) 
+                if (!IsLiveWhite)
                 {
                     if (currentPlayer == 2)
                     {
-                        EndGame = new end_of_game.end_of_game(true, this);
+                        EndGame = new end_of_game.end_of_game("Win", this);
                         EndGame.Owner = this;
                         EndGame.Show();
                     }
                     else
                     {
-                        EndGame = new end_of_game.end_of_game(false, this);
+                        EndGame = new end_of_game.end_of_game("Fail", this);
                         EndGame.Owner = this;
                         EndGame.Show();
                     }

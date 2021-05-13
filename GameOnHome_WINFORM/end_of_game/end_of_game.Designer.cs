@@ -32,6 +32,7 @@ namespace GameOnHome_WINFORM.end_of_game
             this.buttonRestart = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
             this.pictureBox_eog_back = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_eog_back)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,12 +77,25 @@ namespace GameOnHome_WINFORM.end_of_game
             this.pictureBox_eog_back.TabIndex = 1;
             this.pictureBox_eog_back.TabStop = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(100, 45);
+            this.label1.MinimumSize = new System.Drawing.Size(100, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 30);
+            this.label1.TabIndex = 2;
+            // 
             // end_of_game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(300, 150);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonRestart);
             this.Controls.Add(this.pictureBox_eog_back);
@@ -99,6 +113,7 @@ namespace GameOnHome_WINFORM.end_of_game
             this.Load += new System.EventHandler(this.end_of_game_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_eog_back)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -107,5 +122,6 @@ namespace GameOnHome_WINFORM.end_of_game
         private System.Windows.Forms.Button buttonRestart;
         private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.PictureBox pictureBox_eog_back;
+        private System.Windows.Forms.Label label1;
     }
 }

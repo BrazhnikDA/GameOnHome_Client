@@ -39,6 +39,8 @@ namespace GameOnHome_WINFORM
             this.ClientSize = new System.Drawing.Size(1080, 709);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(1096, 748);
+            this.MinimumSize = new System.Drawing.Size(1096, 748);
             this.Name = "MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Главное меню";

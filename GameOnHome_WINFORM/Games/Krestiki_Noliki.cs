@@ -431,17 +431,17 @@ namespace GameOnHome_WINFORM.Games
                     // Желательно добавить красивые таблички о победе с 2 кнопками, переиграть, главное меню
                     case 1:
                         // Выиграл X
-                        if(currentPlayer == "X")
+                        if (currentPlayer == "X")
                         {
-                            EndGame = new end_of_game.end_of_game(true, this);
+                            EndGame = new end_of_game.end_of_game("Win", this);
                             EndGame.Owner = this;
                             EndGame.Show();
                         }
-                        else 
-                        { 
-                            EndGame = new end_of_game.end_of_game(false, this); 
-                            EndGame.Owner = this; 
-                            EndGame.Show(); 
+                        else
+                        {
+                            EndGame = new end_of_game.end_of_game("Fail", this);
+                            EndGame.Owner = this;
+                            EndGame.Show();
                         }
                         DeactivateAllButtons();
                         return true;
@@ -450,15 +450,15 @@ namespace GameOnHome_WINFORM.Games
                         // Выиграл O
                         if (currentPlayer == "O")
                         {
-                            EndGame = new end_of_game.end_of_game(true, this);
+                            EndGame = new end_of_game.end_of_game("Win", this);
                             EndGame.Owner = this;
                             EndGame.Show();
                         }
-                        else 
+                        else
                         {
-                            EndGame = new end_of_game.end_of_game(false, this);
+                            EndGame = new end_of_game.end_of_game("Fail", this);
                             EndGame.Owner = this;
- 
+
                             EndGame.Show();
                         }
                         DeactivateAllButtons();
@@ -466,11 +466,10 @@ namespace GameOnHome_WINFORM.Games
 
                     case 3:
                         // Ничья
+                        EndGame = new end_of_game.end_of_game("Draw", this);
+                        EndGame.Owner = this;
+                        EndGame.Show();
                         DeactivateAllButtons();
-                        MessageBox.Show("Nichya win");
-                        Krestiki_Noliki krestiki_Noliki = new Krestiki_Noliki(IsStatus);
-                        krestiki_Noliki.Show();
-                        this.Close();
                         return true;
                 }
             }

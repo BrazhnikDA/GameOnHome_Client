@@ -7,10 +7,22 @@ namespace GameOnHome_WINFORM.Games
 {
     public partial class ThreeRow : Form
     {
+        private end_of_game.end_of_game EndGame;
+        public int score;
+
         public ThreeRow()
         {
             InitializeComponent();
         }
+
+        public int getScore
+        {
+            get
+            {
+                return m_game.GetScore();
+            }
+        }
+
 
         private void GameScreen_Load(object sender, EventArgs e)
         {
@@ -85,7 +97,7 @@ namespace GameOnHome_WINFORM.Games
             scoreLabel.Text = "Score: " + m_game.GetScore().ToString();
             //UpdateElements();
             m_game.Fall();
-                //Active = true;
+            //Active = true;
         }
 
         private void Game_ElementsFalled(List<Index> indices)
@@ -111,7 +123,9 @@ namespace GameOnHome_WINFORM.Games
         public void Finish()
         {
             m_active = false;
-            MessageBox.Show("Время вышло. Очки: " + m_game.GetScore().ToString(), "Конец игры", MessageBoxButtons.OK);
+            EndGame = new end_of_game.end_of_game("Score", this);
+            EndGame.Owner = this;
+            EndGame.Show();
         }
 
         public void UpdateBitmaps()

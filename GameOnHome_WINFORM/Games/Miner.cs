@@ -14,6 +14,8 @@ namespace GameOnHome_WINFORM.Games
 
         DateTime date1;
 
+        private end_of_game.end_of_game EndGame;
+
         private const int mapSize = 8;
         private const int cellSize = 75;
 
@@ -43,8 +45,8 @@ namespace GameOnHome_WINFORM.Games
 
         private void Init()
         {
-            this.Width = (mapSize + 1) * cellSize - 50;
-            this.Height = (mapSize + 1) * cellSize + 40;
+            this.Width = (mapSize + 1) * cellSize - 57;
+            this.Height = (mapSize + 1) * cellSize + 0;
 
             date1 = new DateTime(0, 0);
 
@@ -143,12 +145,12 @@ namespace GameOnHome_WINFORM.Games
             if (map[iButton, jButton] == -1)
             {
                 timer1.Stop();
-                ShowAllBombs(iButton, jButton);
-                MessageBox.Show("Поражение!");
-                //Controls.Clear();
+                EndGame = new end_of_game.end_of_game("Fail", this);
+                EndGame.Owner = this;
+                EndGame.Show();
                 Init();
-                Restart();
-            }else { CheckWin(); }
+            }
+            else { CheckWin(); }
         }
 
         private void Restart()
@@ -338,13 +340,13 @@ namespace GameOnHome_WINFORM.Games
 
         private void Miner_Load(object sender, EventArgs e)
         {
-            Label time = new Label();
-            TextBox timebox = new TextBox();
-            Timer timer = new Timer();
+            //Label time = new Label();
+            //TextBox timebox = new TextBox();
+            //Timer timer = new Timer();
 
-            time.Font = new Font("Segoe UI Emoji", 18f);
-            time.Text = "Время";
-            time.Location = new Point();
+            //time.Font = new Font("Segoe UI Emoji", 18f);
+            //time.Text = "Время";
+            //time.Location = new Point();
         }
     }
 }

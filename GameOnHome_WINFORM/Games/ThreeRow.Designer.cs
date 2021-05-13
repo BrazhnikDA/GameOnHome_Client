@@ -63,11 +63,11 @@
             this.timerLabel.AutoSize = true;
             this.timerLabel.Font = new System.Drawing.Font("Book Antiqua", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.timerLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.timerLabel.Location = new System.Drawing.Point(300, 581);
+            this.timerLabel.Location = new System.Drawing.Point(294, 581);
             this.timerLabel.Name = "timerLabel";
-            this.timerLabel.Size = new System.Drawing.Size(33, 30);
+            this.timerLabel.Size = new System.Drawing.Size(45, 30);
             this.timerLabel.TabIndex = 4;
-            this.timerLabel.Text = "time";
+            this.timerLabel.Text = "Время";
             this.timerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // horizontalLine1
@@ -85,11 +85,11 @@
             this.scoreLabel.AutoSize = true;
             this.scoreLabel.Font = new System.Drawing.Font("Book Antiqua", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.scoreLabel.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.scoreLabel.Location = new System.Drawing.Point(290, 558);
+            this.scoreLabel.Location = new System.Drawing.Point(289, 558);
             this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(54, 23);
+            this.scoreLabel.Size = new System.Drawing.Size(56, 23);
             this.scoreLabel.TabIndex = 2;
-            this.scoreLabel.Text = "score";
+            this.scoreLabel.Text = "Счёт";
             this.scoreLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // gameField
@@ -111,9 +111,10 @@
             this.ClientSize = new System.Drawing.Size(634, 611);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Font = new System.Drawing.Font("Book Antiqua", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximumSize = new System.Drawing.Size(3840, 2160);
+            this.MaximumSize = new System.Drawing.Size(650, 650);
             this.MinimumSize = new System.Drawing.Size(650, 650);
             this.Name = "ThreeRow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

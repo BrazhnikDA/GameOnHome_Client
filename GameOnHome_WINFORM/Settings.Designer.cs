@@ -38,9 +38,10 @@ namespace GameOnHome_WINFORM
             // 
             this.pictureBox1.Image = global::GameOnHome_WINFORM.Properties.Resources.dr;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox1.MaximumSize = new System.Drawing.Size(800, 800);
+            this.pictureBox1.MinimumSize = new System.Drawing.Size(800, 800);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1143, 1333);
+            this.pictureBox1.Size = new System.Drawing.Size(800, 800);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -50,20 +51,23 @@ namespace GameOnHome_WINFORM
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.CausesValidation = false;
             this.label1.Font = new System.Drawing.Font("Showcard Gothic", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(251, 63);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(176, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(681, 68);
+            this.label1.Size = new System.Drawing.Size(452, 46);
             this.label1.TabIndex = 1;
             this.label1.Text = "There is nothing here";
             // 
             // Settings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1120, 1268);
+            this.ClientSize = new System.Drawing.Size(784, 709);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaximumSize = new System.Drawing.Size(800, 748);
+            this.MinimumSize = new System.Drawing.Size(800, 748);
             this.Name = "Settings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";

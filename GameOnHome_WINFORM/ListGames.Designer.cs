@@ -50,12 +50,16 @@ namespace GameOnHome_WINFORM
             // 
             // pictureBox_back
             // 
+            this.pictureBox_back.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_back.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_back.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.ListGamesBack;
             this.pictureBox_back.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_back.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_back.MinimumSize = new System.Drawing.Size(1079, 717);
             this.pictureBox_back.Name = "pictureBox_back";
-            this.pictureBox_back.Size = new System.Drawing.Size(1541, 1195);
+            this.pictureBox_back.Size = new System.Drawing.Size(1079, 717);
+            this.pictureBox_back.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox_back.TabIndex = 2;
             this.pictureBox_back.TabStop = false;
             // 
@@ -63,10 +67,11 @@ namespace GameOnHome_WINFORM
             // 
             this.pictureBox_tic_tac.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_tic_tac.Image = global::GameOnHome_WINFORM.Properties.Resources.Tic_tac_icone;
-            this.pictureBox_tic_tac.Location = new System.Drawing.Point(57, 67);
-            this.pictureBox_tic_tac.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_tic_tac.Location = new System.Drawing.Point(40, 40);
+            this.pictureBox_tic_tac.MinimumSize = new System.Drawing.Size(128, 128);
             this.pictureBox_tic_tac.Name = "pictureBox_tic_tac";
-            this.pictureBox_tic_tac.Size = new System.Drawing.Size(183, 213);
+            this.pictureBox_tic_tac.Size = new System.Drawing.Size(128, 128);
+            this.pictureBox_tic_tac.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_tic_tac.TabIndex = 3;
             this.pictureBox_tic_tac.TabStop = false;
             this.pictureBox_tic_tac.Click += new System.EventHandler(this.pictureBox_tic_tac_Click);
@@ -77,10 +82,10 @@ namespace GameOnHome_WINFORM
             // 
             this.pictureBox_shaski.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_shaski.Image = global::GameOnHome_WINFORM.Properties.Resources.checlers_icone;
-            this.pictureBox_shaski.Location = new System.Drawing.Point(297, 67);
-            this.pictureBox_shaski.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_shaski.Location = new System.Drawing.Point(208, 40);
+            this.pictureBox_shaski.MinimumSize = new System.Drawing.Size(128, 128);
             this.pictureBox_shaski.Name = "pictureBox_shaski";
-            this.pictureBox_shaski.Size = new System.Drawing.Size(183, 213);
+            this.pictureBox_shaski.Size = new System.Drawing.Size(128, 128);
             this.pictureBox_shaski.TabIndex = 4;
             this.pictureBox_shaski.TabStop = false;
             this.pictureBox_shaski.Click += new System.EventHandler(this.pictureBox_shaski_Click);
@@ -91,10 +96,10 @@ namespace GameOnHome_WINFORM
             // 
             this.pictureBox_Three_Row.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_Three_Row.Image = global::GameOnHome_WINFORM.Properties.Resources.three_in_a_row_icone;
-            this.pictureBox_Three_Row.Location = new System.Drawing.Point(537, 67);
-            this.pictureBox_Three_Row.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_Three_Row.Location = new System.Drawing.Point(376, 40);
+            this.pictureBox_Three_Row.MinimumSize = new System.Drawing.Size(128, 128);
             this.pictureBox_Three_Row.Name = "pictureBox_Three_Row";
-            this.pictureBox_Three_Row.Size = new System.Drawing.Size(183, 213);
+            this.pictureBox_Three_Row.Size = new System.Drawing.Size(128, 128);
             this.pictureBox_Three_Row.TabIndex = 5;
             this.pictureBox_Three_Row.TabStop = false;
             this.pictureBox_Three_Row.Click += new System.EventHandler(this.pictureBox_Three_Row_Click);
@@ -105,10 +110,10 @@ namespace GameOnHome_WINFORM
             // 
             this.pictureBox_sapper.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_sapper.Image = global::GameOnHome_WINFORM.Properties.Resources.sapper;
-            this.pictureBox_sapper.Location = new System.Drawing.Point(777, 67);
-            this.pictureBox_sapper.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_sapper.Location = new System.Drawing.Point(544, 40);
+            this.pictureBox_sapper.MinimumSize = new System.Drawing.Size(128, 128);
             this.pictureBox_sapper.Name = "pictureBox_sapper";
-            this.pictureBox_sapper.Size = new System.Drawing.Size(183, 213);
+            this.pictureBox_sapper.Size = new System.Drawing.Size(128, 128);
             this.pictureBox_sapper.TabIndex = 6;
             this.pictureBox_sapper.TabStop = false;
             this.pictureBox_sapper.Click += new System.EventHandler(this.pictureBox_saper_Click);
@@ -117,59 +122,67 @@ namespace GameOnHome_WINFORM
             // 
             // label_tic_tac
             // 
+            this.label_tic_tac.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label_tic_tac.AutoSize = true;
             this.label_tic_tac.BackColor = System.Drawing.Color.Transparent;
             this.label_tic_tac.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label_tic_tac.ForeColor = System.Drawing.Color.White;
-            this.label_tic_tac.Location = new System.Drawing.Point(57, 288);
-            this.label_tic_tac.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_tic_tac.MinimumSize = new System.Drawing.Size(183, 50);
+            this.label_tic_tac.Location = new System.Drawing.Point(40, 173);
+            this.label_tic_tac.MinimumSize = new System.Drawing.Size(128, 30);
             this.label_tic_tac.Name = "label_tic_tac";
-            this.label_tic_tac.Size = new System.Drawing.Size(186, 50);
+            this.label_tic_tac.Size = new System.Drawing.Size(128, 30);
             this.label_tic_tac.TabIndex = 7;
             this.label_tic_tac.Text = "Крестики-Нолики";
             this.label_tic_tac.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_shaski
             // 
+            this.label_shaski.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label_shaski.AutoSize = true;
             this.label_shaski.BackColor = System.Drawing.Color.Transparent;
             this.label_shaski.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label_shaski.ForeColor = System.Drawing.Color.White;
-            this.label_shaski.Location = new System.Drawing.Point(297, 287);
-            this.label_shaski.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_shaski.MinimumSize = new System.Drawing.Size(183, 50);
+            this.label_shaski.Location = new System.Drawing.Point(208, 172);
+            this.label_shaski.MinimumSize = new System.Drawing.Size(128, 30);
             this.label_shaski.Name = "label_shaski";
-            this.label_shaski.Size = new System.Drawing.Size(183, 50);
+            this.label_shaski.Size = new System.Drawing.Size(128, 30);
             this.label_shaski.TabIndex = 8;
             this.label_shaski.Text = "Шашки";
             this.label_shaski.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_3ryd
             // 
+            this.label_3ryd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label_3ryd.AutoSize = true;
             this.label_3ryd.BackColor = System.Drawing.Color.Transparent;
             this.label_3ryd.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label_3ryd.ForeColor = System.Drawing.Color.White;
-            this.label_3ryd.Location = new System.Drawing.Point(537, 287);
-            this.label_3ryd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_3ryd.MinimumSize = new System.Drawing.Size(183, 50);
+            this.label_3ryd.Location = new System.Drawing.Point(376, 172);
+            this.label_3ryd.MinimumSize = new System.Drawing.Size(128, 30);
             this.label_3ryd.Name = "label_3ryd";
-            this.label_3ryd.Size = new System.Drawing.Size(183, 50);
+            this.label_3ryd.Size = new System.Drawing.Size(128, 30);
             this.label_3ryd.TabIndex = 9;
             this.label_3ryd.Text = "Три в ряд";
             this.label_3ryd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_saper
             // 
+            this.label_saper.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label_saper.AutoSize = true;
             this.label_saper.BackColor = System.Drawing.Color.Transparent;
             this.label_saper.ForeColor = System.Drawing.Color.White;
-            this.label_saper.Location = new System.Drawing.Point(777, 287);
-            this.label_saper.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_saper.MinimumSize = new System.Drawing.Size(183, 50);
+            this.label_saper.Location = new System.Drawing.Point(544, 172);
+            this.label_saper.MinimumSize = new System.Drawing.Size(128, 30);
             this.label_saper.Name = "label_saper";
-            this.label_saper.Size = new System.Drawing.Size(183, 50);
+            this.label_saper.Size = new System.Drawing.Size(128, 30);
             this.label_saper.TabIndex = 11;
             this.label_saper.Text = "Сапёр";
             this.label_saper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -178,10 +191,10 @@ namespace GameOnHome_WINFORM
             // 
             this.pictureBox_chess.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_chess.Image = global::GameOnHome_WINFORM.Properties.Resources.chess;
-            this.pictureBox_chess.Location = new System.Drawing.Point(1017, 67);
-            this.pictureBox_chess.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox_chess.Location = new System.Drawing.Point(712, 40);
+            this.pictureBox_chess.MinimumSize = new System.Drawing.Size(128, 128);
             this.pictureBox_chess.Name = "pictureBox_chess";
-            this.pictureBox_chess.Size = new System.Drawing.Size(183, 213);
+            this.pictureBox_chess.Size = new System.Drawing.Size(128, 128);
             this.pictureBox_chess.TabIndex = 12;
             this.pictureBox_chess.TabStop = false;
             this.pictureBox_chess.Click += new System.EventHandler(this.pictureBox_chess_Click);
@@ -190,26 +203,27 @@ namespace GameOnHome_WINFORM
             // 
             // label_chess
             // 
+            this.label_chess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label_chess.AutoSize = true;
             this.label_chess.BackColor = System.Drawing.Color.Transparent;
             this.label_chess.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label_chess.ForeColor = System.Drawing.Color.White;
-            this.label_chess.Location = new System.Drawing.Point(1017, 287);
-            this.label_chess.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_chess.MinimumSize = new System.Drawing.Size(183, 50);
+            this.label_chess.Location = new System.Drawing.Point(712, 172);
+            this.label_chess.MinimumSize = new System.Drawing.Size(128, 30);
             this.label_chess.Name = "label_chess";
-            this.label_chess.Size = new System.Drawing.Size(183, 50);
+            this.label_chess.Size = new System.Drawing.Size(128, 30);
             this.label_chess.TabIndex = 13;
             this.label_chess.Text = "Шахматы";
             this.label_chess.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ListGames
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1541, 1195);
+            this.ClientSize = new System.Drawing.Size(1079, 717);
             this.Controls.Add(this.label_chess);
             this.Controls.Add(this.pictureBox_chess);
             this.Controls.Add(this.label_saper);
@@ -221,7 +235,10 @@ namespace GameOnHome_WINFORM
             this.Controls.Add(this.pictureBox_shaski);
             this.Controls.Add(this.pictureBox_tic_tac);
             this.Controls.Add(this.pictureBox_back);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(1095, 756);
+            this.MinimumSize = new System.Drawing.Size(1095, 756);
             this.Name = "ListGames";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список игр";

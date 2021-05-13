@@ -51,6 +51,7 @@ namespace GameOnHome_WINFORM.Games
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(510, 416);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Krestiki_Noliki";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

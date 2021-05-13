@@ -105,7 +105,8 @@ namespace GameOnHome_WINFORM
         private void pictureBox_Three_Row_Click(object sender, EventArgs e)
         {
             ThreeRow three = new ThreeRow();
-            three.Show();
+            this.Close();
+            three.ShowDialog();
         }
 
         //Обработка события наведения на "3 в ряд"
@@ -130,8 +131,9 @@ namespace GameOnHome_WINFORM
         //Обработка события клик по "Сапёр"
         private void pictureBox_saper_Click(object sender, EventArgs e)
         {
-            Games.Miner miner = new Games.Miner();
-            miner.Show();
+            Miner miner = new Miner();
+            this.Close();
+            miner.ShowDialog();
         }
 
         //Обработка события наведения на "Сапёр"
@@ -187,6 +189,5 @@ namespace GameOnHome_WINFORM
             label_chess.Font = new Font("Stencil", 9.75f);                                               //Изменяем стиль названия
             label_chess.ForeColor = Color.White;                                                         //Изменение цвета текста
         }
-
     }
 }

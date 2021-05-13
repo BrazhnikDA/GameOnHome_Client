@@ -155,13 +155,13 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (currentPlayer == 2)
                 {
-                    EndGame = new end_of_game.end_of_game(true, this);
+                    EndGame = new end_of_game.end_of_game("Win", this);
                     EndGame.Owner = this;
                     EndGame.Show();
                 }
                 else
                 {
-                    EndGame = new end_of_game.end_of_game(false, this);
+                    EndGame = new end_of_game.end_of_game("Fail", this);
                     EndGame.Owner = this;
                     EndGame.Show();
                 }
@@ -170,13 +170,13 @@ namespace GameOnHome_WINFORM.Games
             {
                 if (currentPlayer == 1)
                 {
-                    EndGame = new end_of_game.end_of_game(true, this);
+                    EndGame = new end_of_game.end_of_game("Win", this);
                     EndGame.Owner = this;
                     EndGame.Show();
                 }
                 else
                 {
-                    EndGame = new end_of_game.end_of_game(false, this);
+                    EndGame = new end_of_game.end_of_game("Fail", this);
                     EndGame.Owner = this;
                     EndGame.Show();
                 }

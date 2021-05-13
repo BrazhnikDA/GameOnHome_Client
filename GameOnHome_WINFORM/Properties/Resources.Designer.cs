@@ -63,6 +63,16 @@ namespace GameOnHome_WINFORM.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1588266690127712315 {
+            get {
+                object obj = ResourceManager.GetObject("_1588266690127712315", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _3ryd_back {
             get {
                 object obj = ResourceManager.GetObject("_3ryd_back", resourceCulture);
@@ -186,6 +196,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap dr {
             get {
                 object obj = ResourceManager.GetObject("dr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap draw {
+            get {
+                object obj = ResourceManager.GetObject("draw", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -356,6 +376,16 @@ namespace GameOnHome_WINFORM.Properties {
         internal static System.Drawing.Bitmap sapper {
             get {
                 object obj = ResourceManager.GetObject("sapper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scoreTime_back {
+            get {
+                object obj = ResourceManager.GetObject("scoreTime_back", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
