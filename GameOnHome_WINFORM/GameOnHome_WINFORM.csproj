@@ -4,6 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>GameOnHome</AssemblyName>
+    <ApplicationIcon>лого.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

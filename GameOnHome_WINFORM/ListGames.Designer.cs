@@ -50,8 +50,8 @@ namespace GameOnHome_WINFORM
             // 
             // pictureBox_back
             // 
-            this.pictureBox_back.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pictureBox_back.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_back.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_back.BackgroundImage = global::GameOnHome_WINFORM.Properties.Resources.ListGamesBack;
@@ -122,8 +122,8 @@ namespace GameOnHome_WINFORM
             // 
             // label_tic_tac
             // 
-            this.label_tic_tac.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.label_tic_tac.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_tic_tac.AutoSize = true;
             this.label_tic_tac.BackColor = System.Drawing.Color.Transparent;
@@ -139,8 +139,8 @@ namespace GameOnHome_WINFORM
             // 
             // label_shaski
             // 
-            this.label_shaski.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.label_shaski.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_shaski.AutoSize = true;
             this.label_shaski.BackColor = System.Drawing.Color.Transparent;
@@ -156,8 +156,8 @@ namespace GameOnHome_WINFORM
             // 
             // label_3ryd
             // 
-            this.label_3ryd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.label_3ryd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_3ryd.AutoSize = true;
             this.label_3ryd.BackColor = System.Drawing.Color.Transparent;
@@ -173,8 +173,8 @@ namespace GameOnHome_WINFORM
             // 
             // label_saper
             // 
-            this.label_saper.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.label_saper.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_saper.AutoSize = true;
             this.label_saper.BackColor = System.Drawing.Color.Transparent;
@@ -203,8 +203,8 @@ namespace GameOnHome_WINFORM
             // 
             // label_chess
             // 
-            this.label_chess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.label_chess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_chess.AutoSize = true;
             this.label_chess.BackColor = System.Drawing.Color.Transparent;

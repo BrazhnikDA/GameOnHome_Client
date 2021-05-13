@@ -348,6 +348,12 @@ namespace GameOnHome_WINFORM.Games
             //time.Text = "Время";
             //time.Location = new Point();
         }
+
+        private void Miner_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ListGames lg = new ListGames();
+            lg.Show();
+        }
     }
 }
 

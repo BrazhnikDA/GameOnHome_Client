@@ -2390,22 +2390,25 @@ namespace GameOnHome_WINFORM.Games
 
         private void Chess_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ListGames lg = new ListGames();
-
-            if (currentPlayer != 0)
+            if (EndGame == null)
             {
-                DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialog == DialogResult.Yes)
+                ListGames lg = new ListGames();
+
+                if (currentPlayer != 0)
+                {
+                    DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        sound.Stop();
+                        lg.Show();
+                    }
+                }
+                else
                 {
                     sound.Stop();
                     lg.Show();
                 }
-            }
-            else
-            {
-                sound.Stop();
-                lg.Show();
-            }
+            }else { sound.Stop(); }
         }
     }
 }

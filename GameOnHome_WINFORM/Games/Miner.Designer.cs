@@ -83,6 +83,7 @@ namespace GameOnHome_WINFORM.Games
             this.Name = "Miner";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Сапёр";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Miner_FormClosing);
             this.Load += new System.EventHandler(this.Miner_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

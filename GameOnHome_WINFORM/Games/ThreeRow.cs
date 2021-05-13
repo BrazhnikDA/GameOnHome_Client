@@ -9,13 +9,14 @@ namespace GameOnHome_WINFORM.Games
     public partial class ThreeRow : Form
     {
         private end_of_game.end_of_game EndGame;
+        SoundPlayer sound;
         public int score;
 
         public ThreeRow()
         {
             InitializeComponent();
 
-            SoundPlayer sound = new SoundPlayer(Properties.Resources._3Throw);
+            sound = new SoundPlayer(Properties.Resources._3Throw);
             sound.Play();
         }
 
@@ -219,6 +220,8 @@ namespace GameOnHome_WINFORM.Games
             if (e.KeyCode == Keys.Escape && m_active)
             {
                 m_timer.Dispose();
+                ListGames list = new ListGames();
+                list.Show();
                 Close();
             }
         }
@@ -256,6 +259,13 @@ namespace GameOnHome_WINFORM.Games
                 else
                     m_active = value;
             }
+        }
+
+        private void ThreeRow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ListGames lg = new ListGames();
+            lg.Show();
+            sound.Stop();
         }
     }
 

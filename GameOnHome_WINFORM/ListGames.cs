@@ -193,8 +193,9 @@ namespace GameOnHome_WINFORM
 
         private void ListGames_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            Environment.Exit(0);
         }
+
     }
 }
 

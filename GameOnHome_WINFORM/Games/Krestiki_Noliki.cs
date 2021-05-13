@@ -137,6 +137,7 @@ namespace GameOnHome_WINFORM.Games
             Krestiki_Noliki_Load(null, null);
             ActivateAllButtons();
             currentPlayer = "";
+            sound.Play();
         }
 
         private void Button_click_ofline(object sender, EventArgs e)
@@ -464,7 +465,6 @@ namespace GameOnHome_WINFORM.Games
                         {
                             EndGame = new end_of_game.end_of_game("Fail", this);
                             EndGame.Owner = this;
-
                             EndGame.Show();
                         }
                         DeactivateAllButtons();
@@ -744,22 +744,25 @@ namespace GameOnHome_WINFORM.Games
 
         private void Krestiki_Noliki_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ListGames lg = new ListGames();
-
-            if (count > 0)
+            if (EndGame == null)
             {
-                DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialog == DialogResult.Yes)
+                ListGames lg = new ListGames();
+
+                if (count > 0)
+                {
+                    DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        sound.Stop();
+                        lg.Show();
+                    }
+                }
+                else
                 {
                     sound.Stop();
                     lg.Show();
                 }
-            }
-            else
-            {
-                sound.Stop();
-                lg.Show();
-            }
+            }else { sound.Stop(); }
         }
     }
 }

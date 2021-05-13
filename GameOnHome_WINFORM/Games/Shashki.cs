@@ -12,6 +12,7 @@ namespace GameOnHome_WINFORM.Games
     public partial class Shashki : Form
     {
         private end_of_game.end_of_game EndGame;
+        SoundPlayer sound;
 
         private string ID;                          // ID присвоенное сервером
         private bool IsStatus = false;              // True - онлайн, False - оффлайн
@@ -68,7 +69,7 @@ namespace GameOnHome_WINFORM.Games
 
             InitBoard();        // "Создаём" доску
 
-            SoundPlayer sound = new SoundPlayer(Properties.Resources.fonMusic);
+            sound = new SoundPlayer(Properties.Resources.fonMusic);
             sound.Play();
         }
         private void InitBoard()
@@ -95,8 +96,8 @@ namespace GameOnHome_WINFORM.Games
         private void CreateMap()
         {
             // Указываем размер окна относительно размера кнопок
-            this.Width = (mapSize + 1) * cellSize + 116;
-            this.Height = (mapSize + 1) * cellSize - 11;
+            this.Width = (mapSize + 1) * cellSize - 75;
+            this.Height = (mapSize + 1) * cellSize - 60;
 
             for (int i = 0; i < mapSize; i++)
             {
@@ -130,8 +131,6 @@ namespace GameOnHome_WINFORM.Games
             simpleSteps.Clear();
 
             InitBoard();
-
-            Shashki_Load(null, null);
             
             currentPlayer = 0;
             listIJ.Clear();
@@ -1377,35 +1376,28 @@ namespace GameOnHome_WINFORM.Games
             Environment.Exit(0); //завершение процесса
         }
 
-        private void Shashki_Load(object sender, EventArgs e)
+        private void Shashki_FormClosing(object sender, FormClosingEventArgs e)
         {
-            PictureBox PB = new PictureBox();
-            PB.Dock = DockStyle.Fill;
-            PB.Location = new Point(0, 0);
-            PB.Image = Properties.Resources.shashki_back;
-
-            Graphics g = Graphics.FromImage(PB.Image);
-            Pen PenGird = new Pen(Color.Black, 5);
-
-            //Отрисовка линий по вертикали
-            for (int i = 0; i < 4; i++)
+            if (EndGame == null)
             {
-                int tmp = 0;
-                if (i == 1) { tmp = 5; }
+                ListGames lg = new ListGames();
 
-                g.DrawLine(PenGird, new Point(97 + 8 * cellSize * i + tmp, 20), new Point(97 + 8 * cellSize * i + tmp, Height - 59));
+                if (currentPlayer != 0)
+                {
+                    DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        sound.Stop();
+                        lg.Show();
+                    }
+                }
+                else
+                {
+                    sound.Stop();
+                    lg.Show();
+                }
             }
-
-            //Отрисовка линий по горизонтали
-            for (int i = 0; i < 4; i++)
-            {
-                int tmp = 0;
-                if (i == 1) { tmp = 5; }
-
-                g.DrawLine(PenGird, new Point(95, 22 + 8 * cellSize * i + tmp), new Point(Width - 115, 22 + 8 * cellSize * i + tmp));
-            }
-
-            this.Controls.Add(PB);
+            else { sound.Stop(); }
         }
     }
 }
