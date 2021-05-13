@@ -748,21 +748,17 @@ namespace GameOnHome_WINFORM.Games
 
             if (count > 0)
             {
-                DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                if (dialog == DialogResult.OK)
+                DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
                 {
                     sound.Stop();
-                    e.Cancel = false;
                     lg.Show();
-                    this.Close();
                 }
             }
             else
             {
                 sound.Stop();
-                e.Cancel = false;
                 lg.Show();
-                this.Close();
             }
         }
     }

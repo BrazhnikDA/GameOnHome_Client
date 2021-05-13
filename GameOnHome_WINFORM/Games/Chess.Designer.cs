@@ -40,6 +40,7 @@ namespace GameOnHome_WINFORM.Games
             this.Name = "Chess";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chess";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Chess_FormClosing);
             this.ResumeLayout(false);
 
         }

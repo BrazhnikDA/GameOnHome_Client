@@ -13,6 +13,8 @@ namespace GameOnHome_WINFORM.Games
     {
         private end_of_game.end_of_game EndGame;
 
+        SoundPlayer sound;                          // Музыка
+
         public string ID;                          // ID присвоенное сервером
         public bool IsStatus = false;              // True - онлайн, False - оффлайн
 
@@ -64,7 +66,7 @@ namespace GameOnHome_WINFORM.Games
         {
             InitializeComponent();
 
-            SoundPlayer sound = new SoundPlayer(Properties.Resources.fonMusic);
+            sound = new SoundPlayer(Properties.Resources.fonMusic);
             sound.Play();
 
             this.Name = "Chess";
@@ -2384,6 +2386,26 @@ namespace GameOnHome_WINFORM.Games
             if (client != null)
                 client.Close();//отключение клиента
             Environment.Exit(0); //завершение процесса
+        }
+
+        private void Chess_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ListGames lg = new ListGames();
+
+            if (currentPlayer != 0)
+            {
+                DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
+                {
+                    sound.Stop();
+                    lg.Show();
+                }
+            }
+            else
+            {
+                sound.Stop();
+                lg.Show();
+            }
         }
     }
 }

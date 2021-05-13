@@ -119,7 +119,6 @@ namespace GameOnHome_WINFORM
 
         private void lab3_click(object sender, EventArgs e)
         {
-            PlaySound();
             Application.Exit();                                                          //Конец события
         }
 
