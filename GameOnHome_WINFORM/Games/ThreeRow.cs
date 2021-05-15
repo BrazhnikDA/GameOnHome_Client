@@ -263,9 +263,30 @@ namespace GameOnHome_WINFORM.Games
 
         private void ThreeRow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ListGames lg = new ListGames();
-            lg.Show();
-            sound.Stop();
+            if (EndGame == null)
+            {
+                ListGames lg = new ListGames();
+
+                if (getScore != 0)
+                {
+                    DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        sound.Stop();
+                        lg.Show();
+                    }
+                    if (dialog == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                    }
+                }
+                else
+                {
+                    sound.Stop();
+                    lg.Show();
+                }
+            }
+            else { sound.Stop(); }
         }
     }
 

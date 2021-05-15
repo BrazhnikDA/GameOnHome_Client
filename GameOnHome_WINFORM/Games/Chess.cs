@@ -225,12 +225,41 @@ namespace GameOnHome_WINFORM.Games
             prevButton = pressedButton;
         }
         
+        // Записываем путь до короля в список
         private int[] GetPathToKing(int i, int j, int ii, int jj)
         {
             switch(map[i, j])
             {
                 case 12:
-                    if(ii > i)
+                    if (ii > i && jj == j)   // Вверх
+                    {
+                        while (i != ii)
+                        {
+                            pathToKing.Add(new int[5] { i, j, ++i, j, 0 });
+                        }
+                    }
+                    if (ii < i && jj == j)   // Вниз
+                    {
+                        while (i != ii)
+                        {
+                            pathToKing.Add(new int[5] { i, j, --i, j, 0 });
+                        }
+                    }
+                    if (jj > j && ii == i)   // Вправо
+                    {
+                        while (jj != j)
+                        {
+                            pathToKing.Add(new int[5] { i, j, i, ++j, 0 });
+                        }
+                    }
+                    if (jj < j && ii == i)   // Влево
+                    {
+                        while (jj != j)
+                        {
+                            pathToKing.Add(new int[5] { i, j, i, --j, 0 });
+                        }
+                    }
+                    if (ii > i)
                     {
                         if(jj < j)
                         {
@@ -266,6 +295,39 @@ namespace GameOnHome_WINFORM.Games
                         }
                     }
                     break;
+                case 15:
+                    if(ii > i && jj == j)   // Вверх
+                    {
+                        while(i != ii)
+                        {
+                            pathToKing.Add(new int[5] { i, j, ++i, j, 0 });
+                        }
+                    }
+                    if(ii < i && jj == j)   // Вниз
+                    {
+                        while(i != ii)
+                        {
+                            pathToKing.Add(new int[5] { i, j, --i, j, 0 });
+                        }
+                    }
+                    if(jj > j && ii == i)   // Вправо
+                    {
+                        while(jj != j)
+                        {
+                            pathToKing.Add(new int[5] { i, j, i, ++j, 0 });
+                        }
+                    }
+                    if(jj < j && ii == i)   // Влево
+                    {
+                        while(jj != j)
+                        {
+                            pathToKing.Add(new int[5] { i, j, i, --j, 0 });
+                        }
+                    }
+                    break;
+                case 16:
+                    pathToKing.Add(new int[5] { i, j, ii, jj, 0 });
+                    break;
             }
             return new int[4] { 0,0,0,0};
         }
@@ -273,7 +335,7 @@ namespace GameOnHome_WINFORM.Games
         private void BotBrainEasy()
         {
             stepsBot.Clear(); // Очищаем ходы
-            bool isCloseShax = false;       // Закрыт ли поставленный шах
+            int isCloseShax = 0;       // Закрыт ли поставленный шах
             int[] isShax = new int[5]; 
             isShax = CheckShah();
             if (isShax[0] != -1)
@@ -309,22 +371,21 @@ namespace GameOnHome_WINFORM.Games
                     }
                 }
 
-                if(isShax[0] != -1)
+                if (isShax[0] != -1)
                 {
-
                     // Закрываемся от шаха фигурой
                     if (isShax[0] != -1 && pathToKing.Count > 0)
                     {
                         for (int i = 0; i < stepsBot.Count; i++)
                         {
-                            if (isCloseShax)
+                            if (isCloseShax == 1)
                             {
                                 break;
                             }
                             // Закрываем шах съеданием фигуры
                             for (int j = 0; j < pathToKing.Count; j++)
                             {
-                                if (isCloseShax)
+                                if (isCloseShax == 1)
                                 {
                                     break;
                                 }
@@ -338,13 +399,33 @@ namespace GameOnHome_WINFORM.Games
                                         buttons[stepsBot[i][2], stepsBot[i][3]].Image = buttons[stepsBot[i][0], stepsBot[i][1]].Image;
                                         buttons[stepsBot[i][0], stepsBot[i][1]].Image = null;
 
-                                        isCloseShax = true;
+                                        isCloseShax = 1;
                                         break;
                                     }
                                 }
                             }
                         }
-                        if (!isCloseShax)
+                        if (isCloseShax == 0)
+                        {
+                            for (int i = 0; i < stepsBot.Count; i++)
+                            {
+                                for (int j = 0; j < pathToKing.Count; j++)
+                                {
+                                    if (stepsBot[i][2] != pathToKing[j][2] && stepsBot[i][3] != pathToKing[j][3] && map[stepsBot[i][0], stepsBot[i][1]] == 21)
+                                    {
+                                        map[stepsBot[i][2], stepsBot[i][3]] = map[stepsBot[i][0], stepsBot[i][1]];
+                                        map[stepsBot[i][0], stepsBot[i][1]] = 0;
+
+                                        buttons[stepsBot[i][2], stepsBot[i][3]].Image = buttons[stepsBot[i][0], stepsBot[i][1]].Image;
+                                        buttons[stepsBot[i][0], stepsBot[i][1]].Image = null;
+
+                                        isCloseShax = 1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (isCloseShax == 0)
                         {
                             for (int i = 0; i < stepsBot.Count; i++)
                             {
@@ -357,18 +438,21 @@ namespace GameOnHome_WINFORM.Games
                                     buttons[stepsBot[i][2], stepsBot[i][3]].Image = buttons[stepsBot[i][0], stepsBot[i][1]].Image;
                                     buttons[stepsBot[i][0], stepsBot[i][1]].Image = null;
 
-                                    isCloseShax = true;
+                                    isCloseShax = 1;
                                     break;
                                 }
                             }
                         }
                     }
+                    if (isCloseShax != 1)
+                        isCloseShax = -1;
                 }
-
-                if (indexEat == 0)
+                else
                 {
-                    Random rnd = new Random();
-                    int xod = rnd.Next(0, steps.Count);
+                    if (indexEat == 0)
+                    {
+                        Random rnd = new Random();
+                        int xod = rnd.Next(0, steps.Count);
 
                         // Нет шаха сьедаем важную фигуру
                         map[stepsBot[xod][2], stepsBot[xod][3]] = map[stepsBot[xod][0], stepsBot[xod][1]];    // Куда сходили теперь наша фигура
@@ -376,20 +460,21 @@ namespace GameOnHome_WINFORM.Games
 
                         buttons[stepsBot[xod][2], stepsBot[xod][3]].Image = buttons[stepsBot[xod][0], stepsBot[xod][1]].Image;
                         buttons[stepsBot[xod][0], stepsBot[xod][1]].Image = null;
-                    
-                }
-                else
-                {                 
-   
+
+                    }
+                    else
+                    {
+
                         map[stepsBot[indexEat][2], stepsBot[indexEat][3]] = map[stepsBot[indexEat][0], stepsBot[indexEat][1]];    // Куда сходили теперь наша фигура
                         map[stepsBot[indexEat][0], stepsBot[indexEat][1]] = 0;    // Где стояли теперь пустота
 
                         buttons[stepsBot[indexEat][2], stepsBot[indexEat][3]].Image = buttons[stepsBot[indexEat][0], stepsBot[indexEat][1]].Image;
                         buttons[stepsBot[indexEat][0], stepsBot[indexEat][1]].Image = null;
-                    
+
+                    }
                 }
             }
-            if(!isCloseShax && isShax[0] != -1) { MessageBox.Show("Game over"); }
+            if(isCloseShax == -1) { MessageBox.Show("Game over"); }
             Thread.Sleep(220);
         }
 
@@ -2401,6 +2486,10 @@ namespace GameOnHome_WINFORM.Games
                     {
                         sound.Stop();
                         lg.Show();
+                    }
+                    if (dialog == DialogResult.No)
+                    {
+                        e.Cancel = true;
                     }
                 }
                 else

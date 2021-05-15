@@ -756,6 +756,10 @@ namespace GameOnHome_WINFORM.Games
                         sound.Stop();
                         lg.Show();
                     }
+                    if (dialog == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                    }
                 }
                 else
                 {

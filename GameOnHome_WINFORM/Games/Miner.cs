@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace GameOnHome_WINFORM.Games
 {
+
     public partial class Miner : Form
     {
+        SoundPlayer sound;
         public Miner()
         {
             InitializeComponent();
+
+            sound = new SoundPlayer(Properties.Resources._3Throw);
+            sound.Play();
+
             Init();
         }
 
@@ -183,6 +190,7 @@ namespace GameOnHome_WINFORM.Games
                 MessageBox.Show("Вы выиграли!");
                 Controls.Clear();
                 Init();
+                sound.Stop();
             }
         }
 
@@ -351,8 +359,30 @@ namespace GameOnHome_WINFORM.Games
 
         private void Miner_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ListGames lg = new ListGames();
-            lg.Show();
+            if (EndGame == null)
+            {
+                ListGames lg = new ListGames();
+
+                if (textBox_Timer.Text != "00:00")
+                {
+                    DialogResult dialog = MessageBox.Show("Игра только началась. Закрыть окно?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialog == DialogResult.Yes)
+                    {
+                        sound.Stop();
+                        lg.Show();
+                    }
+                    if(dialog == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                    }
+                }
+                else
+                {
+                    sound.Stop();
+                    lg.Show();
+                }
+            }
+            else { sound.Stop(); }
         }
     }
 }
