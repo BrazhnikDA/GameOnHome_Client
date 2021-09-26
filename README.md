@@ -1,6 +1,4 @@
-Status: ![https://img.shields.io/badge/Status-Finished-brightgreen](https://img.shields.io/badge/Status-Finished-brightgreen) ![https://img.shields.io/badge/Release-Yes-brightgreen](https://img.shields.io/badge/Release-Yes-brightgreen)
-
-Language: ![https://img.shields.io/badge/Language-C%23-blue](https://img.shields.io/badge/Language-C%23-blue)
+![https://img.shields.io/badge/Status-Finished-brightgreen](https://img.shields.io/badge/Status-Finished-brightgreen) ![https://img.shields.io/badge/Release-Yes-brightgreen](https://img.shields.io/badge/Release-Yes-brightgreen) ![https://img.shields.io/badge/Language-C%23-blue](https://img.shields.io/badge/Language-C%23-blue)
 
 # Game On Home
 
@@ -41,29 +39,41 @@ Language: ![https://img.shields.io/badge/Language-C%23-blue](https://img.shields
 ### В целом получился сыроватый проект, но был получен важный опыт работы в команде.
 
 **Успехи**
-:white_check_mark: * Написали простой игровой движок 
-:white_check_mark: * Поработали с сетевым кодом, пускай и простым
-:white_check_mark: * Продумали логику действий ИИ
-:white_check_mark: * Поняли, что готовый игровой движок намного лучше самописного
-:white_check_mark: * Научились в короткие сроки решать множественные задачи, находить выход из проблем
+
+:white_check_mark: 
+*	Написали простой игровой движок 
+
+:white_check_mark: 
+*	Поработали с сетевым кодом, пускай и простым
+
+:white_check_mark: 
+*	Продумали логику действий ИИ
+
+:white_check_mark: 
+*	Поняли, что готовый игровой движок намного лучше самописного
+
+:white_check_mark: 
+*	Научились в короткие сроки решать множественные задачи, находить выход из проблем
 
 ## Участники проекта
 
 ### Наша команда состояла из 3-ёх человек: 
 
-### Бражник Дмитрий - написание кода, как клиентской так и серверной части.
+#### Бражник Дмитрий - написание кода, как клиентской так и серверной части.
 
-### Еланский Александр - создание интерфейса, тестирование.
+#### Еланский Александр - создание интерфейса, тестирование.
 
-### Шаталин Дмитрий - 2Д дизайнер, написание документации, создание презентации и оформление проекта.
+#### Шаталин Дмитрий - 2Д дизайнер, написание документации, создание презентации и оформление проекта.
 
 
 	
 ## Как запустить игру? 
 	
-### Для запуска игры скачайте папку по этой ссылке: <https://disk.yandex.ru/d/pNGn0saIxJ3YbQ>, 
+### Для запуска игры скачайте папку по этой ссылке: <https://disk.yandex.ru/d/pNGn0saIxJ3YbQ> 
+
 ### она содержит откомплированный проект, после чего запускайте GameOnHome.exe. 
 
-**Приятного время припровождения в шашках!**  :grinning_face_with_big_eyes:
+:grinning_face_with_big_eyes:
+### **Приятного время припровождения в шашках!**
 	
 	
